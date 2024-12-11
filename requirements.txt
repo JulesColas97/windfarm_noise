@@ -13,3 +13,4 @@ sounddevice
 tqdm
 typing
 func-timeout
+-e src/
