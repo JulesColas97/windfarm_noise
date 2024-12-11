@@ -1,3 +1,5 @@
+src/prepost/__pycache__
+src/prepost/source/__pycache__
 venv/
 example/les_data/
 example/**/*.dat
