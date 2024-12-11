@@ -50,7 +50,7 @@ Z,Y,X = np.meshgrid(atmos.z,atmos.y,atmos.x,indexing='ij')
 print(Z.shape)
 
 U_hub = 11.5 # ms 
-alpha = 0.0
+alpha = 0.4
 epsilon = 0.01
 
 atmos.u = U_hub * (Z/wt.href) ** alpha
@@ -68,7 +68,6 @@ frequencies = np.array([50,100,200,500,800,1000])
 Ncore = 4
 # Compute sound power 
 # -----------------------------------------------------------------------------
-
 omega = 12.1 * 2 * np.pi / 60
 wt.controlRotSpeed(U_hub, omega=omega)
 wt.setOptimalTwist(U_hub, 4)
@@ -80,4 +79,4 @@ src = pp.Source(wt, atmos, mesh)
 src.computeSpp(frequencies, Ncore)
 src.mesh.polar_2_cartesian()
 
-src.save("./swl_constant.dat")
+src.save("./swl.dat")

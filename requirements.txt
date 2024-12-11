@@ -2,6 +2,7 @@ numpy
 h5py
 scipy
 matplotlib
+pyqt5
 numexpr
 pandas
 Pillow
