@@ -1,0 +1,97 @@
+$input
+! general parameters 
+!------------------------------------------------------------------------------
+case_name='c0'
+var0%c=343
+var0%rho=1.2
+var0%gamma=1.4
+
+! Frequencies 
+nb_freq=5
+frequencies(1)=50,100,200,500
+
+! Angles 
+nb_theta=1
+theta(1)=0
+
+! Domain definition 
+Lx1=3500.0
+Lx2=500.0
+Ly1=1000.0
+Ly2=1000.0
+Lz=300
+
+! Numerical parameters 
+!------------------------------------------------------------------------------
+dx=0.5
+cfl=0.1
+! PML
+size=30
+param=50000.0
+n=2.5
+! impedance
+imp%sigmae=50000.0
+imp%alphae=100.0
+imp%rigid=.false.
+
+! Source 
+src%pos_x=0.0
+src%pos_z=90
+
+! External Flow 
+!------------------------------------------------------------------------------
+! if .true. read from twente LES
+external_flow=.false.
+! if .true. constant flow equal to u0
+uniform=.true.
+
+! if .true. log profile with z0=0.002
+logarithmic=.false.
+u0=11
+
+! Set the type of WAPE used
+! if .true. Ostashev WAPE, else classic WAPE
+arbitrary=.true.
+
+! if true newa phase preserving WAPE
+arbitrary_new=.false.
+
+! (i am not sure this does somethind) 
+interpolation=.true.
+
+! path to LES data
+fdir='../../les_data/1TSBL/blue/output/'
+
+! twente paramaters needed to rescale and positionned the flow 
+fname='tavg'
+tinput%ratio=1
+tinput%z_i=1000.0
+tinput%delta=0.25
+tinput%T_scale_K=293.15
+tinput%Lx=6.0
+tinput%Ly=3.44
+tinput%Lz=1.0
+tinput%posx=1.0
+tinput%posy=1.72
+tinput%posz=0.04
+
+! Set output paramaters 
+!------------------------------------------------------------------------------
+dout=1
+nb_receiver=3
+heights(1)=2.0, 10, 100
+side=.true.
+
+! does not doe anything 
+top=.false.
+
+! if continuation set to true resart from the last computed angles
+! not yet a continuation with respect to frequency 
+continuation=.false.
+
+! Set the plane in the complete domain where the solution must be recorded
+nb_xplane=0
+xplane(1)=
+nb_yplane=0
+yplane(1)=
+$end input

@@ -1,0 +1,7 @@
+venv/
+example/les_data/
+example/**/*.dat
+example/**/*.h5
+*.mod
+*.o
+

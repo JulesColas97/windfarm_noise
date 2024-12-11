@@ -1,0 +1,15 @@
+numpy
+h5py
+scipy
+matplotlib
+numexpr
+pandas
+Pillow
+# tikzplotlib
+-e git+ssh://git@github.com/JulesColas97/tikzplotlib.git#egg=tikzplotlib
+pyshtools
+python-sofa
+sounddevice
+tqdm
+typing
+func-timeout
