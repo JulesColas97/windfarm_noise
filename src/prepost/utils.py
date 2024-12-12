@@ -1,5 +1,5 @@
 import numpy as np
-# import tikzplotlib
+import tikzplotlib
 import os
 import scipy.spatial.qhull as qhull
 import itertools
@@ -211,72 +211,72 @@ def integrateThirdOctave(frequencies, s):
 
 
 def save_figure(filepath: str = None, fig='gcf', clean: bool = True):
-    plt.savefig(filepath) 
-#     from matplotlib.lines import Line2D
-#     from matplotlib.legend import Legend
-#     Line2D._us_dashSeq = property(lambda self: self._dash_pattern[1])
-#     Line2D._us_dashOffset = property(lambda self: self._dash_pattern[0])
-#     Legend._ncol = property(lambda self: self._ncols)
-#
-#     if clean:
-#         tikzplotlib.clean_figure()
-#
-#     isExist = os.path.exists(os.path.dirname(filepath))
-#     if not isExist:
-#         os.makedirs(os.path.dirname(filepath))
-#     tikzplotlib.save(filepath=filepath, figure=fig,
-#                      wrap=False,
-#                      add_axis_environment=True,
-#                      tex_relative_path_to_data='\\figpath',
-#                      dpi=300,
-#                      externalize_tables=True,
-#                      override_externals=True,
-#                      extra_axis_parameters={
-#                          # 'axis background/.style={fill=gray!60}',
-#                          'xtick distance= \\xtick',
-#                          'ytick distance = \\ytick',
-#                          'colorbar=\\colorb',
-#                          'colorbar style ={title=\\clegend,at={(1.02,1)},anchor=north west,width=0.15cm,major tick length=0.15cm,tick pos=right}',
-#                          'height=\\height',
-#                          'width=\\width',
-#                          'tick align=outside',
-#                          'xmin=\\xmin',
-#                          'xmax=\\xmax',
-#                          'ymin=\\ymin', 'ymax=\\ymax',
-#                          'xlabel=\\xlabel',
-#                          'ylabel =\\ylabel'}
-#                      )
-#     print(tikzplotlib.Flavors.latex.preamble())
-#
+    # plt.savefig(filepath) 
+    from matplotlib.lines import Line2D
+    from matplotlib.legend import Legend
+    Line2D._us_dashSeq = property(lambda self: self._dash_pattern[1])
+    Line2D._us_dashOffset = property(lambda self: self._dash_pattern[0])
+    Legend._ncol = property(lambda self: self._ncols)
+
+    if clean:
+        tikzplotlib.clean_figure()
+
+    isExist = os.path.exists(os.path.dirname(filepath))
+    if not isExist:
+        os.makedirs(os.path.dirname(filepath))
+    tikzplotlib.save(filepath=filepath, figure=fig,
+                     wrap=False,
+                     add_axis_environment=True,
+                     tex_relative_path_to_data='\\figpath',
+                     dpi=300,
+                     externalize_tables=True,
+                     override_externals=True,
+                     extra_axis_parameters={
+                         # 'axis background/.style={fill=gray!60}',
+                         'xtick distance= \\xtick',
+                         'ytick distance = \\ytick',
+                         'colorbar=\\colorb',
+                         'colorbar style ={title=\\clegend,at={(1.02,1)},anchor=north west,width=0.15cm,major tick length=0.15cm,tick pos=right}',
+                         'height=\\height',
+                         'width=\\width',
+                         'tick align=outside',
+                         'xmin=\\xmin',
+                         'xmax=\\xmax',
+                         'ymin=\\ymin', 'ymax=\\ymax',
+                         'xlabel=\\xlabel',
+                         'ylabel =\\ylabel'}
+                     )
+    print(tikzplotlib.Flavors.latex.preamble())
+
 def save_simple_figure(filepath: str = None, fig='gcf', clean: bool = True):
-    plt.savefig(filepath) 
-#     from matplotlib.lines import Line2D
-#     from matplotlib.legend import Legend
-#     Line2D._us_dashSeq = property(lambda self: self._dash_pattern[1])
-#     Line2D._us_dashOffset = property(lambda self: self._dash_pattern[0])
-#     Legend._ncol = property(lambda self: self._ncols)
-#     if clean:
-#         tikzplotlib.clean_figure()
-#
-#     isExist = os.path.exists(os.path.dirname(filepath))
-#     if not isExist:
-#         os.makedirs(os.path.dirname(filepath))
-#     tikzplotlib.save(filepath=filepath, figure=fig,
-#                      wrap=False,
-#                      add_axis_environment=True,
-#                      tex_relative_path_to_data='\\figpath',
-#                      dpi=300,
-#                      externalize_tables=True,
-#                      override_externals=True,
-#                      extra_axis_parameters={
-#                          # 'axis background/.style={fill=gray!60}',
-#                          'height=\\height',
-#                          'width=\\width',
-#                          "axis on top",
-#                          'colorbar style ={title=\\clegend,at={(1.02,1)},anchor=north west,width=0.15cm,major tick length=0.15cm,tick pos=right}',
-#                          }
-#                      )
-#     print(tikzplotlib.Flavors.latex.preamble())
+    # plt.savefig(filepath) 
+    from matplotlib.lines import Line2D
+    from matplotlib.legend import Legend
+    Line2D._us_dashSeq = property(lambda self: self._dash_pattern[1])
+    Line2D._us_dashOffset = property(lambda self: self._dash_pattern[0])
+    Legend._ncol = property(lambda self: self._ncols)
+    if clean:
+        tikzplotlib.clean_figure()
+
+    isExist = os.path.exists(os.path.dirname(filepath))
+    if not isExist:
+        os.makedirs(os.path.dirname(filepath))
+    tikzplotlib.save(filepath=filepath, figure=fig,
+                     wrap=False,
+                     add_axis_environment=True,
+                     tex_relative_path_to_data='\\figpath',
+                     dpi=300,
+                     externalize_tables=True,
+                     override_externals=True,
+                     extra_axis_parameters={
+                         # 'axis background/.style={fill=gray!60}',
+                         'height=\\height',
+                         'width=\\width',
+                         "axis on top",
+                         'colorbar style ={title=\\clegend,at={(1.02,1)},anchor=north west,width=0.15cm,major tick length=0.15cm,tick pos=right}',
+                         }
+                     )
+    print(tikzplotlib.Flavors.latex.preamble())
 
 if __name__ == "__main__":
 

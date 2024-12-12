@@ -1220,23 +1220,28 @@ class SplField():
 
         if len(spl.shape) == 2:
             print("plotting 2D spl")
-            if z is not None:
-                absice = [self.x_grid[:, :, 0],
-                      self.y_grid[:, :, 0], self.z_grid[0, 0, :],
-                      self.frequencies]
-            if y is not None:
-                absice = [self.x_grid[:, 0, :],
-                          self.y_grid[:, 0, :], self.z_grid[:, 0, :],
-                      self.frequencies]
-            if x is not None:
-                absice = [self.x_grid[0, :, :],
-                          self.y_grid[0, :, :], self.z_grid[0, :, :],
-                      self.frequencies]
+            # if z is not None:
+            # if test dim == [1,1,0,0,0]:
+            #     absice = [self.x_grid[:, :, 0],
+            #           self.y_grid[:, :, 0], self.z_grid[0, 0, :],
+            #           self.frequencies,time_src]
+            # # if y is not None:
+            # if test dim == [1,0,1,0,0]:
+            #     absice = [self.x_grid[:, 0, :],
+            #               self.y_grid[:, 0, :], self.z_grid[:, 0, :],
+            #           self.frequencies,time_src]
+            # # if x is not None:
+            # if test dim == [0,1,1,0,0]:
+            #     absice = [self.x_grid[0, :, :],
+            #               self.y_grid[0, :, :], self.z_grid[0, :, :],
+            #           self.frequencies,time_src]
             #absice = [self.x_grid[:, :, 0],
             #          self.y_grid[:, :, 0], self.z_grid[0, 0, :],
             #          self.frequencies, time_src]
             #plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],spl,**kwargs)
-            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],spl,**kwargs)
+            
+            
+            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],spl.T,**kwargs)
             plt.xlabel(labels[np.where(test_dim)[0][0]])
             plt.ylabel(labels[np.where(test_dim)[0][1]])
         if len(spl.shape) == 3:
@@ -1291,20 +1296,20 @@ class SplField():
             #     plt.plot(self.frequencies,mean,**kwargs)
 
         if len(mean.shape)==2:
-            if z is not None:
-                absice = [self.x_grid[:, :, 0],
-                      self.y_grid[:, :, 0], self.z_grid[0, 0, :],
-                      self.frequencies]
-            if y is not None:
-                absice = [self.x_grid[:, 0, :],
-                          self.y_grid[:, 0, :], self.z_grid[:, 0, :],
-                      self.frequencies]
-            if x is not None:
-                absice = [self.x_grid[0, :, :],
-                          self.y_grid[0, :, :], self.z_grid[0, :, :],
-                      self.frequencies]
-            # plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],mean.T,**kwargs)
-            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],mean,**kwargs)
+            # if z is not None:
+            #     absice = [self.x_grid[:, :, 0],
+            #           self.y_grid[:, :, 0], self.z_grid[0, 0, :],
+            #           self.frequencies]
+            # if y is not None:
+            #     absice = [self.x_grid[:, 0, :],
+            #               self.y_grid[:, 0, :], self.z_grid[:, 0, :],
+            #           self.frequencies]
+            # if x is not None:
+            #     absice = [self.x_grid[0, :, :],
+            #               self.y_grid[0, :, :], self.z_grid[0, :, :],
+            #           self.frequencies]
+            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],mean.T,**kwargs)
+            # plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],mean,**kwargs)
             plt.xlabel(labels[np.where(test_dim)[0][0]])
             plt.ylabel(labels[np.where(test_dim)[0][1]])
 
@@ -1350,10 +1355,10 @@ class SplField():
             plt.ylabel('am (dB)')
 
         if len(am.shape)==2:
-            absice = [self.x_grid[:, :, 0],
-                      self.y_grid[:, :, 0], self.z_grid[0, 0, :],
-                      self.frequencies]
-            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],am,**kwargs)
+            # absice = [self.x_grid[:, :, 0],
+            #           self.y_grid[:, :, 0], self.z_grid[0, 0, :],
+            #           self.frequencies]
+            plt.pcolormesh(absice[np.where(test_dim)[0][0]],absice[np.where(test_dim)[0][1]],am.T,**kwargs)
             plt.xlabel(labels[np.where(test_dim)[0][0]])
             plt.ylabel(labels[np.where(test_dim)[0][1]])
             #plt.pcolormesh(absice[np.where(test_dim)[0][1]],absice[np.where(test_dim)[0][0]],am,**kwargs)
