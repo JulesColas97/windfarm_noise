@@ -163,6 +163,7 @@ subroutine read_param(case_name,var0,simu,src,imp,output,pml,flow,tinput)
     allocate(output%heights(output%nb_receiver))
     output%heights = heights(1:output%nb_receiver)
     output%side = side
+    output%gen_side = side
     output%top = top
     ! if (nb_xplane>0) then
     !     allocate(output%xplane(nb_xplane))

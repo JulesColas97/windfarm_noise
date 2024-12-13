@@ -248,7 +248,7 @@ if (size(output%yplane)>0) then
 endif 
 
 enddo
-output%side = .false.
+output%side = output%gen_side
 ! end loop over frequency
 !##########################################################################
 ! deallocate mesh

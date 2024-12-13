@@ -231,7 +231,7 @@ subroutine propa_1angle_1freq_arbitrary(var0,f,theta,src,imp,dom,pml,flow2D,mesh
             CALL CPU_TIME(start_interp)
             ! interpolation on coarse grid for side view
             CALL CPU_TIME(start_interps)
-            if (output%side) then
+            if (output%local_side) then
                 !call interplog(mesh%z,sol%deltaL,mesh%z_coarse,sol%deltaL_vect(kk,:))
                 call interpcomplextoreal(mesh%z,sol%p,mesh%z_coarse,sol%deltaL_vect(kk,:))
                 sol%deltaL_vect(kk,:) = 20*log10(MAX(sol%deltaL_vect(kk,:),1e-10))

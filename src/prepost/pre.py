@@ -137,7 +137,10 @@ class Simu():
     # @param key (str): Key of the input.
     # @param value (Any): Value of the input.
     def set_input(self,key: str, value: any):
-        self.inputs[key] = value
+        if isinstance(value, np.ndarray):
+            self.inputs[key] = value.tolist()
+        else:
+            self.inputs[key] = value
 
     ##
     # @brief Sets the frequencies for the simulation. If only fc is given only these frequencies are computed
@@ -163,7 +166,7 @@ class Simu():
     # @param src_path (str, optional): Path to the source code. Defaults to '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE'.
     # @param flow_path (str, optional): Path to the flow data. Defaults to '/home/lmfa/jcolas/Documents/DEV/LES/'.
     # @param ratio (float, optional): Ratio for the LES data. Defaults to None.
-    def defineCases(self, heights: list, angles: list, 
+    def defineCases(self, heights: list, angles: np.ndarray, 
                     src_path: str = '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE',
                     flow_path: str = '/home/lmfa/jcolas/Documents/DEV/LES/', ratio: float = None):
         self.heights=heights
@@ -240,13 +243,13 @@ class Simu():
 
         if self.xplanes is not None:
             self.set_input('nb_xplane',len(self.xplanes))
-            self.set_input('xplane(1)',list(self.xplanes-self.tx[iturbine]*self.les.z_i))
+            self.set_input('xplane(1)',self.xplanes-self.tx[iturbine]*self.les.z_i)
         else:
             self.set_input('nb_xplane',0)
 
         if self.yplanes is not None:
             self.set_input('nb_yplane',len(self.yplanes))
-            self.set_input('yplane(1)',list(self.yplanes-self.ty[iturbine]*self.les.z_i))
+            self.set_input('yplane(1)',self.yplanes-self.ty[iturbine]*self.les.z_i)
         else:
             self.set_input('nb_yplane',0)
 
@@ -389,7 +392,7 @@ class Simu():
                         shutil.copy(self.src_path, path + '/PE_2D')
 
                     self.inputs['nb_theta'] = ntau + rtau
-                    self.inputs['theta(1)'] = list(self.tau[(distribute_tau - 1) * ntau:])
+                    self.inputs['theta(1)'] = self.tau[(distribute_tau - 1) * ntau:].tolist()
                     path = os.path.join(dir, 't' + str(ii) + '/' + str(self.heights[jj])
                                         + '/tau' + str(distribute_tau-1) + '/')
                     os.makedirs(path,exist_ok=True)
@@ -404,7 +407,7 @@ class Simu():
                 # if tau is not distributed one job is launched for all propagation 
                 else:
                     self.inputs['nb_theta'] = self.tau.size
-                    self.inputs['theta(1)'] = list(self.tau)
+                    self.inputs['theta(1)'] = self.tau.tolist()
                     path = os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj]))
                     os.makedirs(path,exist_ok=True)
                     self.createInputFile(directory=path)
@@ -446,7 +449,7 @@ class Simu():
                     f.write("#SBATCH --error=err.err    # error messages go here\n")
                     f.write("#SBATCH --mail-user=jules.colas@ecl17.ec-lyon.fr\n")
                     f.write("#SBATCH --mail-type=ALL\n")
-                    f.write("#SBATCH --partition=cascade # partition name\n")
+                    f.write("#SBATCH --partition=haswell # partition name\n")
                     f.write("#SBATCH --nodes=1\n")
                     if countjobs == (self.nJob):
                         f.write("#SBATCH --ntasks="+str(self.rest_cases)+"\n")

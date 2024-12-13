@@ -185,6 +185,7 @@ module types
         integer                             :: nb_receiver
         real, allocatable,dimension(:)      :: heights
         logical                             :: side
+        logical                             :: local_side
         logical                             :: top
         real,allocatable,dimension(:)       :: xplane    
         real,allocatable,dimension(:)       :: yplane    

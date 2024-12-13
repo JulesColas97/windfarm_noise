@@ -1,4 +1,11 @@
 from .spl import SplField
+from .post import Simu, DeltaLField
+from .post import PeResults
+import numpy as np
+
+import matplotlib.pyplot as plt
+import logging
+from .source.main import Source
 
 
 
@@ -153,16 +160,25 @@ def concatenate_angles(casename, path2Pe, simu, iTurb, refine, z, stepx):
     if stepx is not None:
         deltaL.deltaL_polar = deltaL.deltaL_polar[::stepx, ...]
         deltaL.x_polar = deltaL.x_polar[::stepx, ...]
+        deltaL.x = deltaL.x[::stepx]
         deltaL.y_polar = deltaL.y_polar[::stepx, ...]
+
+    deltaL.nx = deltaL.x_polar.shape[0]
+    deltaL.ntau = deltaL.x_polar.shape[1]
+    deltaL.nz = deltaL.z_polar.shape[0]
+    print(deltaL.x_polar.shape)
+    print(deltaL.y_polar.shape)
+    print(deltaL.nx)
+    print(deltaL.nz)
 
     # refine angles (linera interpolation)
     for kk in range(refine):
         deltaL.refine_angle()
 
-
     deltaL.nx = deltaL.x_polar.shape[0]
     deltaL.ntau = deltaL.x_polar.shape[1]
     deltaL.nz = deltaL.z_polar.shape[0]
+
 
     deltaL.shift_domain(simu.tx[iTurb]*simu.les.z_i,simu.ty[iTurb]*simu.les.z_i)
     deltaL.xS = simu.tx[iTurb]*simu.les.z_i
@@ -236,6 +252,7 @@ def concatenate_all_dl(casename,path2Pe,refine=2,z=None,nx=None,ny=None,stepx=No
 def concatenate_side_dl(casename,path2Pe, iTurb=None, tau=[0,180], nx=None, nz=None,
                         dl_fname=None, spp_fname=None, spl_fname=None):
 
+    simu = Simu(casename)
     print('Start concatenating side view...')
     if dl_fname is None :
         dl_fname = './xz/DL'
