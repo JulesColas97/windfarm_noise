@@ -961,7 +961,7 @@ class SplField():
         self.AWEIGHT = True
         return dBA
 
-    def combine_2_turbines(self, spl2,shift=0, tmax: float = None):
+    def combine_2_turbines(self, spl2, shift=0, tmax: float = None):
         seg_flag = False
         if self.SPL_time is not None:
             s1 = self.SPL_time
@@ -1132,8 +1132,8 @@ class SplField():
         if self.SPL_time is not None:
             self.mean_time = np.mean(self.SPL_time,4)
         if self.SPL_seg is not None:
-            spl = np.sum(10**(self.SPL_seg/10),(3,4))
-            self.mean_seg = np.mean(spl,4)
+            self.mean_seg = 10*np.log10(np.sum(10**(self.SPL_seg/10),(3,4,6))/self.Nbeta)
+            # self.mean_seg = np.mean(spl,4)
         if self.OASPL_time is not None:
             self.OAmean_time = 10*np.log10(np.mean(10**(self.OASPL_time/10),3))
         if self.OASPL_seg is not None:
@@ -1317,6 +1317,7 @@ class SplField():
 
 
         if len(mean.shape)==3:
+            print("use anim function to plot 3D data field")
             return
 
     def plot_am(self,time=True,OA=False,x:float=None,y:float=None,z:float=None,freq:float=None,**kwargs):

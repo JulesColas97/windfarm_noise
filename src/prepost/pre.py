@@ -149,12 +149,13 @@ class Simu():
     # @param Nfc (list, optional): List of the number of frequencies per band. Defaults to None.
     def set_frequencies(self,fc: list, Nfc: list = None):
         if Nfc is None:
-            self.inputs['nb_freq'] = len(fc)
-            self.inputs['frequencies(1)'] = list(fc)
+            self.set_input('nb_freq',len(fc))
+            self.set_input('frequencies(1)',fc)
             self.frequencies = np.array(fc)
         else : 
-            self.inputs['nb_freq'] = sum(Nfc)
-            self.inputs['frequencies(1)'] = list(computeThirdOctaveFrequencies(fc,Nfc))
+            self.set_input('nb_freq',sum(Nfc))
+            self.set_input('frequencies(1)',computeThirdOctaveFrequencies(fc,Nfc))
+            # self.inputs['frequencies(1)'] = list(computeThirdOctaveFrequencies(fc,Nfc))
             self.frequencies = np.array(computeThirdOctaveFrequencies(fc,Nfc))
 
     # define the case to be simulate with number of source heights, angles and flow data 

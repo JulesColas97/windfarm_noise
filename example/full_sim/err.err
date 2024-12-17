@@ -1,0 +1,414 @@
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+HDF5-DIAG: Error detected in HDF5 (1.10.1)     major: File accessibilty
+    minor: Unable to open file
+thread 0  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+:
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    major: File accessibilty
+    minor: Bad file ID accessed
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+HDF5-DIAG: Error detected in HDF5 (1.10.1)   #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0    major: File accessibilty
+thread 0:
+    minor: Bad file ID accessed
+:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    minor: Unable to open file
+    major: File accessibilty
+HDF5-DIAG: Error detected in HDF5 (1.10.1)   #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    minor: Unable to open file
+thread 0    major: File accessibilty
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+:
+    minor: Unable to open file
+HDF5-DIAG: Error detected in HDF5 (1.10.1)     major: File accessibilty
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+thread 0    minor: Unable to open file
+    major: File accessibilty
+    major: Virtual File Layer
+:
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    minor: Unable to open file
+    minor: Can't update object
+    major: Virtual File Layer
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    minor: Can't update object
+    major: File accessibilty
+    major: File accessibilty
+    major: File accessibilty
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    minor: Unable to open file
+    minor: Unable to open file
+    minor: Bad file ID accessed
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: File accessibilty
+    minor: Bad file ID accessed
+    major: Virtual File Layer
+    minor: Unable to open file
+    minor: Can't update object
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: Virtual File Layer
+    major: File accessibilty
+    minor: Can't update object
+    minor: Bad file ID accessed
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0HDF5-DIAG: Error detected in HDF5 (1.10.1) :
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+thread 0:
+    major: File accessibilty
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    minor: Unable to open file
+    major: File accessibilty
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: Virtual File Layer
+    minor: Can't update object
+    major: File accessibilty
+    minor: Unable to open file
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    minor: Bad file ID accessed
+    major: Virtual File Layer
+HDF5-DIAG: Error detected in HDF5 (1.10.1)     minor: Can't update object
+HDF5-DIAG: Error detected in HDF5 (1.10.1)   #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+thread 0thread 0    major: File accessibilty
+:
+:
+    minor: Bad file ID accessed
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    major: File accessibilty
+    minor: Unable to open file
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    major: File accessibilty
+    minor: Unable to open file
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    major: Virtual File Layer
+    minor: Can't update object
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    major: File accessibilty
+    minor: Bad file ID accessed
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+HDF5-DIAG: Error detected in HDF5 (1.10.1)   #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+thread 0    major: Virtual File Layer
+:
+    minor: Can't update object
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    major: File accessibilty
+    minor: Unable to open file
+    minor: Bad file ID accessed
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+HDF5-DIAG: Error detected in HDF5 (1.10.1)     major: File accessibilty
+thread 0    minor: Bad file ID accessed
+:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+HDF5-DIAG: Error detected in HDF5 (1.10.1)   #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+thread 0    major: Virtual File Layer
+:
+    minor: Can't update object
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    major: File accessibilty
+    minor: Unable to open file
+    minor: Bad file ID accessed
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+HDF5-DIAG: Error detected in HDF5 (1.10.1) thread 0:
+  #000: H5F.c line 586 in H5Fopen(): unable to open file
+    major: File accessibilty
+    minor: Unable to open file
+  #001: H5Fint.c line 1305 in H5F_open(): unable to lock the file
+    major: File accessibilty
+    minor: Unable to open file
+  #002: H5FD.c line 1839 in H5FD_lock(): driver lock request failed
+    major: Virtual File Layer
+    minor: Can't update object
+  #003: H5FDsec2.c line 940 in H5FD_sec2_lock(): unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'
+    major: File accessibilty
+    minor: Bad file ID accessed
+
+real	0m55.999s
+user	0m47.170s
+sys	0m4.100s
+
+real	0m58.960s
+user	0m50.539s
+sys	0m4.406s
+
+real	1m0.105s
+user	0m46.938s
+sys	0m4.038s
+
+real	1m4.164s
+user	0m52.220s
+sys	0m4.621s
+
+real	1m4.397s
+user	0m47.718s
+sys	0m4.065s
+
+real	1m7.445s
+user	0m51.141s
+sys	0m4.339s

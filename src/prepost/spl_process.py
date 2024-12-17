@@ -322,10 +322,6 @@ def combine_dl_src(casename,path2Pe,iTurb=None,
         #-----------------------------------------------------------------
         src = Source()
         src.load(spp_fname+str(ii)+'.dat')
-        # if polar:
-        #     deltaL.x_cart = deltaL.x_polar[::10,:]
-        #     deltaL.y_cart = deltaL.y_polar[::10,:]
-        #     deltaL.deltaL_polar = deltaL.deltaL_polar[::10,:,...]
 
         # deltaL.deltaL_cart = np.transpose(deltaL.deltaL_polar, (0,2,1,3,4))
 
@@ -352,24 +348,14 @@ def combine_dl_src(casename,path2Pe,iTurb=None,
         # combine Delta L spp
         print(deltaL.height)
         spl.combine_linear_broadband(free_field=free_field)
-        # spl.src.save(spp_fname+str(ii)+'.dat')
-        # spl.deltaL.save(dl_fname+str(ii)+'.dat')
 
         if third:
             fc = [50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000]
             Nfc = [1,  1,  1,   1,   1,  1,   2,   2,   3,   4,   4,   4,   5,  5]
             spl.compute_third_octave(fc, Nfc)
         spl.atm_absorption()
-        # spl.Aweight()
-
         spl.save(spl_fname+str(ii)+'.dat')
 
-        # remove interpolated field from source
-        # src.SppInterpolated = None
-        # src.x_interpolate = None
-        # src.y_interpolate = None
-        # src.z_interpolate = None
-        # src.save(spp_fname+str(ii)+'.dat')
         # reset fields
         deltaL = None
         spl = None
