@@ -47,7 +47,6 @@ atmos.z = np.linspace(0,200,100)
 atmos.y = np.array([-1000,1000])
 atmos.x = np.array([-1000,1000])
 Z,Y,X = np.meshgrid(atmos.z,atmos.y,atmos.x,indexing='ij')
-print(Z.shape)
 
 U_hub = 11.5 # ms 
 alpha = 0.4
@@ -59,11 +58,8 @@ print(atmos.u.shape)
 # plt.plot(atmos.u[:,0,0],atmos.z)
 atmos.epsilon = np.zeros_like(atmos.u) +  epsilon
 
-
-
-# define frequencies 
+# define frequencies
 frequencies = np.array([50,100,200,500,800,1000])
-
 
 Ncore = 4
 # Compute sound power 

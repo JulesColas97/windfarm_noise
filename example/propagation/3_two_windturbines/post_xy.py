@@ -12,7 +12,8 @@ workdir = './'
 savdir = workdir + '/xy/figure/'
 case = 'c0'
 path2Pe = workdir
-iTurb = [0,1]
+# to choose for which turbine the concatenation occurs
+iTurb = [0]
 
 simu = Simu(workdir + case)
 simu.load(workdir + 'c0.dat')
@@ -24,7 +25,7 @@ simu.check_run_cases()
 # -----------------------------------------------------------------------------
 print('reading delta L ...')
 print('------------------------------------------------------------------')
-concatenate_all_dl(case, path2Pe, refine=10, iTurb=iTurb,
+concatenate_all_dl(case, path2Pe, refine=0, iTurb=iTurb,
                       z=2, stepx=5,
                       dl_fname=workdir+'/xy/DL_polar',
                       spl_fname=workdir+'/xy/spl_polar',

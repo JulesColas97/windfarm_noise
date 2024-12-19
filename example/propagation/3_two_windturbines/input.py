@@ -17,11 +17,11 @@ simu.set_frequencies(fc)
 # -----------------------------------------------------------------------------
 simu.set_input('side', True)
 #set plane to save solution 
-# same referentiel as LES sim 
+# same referentiel as LES sim
 simu.set_xplanes([1000])
 simu.set_yplanes([1720])
 
-# define domain 
+# define domain
 # -----------------------------------------------------------------------------
 xmin = 0
 xmax = 1000 + 2000
@@ -30,7 +30,7 @@ ymax = 1720 + 1000
 zmax = 300
 simu.defineDomain(xmin, xmax, ymin, ymax, zmax)
 
-# discretize the rotor 
+# discretize the rotor witjh equivalent source height
 R = 60
 hub = 90
 Nh = 3
@@ -38,12 +38,11 @@ dh = 2*R/Nh
 height = np.arange(hub-R+dh/2, hub+R, dh)
 heights = np.rint(height).astype(int)
 # tau = np.array([0, 90, 180, 270])
-tau = np.array([0, 20,40,69,80, 90,100,120,140,160, 180,200,220,240,260,270])
 
-
+tau = np.array([0, 20,40,60,80, 90,100,120,140,160, 180,200,220,240,260,270])
 
 # define cases with height, angles and flow 
-# les_path = '../../les_data/2TSBL/blue/'
+# needs to be absolute path
 les_path = '/store/lmfa-2/acoustique-nl/simu_jules/LES/2T/S2/blue/'
 # src_path = '../../../src/kernel/New_PE_c/PE_2D_WAPE'
 src_path = '/home/lmfa/jcolas/Documents/DEV/windfarm_noise/src/kernel/New_PE_c/PE_2D_WAPE'

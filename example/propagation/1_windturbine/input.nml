@@ -7,7 +7,7 @@ var0%rho=1.2
 var0%gamma=1.4
 
 ! Frequencies 
-nb_freq=5
+nb_freq=4
 frequencies(1)=50,100,200,500
 
 ! Angles 
@@ -41,9 +41,9 @@ src%pos_z=90
 ! External Flow 
 !------------------------------------------------------------------------------
 ! if .true. read from twente LES
-external_flow=.false.
+external_flow=.true.
 ! if .true. constant flow equal to u0
-uniform=.true.
+uniform=.false.
 
 ! if .true. log profile with z0=0.002
 logarithmic=.false.
@@ -60,7 +60,7 @@ arbitrary_new=.false.
 interpolation=.true.
 
 ! path to LES data
-fdir='../../les_data/1TSBL/blue/output/'
+fdir='/store/lmfa-2/acoustique-nl/simu_jules/LES/2T/C1/blue/output/'
 
 ! twente paramaters needed to rescale and positionned the flow 
 fname='tavg'
@@ -90,8 +90,8 @@ top=.false.
 continuation=.false.
 
 ! Set the plane in the complete domain where the solution must be recorded
-nb_xplane=0
-xplane(1)=
-nb_yplane=0
-yplane(1)=
+nb_xplane=1
+xplane(1)=1000
+nb_yplane=1
+yplane(1)=1000
 $end input

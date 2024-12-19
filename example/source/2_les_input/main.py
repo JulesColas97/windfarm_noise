@@ -37,10 +37,10 @@ mesh = pp.source.Mesh(polar=False)
 mesh.set_cartesian_mesh(x, y, z)
 mesh.cartesian_2_polar()
 
-# Create the flow object 
-# read LES file 
+# Create the flow object
+# read LES file
 # -----------------------------------------------------------------------------
-les = pp.Les('../../les_data/1TSBL/blue/')
+les = pp.Les('/store/lmfa-2/acoustique-nl/simu_jules/LES/2T/C1/blue/')
 les.read(ratio=1)
 les.dissipation()
 
@@ -62,13 +62,11 @@ print('Omega', wt.omega*60/(2*np.pi))
 # -----------------------------------------------------------------------------
 frequencies = np.array([50,100,200,500,800,1000])
 
-
-# Compute sound power 
+# Compute sound power
 # -----------------------------------------------------------------------------
 Ncore = 4
-
 src = pp.Source(wt, les, mesh)
 src.computeSpp(frequencies, Ncore)
 src.mesh.polar_2_cartesian()
 
-src.save("./swl.dat",atmos_data=False)
+src.save("./swl.dat", atmos_data=False)

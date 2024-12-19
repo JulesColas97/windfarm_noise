@@ -52,7 +52,7 @@ tau = np.array([0,30,60,90,120,150,180,210,240,270,300,330])
 # define the cases for the objects simu. 
 # number of height, angles, turbines (as described in the LES simulations)
 # ratio allows to scale the LES fields.
-simu.defineCases(heights, tau, flow_path=les_path, ratio=1.04)
+simu.defineCases(heights, tau, flow_path=les_path,src_path=src_path,ratio=1.04)
 
 # Creates the files for the simulation
 # distribute tau allows to compute angles in parallels, not very usefull for large wind farm. 

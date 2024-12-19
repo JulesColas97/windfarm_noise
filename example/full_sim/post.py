@@ -11,12 +11,12 @@ logging.basicConfig(format='%(levelname)s: %(message)s', force=True)
 # -----------------------------------------------------------------------------
 check = False
 read_dl = False
-combine = False
+combine = True
 
 interpolate = False
 oaspl = False
 time = False
-combine_turbines = True
+combine_turbines = False
 
 # -----------------------------------------------------------------------------
 workdir = './'

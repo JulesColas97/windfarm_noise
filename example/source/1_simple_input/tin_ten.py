@@ -33,6 +33,7 @@ plt.plot(src.frequencies, TEN, 'r:')
 plt.plot(src.frequencies, TIN, 'b:')
 plt.plot(src.frequencies, SWL, 'k')
 plt.plot(src.frequencies, SWL_true, 'g--')
-
+plt.legend(['TEN','TIN','SWL','SWL_true'])
 plt.xscale('log')
+
 plt.show()
