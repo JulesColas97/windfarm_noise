@@ -6,6 +6,13 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 class GtpeResults():
+    """Class to handle GTPE results from an H5 file.
+
+    Args:
+        fname (str): File name of the H5 file.
+        tau (float): Propagation angle.
+        height (float): Source height.
+    """
     def __init__(self, fname, tau, height):
         self.fname = fname
         self.tau = tau
@@ -14,6 +21,8 @@ class GtpeResults():
     # read solution from h5 file
     # read carto and receivers
     def read(self):
+        """Reads the solution from the H5 file, including mesh and receivers.
+        """
         fname = self.fname
         file = h5py.File(fname, "r")
         solutions = file.get('solution')
@@ -44,7 +53,13 @@ class GtpeResults():
             rec = receivers_all.get(frequencies[ii])
             self.receiver[:, :, ii] = np.transpose(np.array(rec['deltaL']))
 
-    def plotSide(self, freq, cmap='RdYlBu_r'):
+    def plotSide(self, freq: float, cmap: str = 'RdYlBu_r'):
+        """Plots the side view of the deltaL for a given frequency.
+
+        Args:
+            freq (float): Frequency to plot.
+            cmap (str, optional): Colormap to use. Defaults to 'RdYlBu_r'.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         if ifreq is None:
             print('frequence was not calculated.')
@@ -55,7 +70,13 @@ class GtpeResults():
         plt.gca().set_aspect('equal', adjustable='box')
         plt.ylim(0, 300)
 
-    def plotSide3octave(self, freq, cmap='RdYlBu_r'):
+    def plotSide3octave(self, freq: float, cmap: str = 'RdYlBu_r'):
+        """Plots the side view of the deltaL for a given third-octave frequency.
+
+        Args:
+            freq (float): Third-octave frequency to plot.
+            cmap (str, optional): Colormap to use. Defaults to 'RdYlBu_r'.
+        """
         ifreq = np.nonzero(self.fc == freq)[0][0]
         if ifreq is None:
             print('frequence was not calculated.')
@@ -66,7 +87,13 @@ class GtpeResults():
         plt.gca().set_aspect('equal', adjustable='box')
         plt.ylim(0, 300)
 
-    def plotLine(self, freq, height):
+    def plotLine(self, freq: float, height: float):
+        """Plots the deltaL along a line at a given frequency and height.
+
+        Args:
+            freq (float): Frequency to plot.
+            height (float): Height to plot.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iheight = np.nonzero(self.heights == height)[0][0]
         print(self.heights[iheight])
@@ -75,7 +102,13 @@ class GtpeResults():
             return
         plt.plot(self.x, self.receiver[:, iheight, ifreq])
 
-    def plotLine3octave(self, freq, height):
+    def plotLine3octave(self, freq: float, height: float):
+        """Plots the deltaL along a line at a given third-octave frequency and height.
+
+        Args:
+            freq (float): Third-octave frequency to plot.
+            height (float): Height to plot.
+        """
         ifreq = np.nonzero(self.fc == freq)[0][0]
         iheight = np.nonzero(self.heights == height)[0][0]
         if ifreq is None:
@@ -83,7 +116,13 @@ class GtpeResults():
             return
         plt.plot(self.x, self.receiver3octave[:, iheight, ifreq])
 
-    def compute3octave(self, fc, Nfc):
+    def compute3octave(self, fc: list, Nfc: list):
+        """Computes the third-octave frequencies.
+
+        Args:
+            fc (list): List of center frequencies.
+            Nfc (list): List of the number of frequencies per band.
+        """
         freq = computeThirdOctaveFrequencies(fc, Nfc)
         if not np.all(freq == self.frequencies):
             print('central frequencies are not the same')
@@ -101,13 +140,26 @@ class GtpeResults():
             self.receiver3octave[:, :, ifc] = 10*np.log10(np.sum(10**(self.receiver[:, :, int(
                 np.sum(self.Nfc[0:ifc])):np.sum(self.Nfc[0:ifc+1])]/10), 2)/Nfc[ifc])
 
-    def plotLineOaspl(self, height):
+    def plotLineOaspl(self, height: float):
+        """Plots the OASPL along a line at a given height.
+
+        Args:
+            height (float): Height to plot.
+        """
         iheight = np.argmin(abs(self.heights - height))
         SPL, SPL_A, OASPL, OASPL_A = computeSPLLine(np.squeeze(self.receiver3octave[iheight, :, :]), np.squeeze(self.x),
                                                     np.squeeze(self.heights[iheight]+self.h), self.fc, self.tau, self.height, c0=343)
         plt.plot(self.x, OASPL_A)
 
-    def plotFlowSide(self, fname, cmap='RdYlBu_r', xstep=1, zstep=1):
+    def plotFlowSide(self, fname: str, cmap: str = 'RdYlBu_r', xstep: int = 1, zstep: int = 1):
+        """Plots the side view of the flow field from a given H5 file.
+
+        Args:
+            fname (str): File name of the H5 file containing the flow data.
+            cmap (str, optional): Colormap to use. Defaults to 'RdYlBu_r'.
+            xstep (int, optional): Step size in the x-direction. Defaults to 1.
+            zstep (int, optional): Step size in the z-direction. Defaults to 1.
+        """
         f = h5py.File(fname, "r")
 
         # read mesh

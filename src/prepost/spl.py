@@ -13,7 +13,8 @@ from .les import Les
 from .utils import (integrateThirdOctave, cos_window,
                     uneven_tile,uneven_loop, interp_weights,interpolate )
 from .source.main import Source
-from .post import DeltaLField, PeResults
+from .deltaLfield import DeltaLField
+from .wape import  PeResults
 from .pre import Simu
 
 

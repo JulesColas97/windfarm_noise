@@ -1,6 +1,7 @@
 __docformat__ = "google"
 from .setup_pe import *
 from .pre import Simu
+from .wape import PeResults
 from .post import PeResults,DeltaLField
 from .gtpe import GtpeResults
 from .source import *

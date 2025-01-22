@@ -13,11 +13,6 @@ from .utils import computeThirdOctaveFrequencies
 
 
 class Simu():
-    ##
-    # @brief Initializes the Simu class with a dictionary of inputs for a PE simulation.
-    #
-    # @param casename (str): Name of the case.
-    # initialize the input dictionnary for the PE simulation
     def __init__(self, casename: str):
         """initialize Instance Simu, with a dictionnary of input for a PE simulation
 
@@ -91,15 +86,11 @@ class Simu():
 
         }
 
-    ##
-    # @brief Reads and adds a LES flow simulation and stores it as a Les object.
-    #
-    # @param path (str): Path to the LES data.
     def readLes(self, path: str):
-        """read and add a LES flow simulation and store it as a :class:`les.LES`
+        """Reads and adds a LES flow simulation and stores it as a Les object.
 
         Args:
-            path (_type_): _description_
+            path (str): Path to the LES data.
         """
         self.les = Les(path)
         self.les.read()
@@ -108,11 +99,12 @@ class Simu():
         print(str(self.les.turbines.shape[0])+' wind turbines :')
         print(self.les.turbines)
 
-    ##
-    # @brief Creates an input.nml file from the inputs dictionary.
-    #
-    # @param directory (str, optional): Directory to save the input file. Defaults to './'.
     def createInputFile(self, directory: str = './'):
+        """Creates an input.nml file from the inputs dictionary.
+
+        Args:
+            directory (str, optional): Directory to save the input file. Defaults to './'.
+        """
         f = open(directory + '/input.nml', 'w')
         f.write("$input\n")
         for key, value in self.inputs.items():
@@ -131,23 +123,26 @@ class Simu():
         f.close()
         return
 
-    ##
-    # @brief Sets an input in the inputs dictionary.
-    #
-    # @param key (str): Key of the input.
-    # @param value (Any): Value of the input.
     def set_input(self, key: str, value: any):
+        """Sets an input in the inputs dictionary.
+
+        Args:
+            key (str): Key of the input.
+            value (Any): Value of the input.
+        """
         if isinstance(value, np.ndarray):
             self.inputs[key] = value.tolist()
         else:
             self.inputs[key] = value
 
-    ##
-    # @brief Sets the frequencies for the simulation. If only fc is given only these frequencies are computed
-    #
-    # @param fc (list): List of center frequencies.
-    # @param Nfc (list, optional): List of the number of frequencies per band. Defaults to None.
     def set_frequencies(self, fc: list, Nfc: list = None):
+        """Sets the frequencies for the simulation. If only fc is given only these frequencies are computed.
+        If fc and Nfc are set  the set of frequencies are computed with the function computeThirdOctaveFrequencies
+
+        Args:
+            fc (list): List of center frequencies.
+            Nfc (list, optional): List of the number of frequencies per band. Defaults to None.
+        """
         if Nfc is None:
             self.set_input('nb_freq', len(fc))
             self.set_input('frequencies(1)', fc)
@@ -159,18 +154,18 @@ class Simu():
             # self.inputs['frequencies(1)'] = list(computeThirdOctaveFrequencies(fc,Nfc))
             self.frequencies = np.array(computeThirdOctaveFrequencies(fc, Nfc))
 
-    # define the case to be simulate with number of source heights, angles and flow data
-    ##
-    # @brief Defines the cases to be simulated with the number of source heights, angles, and flow data.
-    #
-    # @param heights (list): List of source heights.
-    # @param angles (list): List of propagation angles.
-    # @param src_path (str, optional): Path to the source code. Defaults to '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE'.
-    # @param flow_path (str, optional): Path to the flow data. Defaults to '/home/lmfa/jcolas/Documents/DEV/LES/'.
-    # @param ratio (float, optional): Ratio for the LES data. Defaults to None.
     def defineCases(self, heights: list, angles: np.ndarray,
                     src_path: str = '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE',
                     flow_path: str = '/home/lmfa/jcolas/Documents/DEV/LES/', ratio: float = None):
+        """Defines the cases to be simulated with the number of source heights, angles, and flow data.
+
+        Args:
+            heights (list): List of source heights.
+            angles (list): List of propagation angles.
+            src_path (str, optional): Path to the source code. Defaults to '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE'.
+            flow_path (str, optional): Path to the flow data. Defaults to '/home/lmfa/jcolas/Documents/DEV/LES/'.
+            ratio (float, optional): Ratio for the LES data. Defaults to None.
+        """
         self.heights = heights
         self.tau = angles
         self.src_path = src_path
@@ -193,42 +188,46 @@ class Simu():
         self.inputs['tinput%Ly'] = self.les.ly
         self.inputs['tinput%Lz'] = self.les.lz
 
-    ##
-    # @brief Defines the total domain for the simulation.
-    #
-    # @param x1 (float): Start of the x-domain.
-    # @param x2 (float): End of the x-domain.
-    # @param y1 (float): Start of the y-domain.
-    # @param y2 (float): End of the y-domain.
-    # @param h (float): Height of the domain.
     def defineDomain(self, x1: float, x2: float, y1: float, y2: float, h: float):
+        """Defines the total domain for the simulation.
+
+        Args:
+            x1 (float): Start of the x-domain.
+            x2 (float): End of the x-domain.
+            y1 (float): Start of the y-domain.
+            y2 (float): End of the y-domain.
+            h (float): Height of the domain.
+        """
         self.x1 = x1
         self.x2 = x2
         self.y1 = y1
         self.y2 = y2
         self.h = h
 
-    ##
-    # @brief Sets the x constant planes for the simulation.
-    #
-    # @param xplanes (list): List of x-planes.
     def set_xplanes(self, xplanes: list):
+        """Sets the x constant planes for the simulation.
+
+        Args:
+            xplanes (list): List of x-planes.
+        """
         # x constant planes
         self.xplanes = np.array(xplanes)
 
-    ##
-    # @brief Sets the y constant planes for the simulation.
-    #
-    # @param yplanes (list): List of y-planes
     def set_yplanes(self, yplanes: list):
+        """Sets the y constant planes for the simulation.
+
+        Args:
+            yplanes (list): List of y-planes.
+        """
         # y constant planes
         self.yplanes = np.array(yplanes)
 
-    ##
-    # @brief Sets the specific domain for each turbine.
-    #
-    # @param iturbine (int): Index of the turbine.
     def set_domain(self, iturbine: int):
+        """Sets the specific domain for each turbine.
+
+        Args:
+            iturbine (int): Index of the turbine.
+        """
         Lx1 = self.x2-self.tx[iturbine]*self.les.z_i
         Lx2 = self.tx[iturbine]*self.les.z_i - self.x1
         Ly1 = self.y2 - self.ty[iturbine]*self.les.z_i
@@ -256,11 +255,12 @@ class Simu():
         else:
             self.set_input('nb_yplane', 0)
 
-    ##
-    # @brief Computes an estimation of the simulation time.
-    #
-    # @return (float): Total simulation time.
-    def computeSimulationTime(self):
+    def computeSimulationTime(self) -> float:
+        """Computes an estimation of the simulation time.
+
+        Returns:
+            float: Total simulation time.
+        """
         TIME_1km_45freq_s = 195
 
         Lx1 = self.inputs['Lx1']
@@ -275,15 +275,16 @@ class Simu():
         t_tot = TIME_1km_45freq_s * self.tau.size * area_rectangle / area_circle
         return t_tot
 
-    # create launch file for slurm
-    ##
-    # @brief Creates a launch file for SLURM.
-    #
-    # @param dirname (str): Directory name.
-    # @param jname (str): Job name.
-    # @param mem (int, optional): Memory allocation. Defaults to 5000.
-    # @param time (str, optional): Time limit. Defaults to "2:00:00".
     def createLaunch(self, dirname: str, jname: str, mem: int = 5000, time: str = "2:00:00"):
+        """Creates a launch file for SLURM.
+        Set up for Newton calculator on ECL cluster
+
+        Args:
+            dirname (str): Directory name.
+            jname (str): Job name.
+            mem (int, optional): Memory allocation. Defaults to 5000.
+            time (str, optional): Time limit. Defaults to "2:00:00".
+        """
         f = open(dirname+'/launch.sh', 'w')
         f.write("#!/bin/bash\n")
         f.write("#SBATCH --job-name="+jname+"\n")
@@ -306,15 +307,16 @@ class Simu():
 
         f.write("time ./PE_2D\n")
 
-    ##
-    # @brief Creates a parallel launch file for SLURM with distribution over propagation angles
-    #
-    # @param dirname (str): Directory name.
-    # @param jname (str): Job name.
-    # @param distribute_tau (int): Number of tau distributions.
-    # @param mem (int, optional): Memory allocation. Defaults to 5000.
-    # @param time (str, optional): Time limit. Defaults to "2:00:00".
     def createParallelLaunch(self, dirname: str, jname: str, distribute_tau: int, mem: int = 5000, time: str = "2:00:00"):
+        """Creates a parallel launch file for SLURM with distribution over propagation angles.
+
+        Args:
+            dirname (str): Directory name.
+            jname (str): Job name.
+            distribute_tau (int): Number of tau distributions.
+            mem (int, optional): Memory allocation. Defaults to 5000.
+            time (str, optional): Time limit. Defaults to "2:00:00".
+        """
         f = open(dirname+'/launch.sh', 'w')
         f.write("#!/bin/bash\n")
         f.write("#SBATCH --job-name="+jname+"\n")
@@ -340,15 +342,17 @@ class Simu():
             f.write("cd .. " + "\n")
         f.write("wait")
 
-    ##
-    # @brief Distributes cases for the simulation. create the directorise, input.nml files, launch.sh files for running the complete simulation.I does not launch the jobs
-    #
-    # @param distribute_tau (int, optional): Number of tau distributions. Defaults to None.
-    # @param mem (int, optional): Memory allocation. Defaults to 5000.
-    # @param time (str, optional): Time limit. Defaults to "2:00:00".
-    # @param turbine_index (list, optional): List of turbine indices. Defaults to None.
     def distributeCases(self, distribute_tau: int = None, mem: int = 5000,
                         time: str = "2:00:00", turbine_index: list = None):
+        """Distributes cases for the simulation. Creates the directories, input.nml files, launch.sh files for running the complete simulation. 
+        It does not launch the jobs.
+
+        Args:
+            distribute_tau (int, optional): Number of tau distributions. Defaults to None.
+            mem (int, optional): Memory allocation. Defaults to 5000.
+            time (str, optional): Time limit. Defaults to "2:00:00".
+            turbine_index (list, optional): List of turbine indices. Defaults to None.
+        """
         dir = os.getcwd()
         self.distribute_tau = distribute_tau
         if distribute_tau == False:
@@ -417,14 +421,15 @@ class Simu():
                         path, self.casename+'t'+str(ii)+'h'+str(self.heights[jj]), mem=mem, time=time)
                     shutil.copy(self.src_path, path+'/PE_2D')
 
-    ##
-    # @brief Creates launch files for the simulation. This was coded specifically for haswell partition on Newton HPC.
-    # This done to launch several PE cases with the same job in order to avoid launchind hundreds of jobs in the case of a wind farm
-    #
-    # @param mem (int): Memory allocation.
-    # @param time (str): Time limit.
-    # @param turbine_index (list, optional): List of turbine indices. Defaults to None.
     def createLaunchFiles(self, mem: int, time: str, turbine_index: list = None):
+        """Creates launch files for the simulation. This was coded specifically for haswell partition on Newton HPC.
+        This done to launch several PE cases with the same job in order to avoid launching hundreds of jobs in the case of a wind farm.
+
+        Args:
+            mem (int): Memory allocation.
+            time (str): Time limit.
+            turbine_index (list, optional): List of turbine indices. Defaults to None.
+        """
         dirname = os.getcwd()
         haswell_mem_size = 64000
         haswell_nb_core = 16
@@ -485,6 +490,13 @@ class Simu():
         f.close()
 
     def createLocalLaunchFiles(self, mem: int, time: str, turbine_index: list = None):
+        """Creates local launch files for the simulation.
+
+        Args:
+            mem (int): Memory allocation.
+            time (str): Time limit.
+            turbine_index (list, optional): List of turbine indices. Defaults to None.
+        """
         dirname = os.getcwd()
         haswell_mem_size = 64000
         haswell_nb_core = 16
@@ -507,11 +519,14 @@ class Simu():
 
         f.close()
 
-    ##
-    # @brief Launches the simulation cases. When one job corresponds to one Height and one turbine
-    #
-    # @param turbine_index (list, optional): List of turbine indices. Defaults to None.
     def launchCases(self, turbine_index: list = None):
+        """Launches the simulation cases. When one job corresponds to one Height and one turbine.
+        This is used after running distribute cases. Warning this will launch one job for each (source height, anglen turbine). 
+        Hence it is a not recommended in the case of wind farm case to avoid launching to much jobs. Prefer the createLaunchfile() and launchcCase2() procedure.
+
+        Args:
+            turbine_index (list, optional): List of turbine indices. Defaults to None.
+        """
         dir = os.getcwd()
         if turbine_index is None:
             turbine_index = np.arange(0, len(self.tx))
@@ -521,18 +536,14 @@ class Simu():
                 path = os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj]))
                 os.system("cd "+path+"; sbatch launch.sh")
 
-    ##
-    # @brief Launches the simulation cases. When the function  createLaunchFiles() has been used.
     def launchCases2(self):
+        """Launches the simulation cases. When the function createLaunchFiles() has been used."""
         dir = os.getcwd()
         for ii in range(self.nJob):
             os.system("sbatch launch%s.sh" % (ii))
 
     ##
     # @brief Constructs the name of the h5 file storing the PE results.
-    # the data stucture is such that if tau is not distibuted: <self.dirname>/t<iTurb>/<height>/<self.casename>_<tau>.h5
-    # if tau is distributed:
-    # <self.dirname>/t<iTurb>/<height>/tau<itau>/<self.casename>_<tau>.h5
     #
     # @param iTurb (int): Index of the turbine.
     # @param tau (float): Propagation angle.
@@ -540,6 +551,19 @@ class Simu():
     # @return (str): Complete path to the h5 file.
     def fname(self, iTurb: int,
               tau: float, height: float) -> str:
+        """Constructs the name of the h5 file storing the PE results.
+        the data stucture is such that if tau is not distibuted: <self.dirname>/t<iTurb>/<height>/<self.casename>_<tau>.h5
+        if tau is distributed:
+        <self.dirname>/t<iTurb>/<height>/tau<itau>/<self.casename>_<tau>.h5
+
+        Args:
+            iTurb (int): Index of the turbine.
+            tau (float): Propagation angle.
+            height (float): Source height.
+
+        Returns:
+            str: Complete path to the h5 file.
+        """
         # convert angle to str format
         if int(tau) == tau:
             tau_str = format(tau, "04d")
@@ -567,36 +591,36 @@ class Simu():
             path = dirname + "/t" + str(iTurb) + "/" + str(height) + "/"
         return path + self.casename + "_" + tau_str + ".h5"
 
-    ##
-    # @brief Checks if the simulation cases have run. This only check if the file has been created.
     def check_run_cases(self):
+        """Checks if the simulation cases have run. This only checks if the file has been created."""
         for ii in range(len(self.tx)):
             for jj in range(len(self.heights)):
                 for tt in range(len(self.tau)):
                     fname = self.fname(ii, self.tau[tt], self.heights[jj])
                     if not os.path.isfile(fname):
                         print(fname)
-    ##
-    # @brief Makes the source for the simulation.
-    #
-    # @param wt (WindTurbine): Wind turbine object.
-    # @param mesh (Mesh): Mesh object.
-    # @param offset (float, optional): Offset for the wind speed profile. Defaults to 100.
-    # @param U_inf (list, optional): Wind speed profile. if None self.les is used. Defaults to None.
-    # @param z_coord (list, optional): Vertical coordinates. Defaults to None.
-    # @param fname (str, optional): File name to save the source. Defaults to None.
-    # @param iTurb (list, optional): List of turbine indices. Defaults to None.
-    # @param Ncore (int, optional): Number of cores. Defaults to 16.
-    # @param plot (bool, optional): Whether to plot the wind speed profile. Defaults to False.
-    # @param ratio (float, optional): Ratio for the LES data. Defaults to 1.
-    # @param epsilon (float, optional): To set a constant epsilon instead of the LES data. Defaults to None.
-    # @param omega (float, optional): To set a constant Omega for the wind turbine instead of using NREL table. Defaults to None.
 
     def makeSource(self, wt: WindTurbine, mesh: Mesh, offset: float = 100,
                    U_inf: np.ndarray = None, z_coord: np.ndarray = None,
                    fname: str = None, iTurb: list = None,
                    Ncore: int = 16, plot: bool = False, ratio: float = 1,
                    epsilon: float = None, omega: float = None):
+        """Compute the Spp in free field for the sifferent wind turbines using the Source module
+
+        Args:
+            wt (WindTurbine): Wind turbine object.
+            mesh (Mesh): Mesh object.
+            offset (float, optional): Offset for the wind speed profile. Defaults to 100.
+            U_inf (list, optional): Wind speed profile. if None self.les is used. Defaults to None.
+            z_coord (list, optional): Vertical coordinates. Defaults to None.
+            fname (str, optional): File name to save the source. Defaults to None.
+            iTurb (list, optional): List of turbine indices. Defaults to None.
+            Ncore (int, optional): Number of cores. Defaults to 16.
+            plot (bool, optional): Whether to plot the wind speed profile. Defaults to False.
+            ratio (float, optional): Ratio for the LES data. Defaults to 1.
+            epsilon (float, optional): To set a constant epsilon instead of the LES data. Defaults to None.
+            omega (float, optional): To set a constant Omega for the wind turbine instead of using NREL table. Defaults to None.
+        """
         # check
         try:
             self.tx
@@ -666,21 +690,23 @@ class Simu():
             src = None
             mesh1 = None
 
-    ##
-    # @brief Saves the class as a .dat file using pickle format.
-    #
-    # @param fname (str, optional): File name to save the class. Defaults to None.
     def save(self, fname: str = None):
+        """Saves the class as a .dat file using pickle format.
+
+        Args:
+            fname (str, optional): File name to save the class. Defaults to None.
+        """
         if fname is None:
             fname = self.casename
         with open(fname+'.dat', 'wb') as file:
             pickle.dump(self.__dict__, file)
 
-    ##
-    # @brief Loads the class from a .dat file using pickle format.
-    #
-    # @param fname (str, optional): File name to save the class. Defaults to None.
     def load(self, fname: str):
+        """Loads the class from a .dat file using pickle format.
+
+        Args:
+            fname (str): File name to load the class.
+        """
         print('loading simulation ...')
         with open(fname, 'rb') as file:
             self.__dict__ = pickle.load(file)
