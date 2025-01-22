@@ -6,8 +6,9 @@
 `source.func_repo_XFOIL.run_Xvfb`
 # Contains:
 
-- `prepost.source.wind_turbine.WindTurbine`: a class able to define a wind turbine geometry, and BL quantities.
-- `prepost.source.mesh.Mesh`: a class to define the mesh used to comput Spp.
+- `prepost.source.wind_turbine.WindTurbine`: a class able to define a wind turbine geometry, 
+and boundary layer quantities.
+- `prepost.source.mesh.Mesh`: a class to define the mesh used to compute Spp.
 - `prepost.source.main.Source`: a class to create $Spp_{ff}$ field accroding to ABL, wind turbine géometry and mesh definition.
 
 """

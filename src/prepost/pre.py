@@ -16,78 +16,78 @@ class Simu():
     ##
     # @brief Initializes the Simu class with a dictionary of inputs for a PE simulation.
     #
-    # @param casename (str): Name of the case. 
-    # initialize the input dictionnary for the PE simulation 
-    def __init__(self,casename: str):
+    # @param casename (str): Name of the case.
+    # initialize the input dictionnary for the PE simulation
+    def __init__(self, casename: str):
         """initialize Instance Simu, with a dictionnary of input for a PE simulation
 
         Args:
             casename (str): name of the case
         """
-        self.casename=casename
+        self.casename = casename
         self.xplanes = None
         self.yplanes = None
         self.inputs = {
-            "case_name"               : str(casename),
-            "var0%c"                  : 343,
-            "var0%rho"                : 1.2,
-            "var0%gamma"              : 1.4,
+            "case_name": str(casename),
+            "var0%c": 343,
+            "var0%rho": 1.2,
+            "var0%gamma": 1.4,
 
-            "nb_freq"                 : 3,
-            "frequencies(1)"          : [100,500,1000],
+            "nb_freq": 3,
+            "frequencies(1)": [100, 500, 1000],
 
-            "nb_theta"                : 1,
-            "theta(1)"                : 0,
+            "nb_theta": 1,
+            "theta(1)": 0,
 
-            "Lx1"                     : 3000.,
-            "Lx2"                     : 1000.,
-            "Ly1"                     : 1000.,
-            "Ly2"                     : 1000.,
-            "Lz"                      : 300.,
-            "dx"                      : 0.5,
-            "cfl" 	                  : 0.1,
+            "Lx1": 3000.,
+            "Lx2": 1000.,
+            "Ly1": 1000.,
+            "Ly2": 1000.,
+            "Lz": 300.,
+            "dx": 0.5,
+            "cfl": 0.1,
 
-            "size"                    : 30,
-            "param"                   : 5e4,
-            "n"                       : 2.5,
+            "size": 30,
+            "param": 5e4,
+            "n": 2.5,
 
-            "imp%sigmae"              : 50e3,
-            "imp%alphae"              : 100.,
-            "imp%rigid"               : False,
+            "imp%sigmae": 50e3,
+            "imp%alphae": 100.,
+            "imp%rigid": False,
 
-            "src%pos_x"               : 0.,
-            "src%pos_z"               : 100.,
+            "src%pos_x": 0.,
+            "src%pos_z": 100.,
 
-            "external_flow"           : True,
-            "uniform"                 : False,
-            "logarithmic"             : False,
-            "u0"                      : 0,
-            "arbitrary"                : True,
-            "arbitrary_new"           : False,
-            "interpolation"           : True,
+            "external_flow": True,
+            "uniform": False,
+            "logarithmic": False,
+            "u0": 0,
+            "arbitrary": True,
+            "arbitrary_new": False,
+            "interpolation": True,
 
-            "fdir"                    : '/2Dhill/caseA_flat/blue/output/',
-            "fname"                   : 'tavg',
+            "fdir": '/2Dhill/caseA_flat/blue/output/',
+            "fname": 'tavg',
 
-            "tinput%ratio"            : 1,
-            "tinput%z_i"              : 625.,
-            "tinput%delta"            : 0.25,
-            "tinput%T_scale_K"        : 265,
-            "tinput%Lx"               : 10.,
-            "tinput%Ly"               : 1.,
-            "tinput%Lz"               : 1.,
+            "tinput%ratio": 1,
+            "tinput%z_i": 625.,
+            "tinput%delta": 0.25,
+            "tinput%T_scale_K": 265,
+            "tinput%Lx": 10.,
+            "tinput%Ly": 1.,
+            "tinput%Lz": 1.,
 
-            "tinput%posx"             : 1.875,
-            "tinput%posy"             : 0.5,
-            "tinput%posz"             : 0.04,
+            "tinput%posx": 1.875,
+            "tinput%posy": 0.5,
+            "tinput%posz": 0.04,
 
 
-            "dout"                    : 1,
-            "nb_receiver"             : 3,
-            "heights(1)"              : [2.,10,100],
-            "side"                    : True,
-            "top"                     : False,
-            "continuation"            : False,
+            "dout": 1,
+            "nb_receiver": 3,
+            "heights(1)": [2., 10, 100],
+            "side": True,
+            "top": False,
+            "continuation": False,
 
         }
 
@@ -95,7 +95,7 @@ class Simu():
     # @brief Reads and adds a LES flow simulation and stores it as a Les object.
     #
     # @param path (str): Path to the LES data.
-    def readLes(self,path: str):
+    def readLes(self, path: str):
         """read and add a LES flow simulation and store it as a :class:`les.LES`
 
         Args:
@@ -104,7 +104,7 @@ class Simu():
         self.les = Les(path)
         self.les.read()
         print('les domain dimension:')
-        print(self.les.L_x,self.les.L_y,self.les.L_z)
+        print(self.les.L_x, self.les.L_y, self.les.L_z)
         print(str(self.les.turbines.shape[0])+' wind turbines :')
         print(self.les.turbines)
 
@@ -112,21 +112,21 @@ class Simu():
     # @brief Creates an input.nml file from the inputs dictionary.
     #
     # @param directory (str, optional): Directory to save the input file. Defaults to './'.
-    def createInputFile(self,directory: str ='./'):
-        f= open(directory + '/input.nml','w')
+    def createInputFile(self, directory: str = './'):
+        f = open(directory + '/input.nml', 'w')
         f.write("$input\n")
-        for key,value in self.inputs.items():
-            if type(value)==str:
-                f.write("%s='%s'\n"%(key,value))
-            elif type(value)==bool :
-                if value :
-                    f.write("%s=%s\n"%(key,'.true.'))
-                else :
-                    f.write("%s=%s\n"%(key,'.false.'))
+        for key, value in self.inputs.items():
+            if type(value) == str:
+                f.write("%s='%s'\n" % (key, value))
+            elif type(value) == bool:
+                if value:
+                    f.write("%s=%s\n" % (key, '.true.'))
+                else:
+                    f.write("%s=%s\n" % (key, '.false.'))
             elif isinstance(value, list):
-                f.write("%s=%s\n"%(key,str(value)[1:-1]))
-            else :
-                f.write("%s=%s\n"%(key,str(value)))
+                f.write("%s=%s\n" % (key, str(value)[1:-1]))
+            else:
+                f.write("%s=%s\n" % (key, str(value)))
         f.write('$end input')
         f.close()
         return
@@ -136,7 +136,7 @@ class Simu():
     #
     # @param key (str): Key of the input.
     # @param value (Any): Value of the input.
-    def set_input(self,key: str, value: any):
+    def set_input(self, key: str, value: any):
         if isinstance(value, np.ndarray):
             self.inputs[key] = value.tolist()
         else:
@@ -147,18 +147,19 @@ class Simu():
     #
     # @param fc (list): List of center frequencies.
     # @param Nfc (list, optional): List of the number of frequencies per band. Defaults to None.
-    def set_frequencies(self,fc: list, Nfc: list = None):
+    def set_frequencies(self, fc: list, Nfc: list = None):
         if Nfc is None:
-            self.set_input('nb_freq',len(fc))
-            self.set_input('frequencies(1)',fc)
+            self.set_input('nb_freq', len(fc))
+            self.set_input('frequencies(1)', fc)
             self.frequencies = np.array(fc)
-        else : 
-            self.set_input('nb_freq',sum(Nfc))
-            self.set_input('frequencies(1)',computeThirdOctaveFrequencies(fc,Nfc))
+        else:
+            self.set_input('nb_freq', sum(Nfc))
+            self.set_input('frequencies(1)',
+                           computeThirdOctaveFrequencies(fc, Nfc))
             # self.inputs['frequencies(1)'] = list(computeThirdOctaveFrequencies(fc,Nfc))
-            self.frequencies = np.array(computeThirdOctaveFrequencies(fc,Nfc))
+            self.frequencies = np.array(computeThirdOctaveFrequencies(fc, Nfc))
 
-    # define the case to be simulate with number of source heights, angles and flow data 
+    # define the case to be simulate with number of source heights, angles and flow data
     ##
     # @brief Defines the cases to be simulated with the number of source heights, angles, and flow data.
     #
@@ -167,10 +168,10 @@ class Simu():
     # @param src_path (str, optional): Path to the source code. Defaults to '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE'.
     # @param flow_path (str, optional): Path to the flow data. Defaults to '/home/lmfa/jcolas/Documents/DEV/LES/'.
     # @param ratio (float, optional): Ratio for the LES data. Defaults to None.
-    def defineCases(self, heights: list, angles: np.ndarray, 
+    def defineCases(self, heights: list, angles: np.ndarray,
                     src_path: str = '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE',
                     flow_path: str = '/home/lmfa/jcolas/Documents/DEV/LES/', ratio: float = None):
-        self.heights=heights
+        self.heights = heights
         self.tau = angles
         self.src_path = src_path
 
@@ -179,18 +180,18 @@ class Simu():
         self.les = Les(flow_path)
 
         self.les.read(ratio=ratio)
-        self.tx = self.les.turbines[:,1]
-        self.ty = self.les.turbines[:,2]
+        self.tx = self.les.turbines[:, 1]
+        self.ty = self.les.turbines[:, 2]
         if ratio is not None:
             self.inputs['tinput%ratio'] = ratio
-        else :
+        else:
             self.inputs['tinput%ratio'] = self.les.ug
             self.inputs['tinput%ratio'] = 1
         self.inputs['tinput%z_i'] = self.les.z_i
         self.inputs['tinput%T_scale_K'] = self.les.T_scale
-        self.inputs['tinput%Lx'] = self.les.lx 
-        self.inputs['tinput%Ly'] = self.les.ly 
-        self.inputs['tinput%Lz'] = self.les.lz 
+        self.inputs['tinput%Lx'] = self.les.lx
+        self.inputs['tinput%Ly'] = self.les.ly
+        self.inputs['tinput%Lz'] = self.les.lz
 
     ##
     # @brief Defines the total domain for the simulation.
@@ -200,19 +201,18 @@ class Simu():
     # @param y1 (float): Start of the y-domain.
     # @param y2 (float): End of the y-domain.
     # @param h (float): Height of the domain.
-    def defineDomain(self,x1: float,x2: float,y1: float,y2: float,h: float):
+    def defineDomain(self, x1: float, x2: float, y1: float, y2: float, h: float):
         self.x1 = x1
         self.x2 = x2
         self.y1 = y1
         self.y2 = y2
-        self.h = h 
-
+        self.h = h
 
     ##
     # @brief Sets the x constant planes for the simulation.
     #
     # @param xplanes (list): List of x-planes.
-    def set_xplanes(self,xplanes: list):
+    def set_xplanes(self, xplanes: list):
         # x constant planes
         self.xplanes = np.array(xplanes)
 
@@ -220,7 +220,7 @@ class Simu():
     # @brief Sets the y constant planes for the simulation.
     #
     # @param yplanes (list): List of y-planes
-    def set_yplanes(self,yplanes: list):
+    def set_yplanes(self, yplanes: list):
         # y constant planes
         self.yplanes = np.array(yplanes)
 
@@ -228,31 +228,33 @@ class Simu():
     # @brief Sets the specific domain for each turbine.
     #
     # @param iturbine (int): Index of the turbine.
-    def set_domain(self,iturbine: int):
+    def set_domain(self, iturbine: int):
         Lx1 = self.x2-self.tx[iturbine]*self.les.z_i
-        Lx2 = self.tx[iturbine]*self.les.z_i - self.x1 
+        Lx2 = self.tx[iturbine]*self.les.z_i - self.x1
         Ly1 = self.y2 - self.ty[iturbine]*self.les.z_i
         Ly2 = self.ty[iturbine]*self.les.z_i - self.y1
-        Ly = max(Ly1,Ly2)
+        Ly = max(Ly1, Ly2)
         Lz = self.h
 
-        self.set_input('Lx1',Lx1)
-        self.set_input('Lx2',Lx2)
-        self.set_input('Ly1',Ly1)
-        self.set_input('Ly2',Ly2)
-        self.set_input('Lz',Lz)
+        self.set_input('Lx1', Lx1)
+        self.set_input('Lx2', Lx2)
+        self.set_input('Ly1', Ly1)
+        self.set_input('Ly2', Ly2)
+        self.set_input('Lz', Lz)
 
         if self.xplanes is not None:
-            self.set_input('nb_xplane',len(self.xplanes))
-            self.set_input('xplane(1)',self.xplanes-self.tx[iturbine]*self.les.z_i)
+            self.set_input('nb_xplane', len(self.xplanes))
+            self.set_input('xplane(1)', self.xplanes -
+                           self.tx[iturbine]*self.les.z_i)
         else:
-            self.set_input('nb_xplane',0)
+            self.set_input('nb_xplane', 0)
 
         if self.yplanes is not None:
-            self.set_input('nb_yplane',len(self.yplanes))
-            self.set_input('yplane(1)',self.yplanes-self.ty[iturbine]*self.les.z_i)
+            self.set_input('nb_yplane', len(self.yplanes))
+            self.set_input('yplane(1)', self.yplanes -
+                           self.ty[iturbine]*self.les.z_i)
         else:
-            self.set_input('nb_yplane',0)
+            self.set_input('nb_yplane', 0)
 
     ##
     # @brief Computes an estimation of the simulation time.
@@ -273,8 +275,7 @@ class Simu():
         t_tot = TIME_1km_45freq_s * self.tau.size * area_rectangle / area_circle
         return t_tot
 
-
-    # create launch file for slurm 
+    # create launch file for slurm
     ##
     # @brief Creates a launch file for SLURM.
     #
@@ -282,8 +283,8 @@ class Simu():
     # @param jname (str): Job name.
     # @param mem (int, optional): Memory allocation. Defaults to 5000.
     # @param time (str, optional): Time limit. Defaults to "2:00:00".
-    def createLaunch(self,dirname: str,jname: str,mem: int = 5000,time: str = "2:00:00") :
-        f= open(dirname+'/launch.sh','w')
+    def createLaunch(self, dirname: str, jname: str, mem: int = 5000, time: str = "2:00:00"):
+        f = open(dirname+'/launch.sh', 'w')
         f.write("#!/bin/bash\n")
         f.write("#SBATCH --job-name="+jname+"\n")
         f.write("#SBATCH --output=out.out # output messages go here\n")
@@ -295,7 +296,6 @@ class Simu():
         f.write("#SBATCH --cpus-per-task=1\n")
         f.write("#SBATCH --mem=" + str(mem) + "\n")
         f.write("#SBATCH --time=" + str(time) + "\n")
-
 
         f.write("module purge\n")
         f.write("module load  HDF5/1.10.1-intel-2018a\n")
@@ -314,8 +314,8 @@ class Simu():
     # @param distribute_tau (int): Number of tau distributions.
     # @param mem (int, optional): Memory allocation. Defaults to 5000.
     # @param time (str, optional): Time limit. Defaults to "2:00:00".
-    def createParallelLaunch(self,dirname: str,jname: str,distribute_tau: int,mem: int = 5000,time: str = "2:00:00") :
-        f= open(dirname+'/launch.sh','w')
+    def createParallelLaunch(self, dirname: str, jname: str, distribute_tau: int, mem: int = 5000, time: str = "2:00:00"):
+        f = open(dirname+'/launch.sh', 'w')
         f.write("#!/bin/bash\n")
         f.write("#SBATCH --job-name="+jname+"\n")
         f.write("#SBATCH --output=out.out # output messages go here\n")
@@ -328,7 +328,6 @@ class Simu():
         f.write("#SBATCH --mem=" + str(mem*distribute_tau) + "\n")
         f.write("#SBATCH --time=" + str(time) + "\n")
 
-
         f.write("module purge\n")
         f.write("module load  HDF5/1.10.1-intel-2018a\n")
         f.write("export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n")
@@ -336,11 +335,10 @@ class Simu():
         f.write("export OMP_STACKSIZE=1g\n")
         f.write("ulimit -s unlimited\n")
         for kk in range(distribute_tau):
-            f.write("cd ./tau" +str(kk)+"\n")
+            f.write("cd ./tau" + str(kk)+"\n")
             f.write("time ./PE_2D &\n")
-            f.write("cd .. " +"\n")
+            f.write("cd .. " + "\n")
         f.write("wait")
-
 
     ##
     # @brief Distributes cases for the simulation. create the directorise, input.nml files, launch.sh files for running the complete simulation.I does not launch the jobs
@@ -349,23 +347,23 @@ class Simu():
     # @param mem (int, optional): Memory allocation. Defaults to 5000.
     # @param time (str, optional): Time limit. Defaults to "2:00:00".
     # @param turbine_index (list, optional): List of turbine indices. Defaults to None.
-    def distributeCases(self,distribute_tau: int = None,mem: int = 5000,
-                        time: str = "2:00:00",turbine_index: list = None):
+    def distributeCases(self, distribute_tau: int = None, mem: int = 5000,
+                        time: str = "2:00:00", turbine_index: list = None):
         dir = os.getcwd()
         self.distribute_tau = distribute_tau
-        if distribute_tau==False: 
+        if distribute_tau == False:
             self.inputs['nb_theta'] = len(self.tau)
             self.inputs['theta(1)'] = list(self.tau)
 
         if turbine_index is None:
-            turbine_index = np.arange(0,len(self.tx))
-        
+            turbine_index = np.arange(0, len(self.tx))
+
         print(turbine_index)
-        # loop over the wind turbine 
+        # loop over the wind turbine
         for ii in turbine_index:
-            print('t%s :'%(ii), self.tx[ii], self.ty[ii])
+            print('t%s :' % (ii), self.tx[ii], self.ty[ii])
             # set wind turbines location in input.nml
-            # the PE simulation wil always 
+            # the PE simulation wil always
             # be perfomed with the source at (0,0,zS)
             self.inputs["tinput%posx"] = self.tx[ii]
             self.inputs["tinput%posy"] = self.ty[ii]
@@ -383,7 +381,7 @@ class Simu():
                     for kk in range(distribute_tau-1):
                         self.inputs['nb_theta'] = ntau
                         self.inputs['theta(1)'] = list(
-                                self.tau[kk*ntau:(kk+1)*ntau])
+                            self.tau[kk*ntau:(kk+1)*ntau])
                         path = os.path.join(dir,
                                             't' + str(ii) + '/' +
                                             str(self.heights[jj]) +
@@ -393,27 +391,31 @@ class Simu():
                         shutil.copy(self.src_path, path + '/PE_2D')
 
                     self.inputs['nb_theta'] = ntau + rtau
-                    self.inputs['theta(1)'] = self.tau[(distribute_tau - 1) * ntau:].tolist()
+                    self.inputs['theta(1)'] = self.tau[(
+                        distribute_tau - 1) * ntau:].tolist()
                     path = os.path.join(dir, 't' + str(ii) + '/' + str(self.heights[jj])
                                         + '/tau' + str(distribute_tau-1) + '/')
-                    os.makedirs(path,exist_ok=True)
+                    os.makedirs(path, exist_ok=True)
                     self.createInputFile(directory=path)
-                    shutil.copy(self.src_path,path+'/PE_2D')
-
+                    shutil.copy(self.src_path, path+'/PE_2D')
 
                     self.createParallelLaunch(os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj])+'/'),
-                                      self.casename+'t'+str(ii)+'h'+str(self.heights[jj]),
-                                      distribute_tau,
-                                      mem=mem,time=time)
-                # if tau is not distributed one job is launched for all propagation 
+                                              self.casename+'t' +
+                                              str(ii)+'h' +
+                                              str(self.heights[jj]),
+                                              distribute_tau,
+                                              mem=mem, time=time)
+                # if tau is not distributed one job is launched for all propagation
                 else:
                     self.inputs['nb_theta'] = self.tau.size
                     self.inputs['theta(1)'] = self.tau.tolist()
-                    path = os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj]))
-                    os.makedirs(path,exist_ok=True)
+                    path = os.path.join(
+                        dir, 't'+str(ii)+'/'+str(self.heights[jj]))
+                    os.makedirs(path, exist_ok=True)
                     self.createInputFile(directory=path)
-                    self.createLaunch(path,self.casename+'t'+str(ii)+'h'+str(self.heights[jj]),mem=mem,time=time)
-                    shutil.copy(self.src_path,path+'/PE_2D')
+                    self.createLaunch(
+                        path, self.casename+'t'+str(ii)+'h'+str(self.heights[jj]), mem=mem, time=time)
+                    shutil.copy(self.src_path, path+'/PE_2D')
 
     ##
     # @brief Creates launch files for the simulation. This was coded specifically for haswell partition on Newton HPC.
@@ -436,16 +438,18 @@ class Simu():
         self.nJob = int((len(turbine_index)*len(self.heights))
                         // nlaunchPerJob)
         self.rest_cases = int((len(turbine_index)*len(self.heights))
-                        % nlaunchPerJob)
+                              % nlaunchPerJob)
 
         for ii in turbine_index:
             for jj in range(len(self.heights)):
                 if count % nlaunchPerJob == 0:
                     print(countjobs)
 
-                    f = open(dirname + '/launch' + str(count//nlaunchPerJob) + '.sh','w')
+                    f = open(dirname + '/launch' +
+                             str(count//nlaunchPerJob) + '.sh', 'w')
                     f.write("#!/bin/bash\n")
-                    f.write("#SBATCH --job-name=PE"+str(count//nlaunchPerJob)+"\n")
+                    f.write("#SBATCH --job-name=PE" +
+                            str(count//nlaunchPerJob)+"\n")
                     f.write("#SBATCH --output=out.out # output messages go here\n")
                     f.write("#SBATCH --error=err.err    # error messages go here\n")
                     f.write("#SBATCH --mail-user=jules.colas@ecl17.ec-lyon.fr\n")
@@ -457,7 +461,7 @@ class Simu():
                     else:
                         f.write("#SBATCH --ntasks="+str(nlaunchPerJob)+"\n")
                     f.write("#SBATCH --cpus-per-task=1\n")
-                    #f.write("#SBATCH --mem=" + str(mem) + "\n")
+                    # f.write("#SBATCH --mem=" + str(mem) + "\n")
                     f.write("#SBATCH --mem=64000\n")
                     f.write("#SBATCH --time=" + str(time) + "\n")
 
@@ -468,7 +472,7 @@ class Simu():
                     f.write("export OMP_STACKSIZE=1g\n")
                     f.write("ulimit -s unlimited\n")
 
-                f.write("cd t%s/%s/ \n"%(ii,self.heights[jj]))
+                f.write("cd t%s/%s/ \n" % (ii, self.heights[jj]))
                 f.write("time ./PE_2D >out.out & \n")
                 f.write("cd ../../ \n")
                 count += 1
@@ -490,35 +494,35 @@ class Simu():
 
         if turbine_index is None:
             turbine_index = np.arange(0, len(self.tx))
-        
-        f = open(dirname + '/launch.sh','w')
+
+        f = open(dirname + '/launch.sh', 'w')
         for ii in turbine_index:
             for jj in range(len(self.heights)):
                 print(jj)
 
                 f.write("#!/bin/bash\n")
-                f.write("cd t%s/%s/ \n"%(ii,self.heights[jj]))
+                f.write("cd t%s/%s/ \n" % (ii, self.heights[jj]))
                 f.write("time ./PE_2D >out.out\n")
                 f.write("cd ../../ \n")
 
         f.close()
 
     ##
-    # @brief Launches the simulation cases. When one job corresponds to one Height and one turbine 
+    # @brief Launches the simulation cases. When one job corresponds to one Height and one turbine
     #
     # @param turbine_index (list, optional): List of turbine indices. Defaults to None.
-    def launchCases(self,turbine_index: list = None):
+    def launchCases(self, turbine_index: list = None):
         dir = os.getcwd()
         if turbine_index is None:
             turbine_index = np.arange(0, len(self.tx))
         for ii in turbine_index:
-            print('t%s'%(ii))
+            print('t%s' % (ii))
             for jj in range(len(self.heights)):
-                path = os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj]))  
+                path = os.path.join(dir, 't'+str(ii)+'/'+str(self.heights[jj]))
                 os.system("cd "+path+"; sbatch launch.sh")
 
     ##
-    # @brief Launches the simulation cases. When the function  createLaunchFiles() has been used. 
+    # @brief Launches the simulation cases. When the function  createLaunchFiles() has been used.
     def launchCases2(self):
         dir = os.getcwd()
         for ii in range(self.nJob):
@@ -527,14 +531,14 @@ class Simu():
     ##
     # @brief Constructs the name of the h5 file storing the PE results.
     # the data stucture is such that if tau is not distibuted: <self.dirname>/t<iTurb>/<height>/<self.casename>_<tau>.h5
-    #if tau is distributed:
-    #<self.dirname>/t<iTurb>/<height>/tau<itau>/<self.casename>_<tau>.h5
+    # if tau is distributed:
+    # <self.dirname>/t<iTurb>/<height>/tau<itau>/<self.casename>_<tau>.h5
     #
     # @param iTurb (int): Index of the turbine.
     # @param tau (float): Propagation angle.
     # @param height (float): Source height.
     # @return (str): Complete path to the h5 file.
-    def fname(self, iTurb: int, 
+    def fname(self, iTurb: int,
               tau: float, height: float) -> str:
         # convert angle to str format
         if int(tau) == tau:
@@ -587,13 +591,15 @@ class Simu():
     # @param ratio (float, optional): Ratio for the LES data. Defaults to 1.
     # @param epsilon (float, optional): To set a constant epsilon instead of the LES data. Defaults to None.
     # @param omega (float, optional): To set a constant Omega for the wind turbine instead of using NREL table. Defaults to None.
+
     def makeSource(self, wt: WindTurbine, mesh: Mesh, offset: float = 100,
                    U_inf: np.ndarray = None, z_coord: np.ndarray = None,
                    fname: str = None, iTurb: list = None,
-                   Ncore: int=16, plot: bool = False, ratio: float=1,
-                   epsilon: float=None, omega: float=None):
+                   Ncore: int = 16, plot: bool = False, ratio: float = 1,
+                   epsilon: float = None, omega: float = None):
         # check
-        try: self.tx
+        try:
+            self.tx
         except:
             print('turbine not define')
             return
@@ -624,12 +630,12 @@ class Simu():
             xnew = np.array([[self.tx[ii]*self.les.z_i-offset]])
             ynew = np.array([[self.ty[ii]*self.les.z_i]])
             znew = np.array([[wt.href]])
-            U_hub,epsilon_hub = interp_3D_atmos_data(self.les,xnew,ynew,znew)
+            U_hub, epsilon_hub = interp_3D_atmos_data(
+                self.les, xnew, ynew, znew)
 
-
-            #U_hub = self.les.U_inf[np.argmin(np.abs(self.les.z_coord
+            # U_hub = self.les.U_inf[np.argmin(np.abs(self.les.z_coord
             #                                        - wt.href))]
-            #epsilon_hub = self.les.epsilon_Kol[np.argmin(np.abs(self.les.z_coord
+            # epsilon_hub = self.les.epsilon_Kol[np.argmin(np.abs(self.les.z_coord
             #                                                    - wt.href))]
             wt.controlRotSpeed(U_hub, omega=omega)
             wt.setOptimalTwist(U_hub, 4)
@@ -659,7 +665,7 @@ class Simu():
                 src.save('Spp'+str(ii)+'.dat')
             src = None
             mesh1 = None
-    
+
     ##
     # @brief Saves the class as a .dat file using pickle format.
     #

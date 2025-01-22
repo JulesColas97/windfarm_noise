@@ -1,45 +1,43 @@
 import numpy as np
-import os
 from os import path
-from scipy.io import loadmat
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import scipy.interpolate as interp
 import pickle
 import logging
 from matplotlib.widgets import Slider
-import time 
+import time
 
-from .WP_LEE import WP_LEE
-from .func_repo_XFOIL import XFOIL, run_Xvfb,kill_Xvfb
+from .func_repo_XFOIL import XFOIL, run_Xvfb, kill_Xvfb
 from .utils import computeThirdOctaveFrequencies, interp_atmos_data
 from . import BEM as bem
- 
+
 
 class WindTurbine:
     """A class to create a wind turbine, with geometry and boundary layer quantities 
     """
-    href : float                                                                # hub height
-    Nseg : int                                                                  # number of segments per blade
-    Nblade : int                                                                # number of blades
-    Nbeta : int                                                                 # number of angular position
-    omega : float                                                               # rotation speed
-    delta_beta : float                                                          # angular position
-    seg : np.ndarray                                                            # segment position
-    chord : np.ndarray                                                          # segment chord length
-    Lspan : np.ndarray                                                          # sgement span length
-    twist : np.ndarray                                                          # segement twist
-    airfoilIndex : np.ndarray                                                   # segment airfoil type
-    pathToAirfoilGeom : str
-    airfoilDataName : np.ndarray                                                # xfoil data path
-    airfoil_data : dict                                                         # xfoil data
-    tau: float                                                                  # orientation of the turbine (from x axis CCW)
-    absolute_pos: tuple                                                         # position in LES grid
+    href: float                     # hub height
+    Nseg: int                       # number of segments per blade
+    Nblade: int                     # number of blades
+    Nbeta: int                      # number of angular position
+    omega: float                    # rotation speed
+    delta_beta: float               # angular position
+    seg: np.ndarray                 # segment position
+    chord: np.ndarray               # segment chord length
+    Lspan: np.ndarray               # sgement span length
+    twist: np.ndarray               # segement twist
+    airfoilIndex: np.ndarray        # segment airfoil type
+    pathToAirfoilGeom: str
+    airfoilDataName: np.ndarray     # xfoil data path
+    airfoil_data: dict              # xfoil data
+    tau: float                      # orientation of the turbine (from x axis CCW)
+    absolute_pos: tuple             # position in LES grid
+
     def __init__(self):
         return
 
 
-    def setOptimalTwist(self,U_ref:np.array,AoA_opt:float):
+    def setOptimalTwist(self, U_ref:np.array, AoA_opt: float):
         """Create optimal twist for a given angle of attack (used to create Cotte wind turbines)
 
         Args:
@@ -52,11 +50,11 @@ class WindTurbine:
 
 
     def default(self):
-        """Create default wind turbine 
+        """Create default wind turbine
         same as Cotte but scaled up for D = 100m
         """
         self.tau = 0
-        self.absolute_pos = (0.,0.)
+        self.absolute_pos = (0., 0.)
         self.href = 100
         self.Nseg = 8
         self.Nblade = 3
@@ -66,14 +64,14 @@ class WindTurbine:
         self.seg = 1.07*np.asarray([6.0454, 14.8958, 22.7309, 29.1557, 34.4240, 38.7440, 42.2865, 45.1913])  #Spnwise location of segment center point
         self.Lspan = 1.07* np.asarray([9.0908, 8.6100, 7.0602, 5.7894, 4.7473, 3.8928, 3.1921, 2.6175])       #Spanwise lengths of blade segments
         self.chord = np.asarray([3.2273, 2.6963, 2.2261, 1.8407, 1.5246, 1.2654, 1.0528, 0.8785])
-        self.setOptimalTwist(8,4)
+        self.setOptimalTwist(8, 4)
         self.airfoilIndex = np.asarray([0,0,0,0,0,0,0,0])
         path2data =  path.join(path.dirname(__file__), 'BL_data/NACA63415')
         self.airfoilDataPath = np.asarray([path2data])
         self.airfoil_data = {}
         self.airfoil_data = pickle.load(open(path2data,'rb'))
         # self.airfoil_data = loadmat(pathToAirfoilData+'NACA63415')
-    
+
     def computeBeta(self):
         """compute beta angle according to number of blade and number of discretization per 1/Nblade turn 
         the beta array is of shape (Nblade, Nbeta). The total number of angular position is Nblade*Nbeta and cover a complete 360 rotation.
@@ -82,7 +80,7 @@ class WindTurbine:
         self.beta = (np.linspace(0, 2 * np.pi - dbeta, self.Nblade).reshape(self.Nblade, 1) + np.linspace(0,2*np.pi*(self.Nbeta-1)/self.Nblade/self.Nbeta,self.Nbeta).reshape(1,self.Nbeta)) #+ np.pi/3
 
 
-    def proximity(self,height_array:np.ndarray)->np.ndarray:
+    def proximity(self,height_array: np.ndarray)->np.ndarray:
         """Compute the proximity matrix to combine delta L and Spp. 
 
         Args:
@@ -103,7 +101,7 @@ class WindTurbine:
         return proximity.astype(int)
 
 
-    def proximityLinear(self,height_array: np.ndarray)->np.ndarray:
+    def proximityLinear(self, height_array: np.ndarray)->np.ndarray:
         """compute th proximity matrix to combine delta L and Spp, with linear interpolation between the Delta L
 
         Args:
@@ -244,7 +242,7 @@ class WindTurbine:
             target_l_c (float, optional): span/chord target ratio (to respect the incoherent source assumption). Defaults to 3.0.
             D (float, optional): new Diameter to resize the wind turbine. Defaults to None.
         """
-        
+
         # change diameter size 
         if D is not None : 
             originalDiameter = seg[-1] + 0.5*Lspan[-1]
@@ -258,7 +256,7 @@ class WindTurbine:
             self.twist = twist
             self.chord = c
             self.airfoilIndex = airfoilIndex
-            return 
+            return
         # for interpolation of chord and twist 
         tck_c = interp.splrep(seg, c, k = 2)
         tck_twist = interp.splrep(seg, twist, k = 2)
@@ -406,10 +404,10 @@ class WindTurbine:
         airfoil_data = {}
         airfoil_data['AoA'] = AoA
         airfoil_data['reynolds'] = reynolds
-        airfoil_data['chord'] = self.chord 
-        airfoil_data['Lspan'] = self.Lspan 
-        airfoil_data['seg'] = self.seg 
-        airfoil_data['twist'] = self.twist 
+        airfoil_data['chord'] = self.chord
+        airfoil_data['Lspan'] = self.Lspan
+        airfoil_data['seg'] = self.seg
+        airfoil_data['twist'] = self.twist
         airfoil_data['airfoildIndex'] = self.airfoilIndex
         airfoil_data['airfoilDataName'] = self.airfoilDataName
 
@@ -545,7 +543,7 @@ class WindTurbine:
             outfile.write('Data generation has started!!!\n')
             outfile.write(str(self.chord[temp3]) + 'm has been completed')
             outfile.close()
-        
+
         # kill the virtual frame buffer
         kill_Xvfb()
 
@@ -559,10 +557,10 @@ class WindTurbine:
         self.airfoil_data = {}
         self.airfoil_data['AoA'] = AoA
         self.airfoil_data['reynolds'] = reynolds
-        self.airfoil_data['chord'] = self.chord 
-        self.airfoil_data['Lspan'] = self.Lspan 
-        self.airfoil_data['seg'] = self.seg 
-        self.airfoil_data['twist'] = self.twist 
+        self.airfoil_data['chord'] = self.chord
+        self.airfoil_data['Lspan'] = self.Lspan
+        self.airfoil_data['seg'] = self.seg
+        self.airfoil_data['twist'] = self.twist
         self.airfoil_data['airfoildIndex'] = self.airfoilIndex
         self.airfoil_data['airfoilDataName'] = self.airfoilDataName
 
@@ -585,23 +583,23 @@ class WindTurbine:
         pickle.dump(self.airfoil_data,  open(fname, 'wb'))
 
 
-    def readBladeData(self,fname:str):
+    def readBladeData(self, fname:str):
         """read the BL data from file, set the seg, twist, chord and span accordingly
 
         Args:
             fname (str): path to the BL file
         """
-        self.airfoil_data = pickle.load(open(fname,'rb'))
-        self.chord = self.airfoil_data['chord'] 
-        self.Lspan = self.airfoil_data['Lspan'] 
+        self.airfoil_data = pickle.load(open(fname, 'rb'))
+        self.chord = self.airfoil_data['chord']
+        self.Lspan = self.airfoil_data['Lspan']
         self.seg = self.airfoil_data['seg']
-        self.twist = self.airfoil_data['twist'] 
-        self.airfoilIndex = self.airfoil_data['airfoildIndex'] 
-        self.airfoilDataname = self.airfoil_data['airfoilDataName'] 
+        self.twist = self.airfoil_data['twist']
+        self.airfoilIndex = self.airfoil_data['airfoildIndex']
+        self.airfoilDataname = self.airfoil_data['airfoilDataName']
         self.Nseg = len(self.chord)
 
     # set omega according to Uref (from NREL documentation)
-    def controlRotSpeed(self,Uref:float,omega:float=None):
+    def controlRotSpeed(self, Uref:float, omega:float=None):
         """set omega according to Uref from NREL documentation
 
         Args:
@@ -610,7 +608,7 @@ class WindTurbine:
         """
         # from Nrel decsription 
         cutin=3; rated=11.4; cutOut=25
-        cutin_ratio = 6.9; rated_ratio = 12.1 
+        cutin_ratio = 6.9; rated_ratio = 12.1
 
         U =  np.array([3.0760869565217392,
         4.315217391304348,
@@ -646,15 +644,15 @@ class WindTurbine:
         12.1,
         12.1])
 
-        omega_tck = interp.splrep(U,omega_rpm,k=2)
+        omega_tck = interp.splrep(U, omega_rpm, k=2)
 
         if omega is None:
             # self.omega = (omega_rpm[np.argmin(np.abs(Uref-U))]) * 2*np.pi/60
             self.omega = interp.splev(Uref, omega_tck) * 2*np.pi/60
 
-            print('Omega set to :' +str( self.omega *60/(2*np.pi))+' rpm')
-        else : 
-           self.omega = omega
+            print('Omega set to :' +str( self.omega * 60/(2*np.pi)) + ' rpm')
+        else:
+            self.omega = omega
 
         # # linear increase of rotational speed with wind velocity 
         # if Uref > cutin and Uref < rated:
@@ -717,7 +715,7 @@ class WindTurbine:
             alpha = 1
             self.twist = self.twist - alpha * np.pi/180 * (pitch_array[np.argmin(np.abs(Uref-U))])
             print(' wind turbine blade pitched : ' + str(pitch_array[np.argmin(np.abs(Uref-U))]) + 'deg')
-        else : 
+        else:
             self.twist = self.twist - np.pi/180 * pitch
 
     # find index in array (need for exploreDataBase)
@@ -737,20 +735,20 @@ class WindTurbine:
 
         # % WPS model of Lee et al. (2018)
         #calculate input parameters for the LEE model
-        Ue = Uinf * np.abs(UeUinf)                                                 # external velocity (m)
-        tau_w = np.abs(cf) * 0.5 * rho0 * Ue ** 2                                  # wall shear stress (Pa)
-        tau_max = tau_w                                                            # maximum shear stress (Pa)
-        H = delta_star / theta_momen                                               # shape factor
-        u_star = np.sqrt(tau_w / rho0)                                             # friction velocity (m/s)
-        delta = theta_momen * (3.15 + 1.72 / (H-1)) + delta_star                   # BL thickness (Drela 1986 paper)
-        beta_c = theta_momen / tau_w * np.abs(dpdx)                                # Clauser parameter
-        
-        Delta = delta / delta_star     
+        Ue = Uinf * np.abs(UeUinf)                                  # external velocity (m)
+        tau_w = np.abs(cf) * 0.5 * rho0 * Ue ** 2                   # wall shear stress (Pa)
+        tau_max = tau_w                                             # maximum shear stress (Pa)
+        H = delta_star / theta_momen                                # shape factor
+        u_star = np.sqrt(tau_w / rho0)                              # friction velocity (m/s)
+        delta = theta_momen * (3.15 + 1.72 / (H-1)) + delta_star    # BL thickness (Drela 1986 paper)
+        beta_c = theta_momen / tau_w * np.abs(dpdx)                 # Clauser parameter
+
+        Delta = delta / delta_star
 
         PI_Lee = 0.8 * (beta_c + 0.5) ** (3/4)
         e_Lee=  3.7 + 1.5 * beta_c
         d_Lee = 4.76 * ((1.4 / Delta) ** 0.75) * (0.375 * e_Lee - 1)
-        
+
         R_T = (delta / Ue) / (nu0 / u_star ** 2)                                   # ratio of outer to inner boundary layer time scales
         a_Lee = 2.82 * Delta ** 2 * ((6.13 * (Delta ** (-0.75))+ d_Lee) ** e_Lee) * (4.2 * PI_Lee / Delta + 1)
         hstar_Lee= min(3, (0.139 + 3.1043 * beta_c)) + 7
@@ -760,7 +758,7 @@ class WindTurbine:
             dstar_Lee = d_Lee
 
         # non-dimensional angular frequency
-        omega_adim = 2 * np.pi * freq * delta_star / Ue                           
+        omega_adim = 2 * np.pi * freq * delta_star / Ue
 
         #wall pressure spectrun in dimensional and non-dimensional forms LEE et al
         Phipp_LEE_adim = (max(a_Lee, (0.25 * beta_c - 0.52) * a_Lee) * omega_adim ** 2) / ((4.76 * omega_adim ** 0.75 + dstar_Lee) ** e_Lee +(omega_adim * 8.8 * R_T ** (-0.57)) ** hstar_Lee)
@@ -770,11 +768,11 @@ class WindTurbine:
 
 
     def computeBEM(self,Nbeta,atmos,BEM=True):
-        nu0 = 1.45e-5       
+        nu0 = 1.45e-5
 
         Cl_tck = self.airfoil_data['Cl_tck']
         Cd_tck = self.airfoil_data['Cd_tck']
-        
+
         # reshape vectors
         beta = np.linspace(0, 2 * np.pi, Nbeta).reshape(-1,1)
         seg = self.seg.reshape(1,-1)
@@ -783,12 +781,13 @@ class WindTurbine:
         blade_length = self.seg[-1] + 0.5 * self.Lspan[-1]
 
         # coordinate of the segment
-        h_temp = (np.cos(beta) * seg + self.href).reshape(len(beta), seg.shape[1])         #hight of current segment
+        #hight of current segment
+        h_temp = (np.cos(beta) * seg + self.href).reshape(len(beta), seg.shape[1])
 
         # interpolate atmospheric field on segment position (cubic interpolation)
-        U_inf = interp_atmos_data(atmos.z_coord,atmos.U_inf,h_temp)
+        U_inf = interp_atmos_data(atmos.z_coord, atmos.U_inf, h_temp)
         U_rot = seg * self.omega
-        
+
         # initialize matrices
         AoA_seg = np.zeros((beta.shape[0], seg.shape[1]))
         rey_seg = np.zeros((beta.shape[0], seg.shape[1]))
@@ -797,8 +796,9 @@ class WindTurbine:
         epsilon_array = np.zeros((beta.shape[0], seg.shape[1]))
         U_rel = np.zeros((beta.shape[0], seg.shape[1]))
         F_array = np.zeros((beta.shape[0], seg.shape[1]))
-        colors=mcp.gen_color(cmap="copper",n=self.Nseg)
-        #colors = ['k','b','r','g','orange','brown','steelblue', 'plum','gray']
+
+        #colors=mcp.gen_color(cmap="copper",n=self.Nseg)
+        colors = ['k','b','r','g','orange','brown','steelblue', 'plum','gray']
         for ibeta in range(beta.shape[0]):
             for iseg in range(seg.shape[1]):   
                 U_rel[ibeta, iseg] = np.sqrt(U_inf[ibeta, iseg] ** 2 + U_rot[0, iseg] ** 2)     
@@ -806,8 +806,8 @@ class WindTurbine:
                 J= self.omega * blade_length / U_inf[ibeta, iseg]
                 theta = 3*c[0,iseg]/(2*np.pi*seg[0,iseg])            
                 F = 2 / np.pi * np.arccos(np.exp(-(3 / 2) * (1 - seg[0, iseg] / blade_length) * (1 + J ** 2) ** 0.5))
-        
-                if BEM : 
+
+                if BEM:
                     # AoA_seg[ibeta,iseg],a,adash,F,epsilon, a_conv,adash_conv,alpha_conv = bem.simple(Cl_tck[iseg],
                     #                                                                                  Cd_tck[iseg], 
                     #                                                                                  Re,J,theta,
@@ -828,7 +828,7 @@ class WindTurbine:
                     plt.figure(12)
                     plt.plot(np.array(alpha_conv)*180/np.pi,colors[iseg])
 
-                else :
+                else:
                      AoA_seg[ibeta,iseg],a,adash,F,epsilon = bem.noBEM(Cl_tck[iseg],Cd_tck[iseg],Re,J,blade_length,seg[0,iseg],twist[0,iseg],c[0,iseg])
 
 
@@ -840,16 +840,16 @@ class WindTurbine:
                 U_rel[ibeta, iseg] = np.sqrt((U_inf[ibeta, iseg] * (1 - F * a)) ** 2 + (U_rot[0, iseg] * (1 + adash)) ** 2)
                 rey_seg[ibeta, iseg] = Re
 
-        U_rot = np.repeat(U_rot.reshape(1,-1),beta.shape[0],axis=0)
+        U_rot = np.repeat(U_rot.reshape(1,-1), beta.shape[0], axis=0)
 
-        B,R = np.meshgrid(np.squeeze(beta),self.seg,indexing='ij')
+        B,R = np.meshgrid(np.squeeze(beta), self.seg, indexing='ij')
 
         print(adash_array.shape)
         print(R.shape)
 
         fig = plt.figure(0)
         ax = fig.add_subplot(231, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,AoA_seg*180/np.pi,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, AoA_seg*180/np.pi, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
@@ -857,7 +857,7 @@ class WindTurbine:
 
         fig = plt.figure(0)
         ax = fig.add_subplot(232, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,a_array,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, a_array, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
@@ -865,28 +865,28 @@ class WindTurbine:
         
         fig = plt.figure(0)
         ax = fig.add_subplot(233, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,adash_array,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, adash_array, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
         cbar.ax.set_title("a'")
 
         ax = fig.add_subplot(234, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,U_rel,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, U_rel, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
         cbar.ax.set_title("U_rel")
 
         ax = fig.add_subplot(235, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,U_inf,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, U_inf, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
         cbar.ax.set_title("U_inf")
 
         ax = fig.add_subplot(236, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,U_rot,shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, U_rot, shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         cbar = plt.colorbar(cax)
@@ -897,7 +897,7 @@ class WindTurbine:
 
         fig = plt.figure(100)
         ax = fig.add_subplot(231, polar = True)
-        cax = ax.pcolormesh(B + np.pi/2,R,F_array,cmap='RdBu_r',shading='auto')#,edgecolors='k')   
+        cax = ax.pcolormesh(B + np.pi/2, R, F_array, cmap='RdBu_r', shading='auto')#,edgecolors='k')   
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         plt.colorbar(cax)
@@ -913,7 +913,7 @@ class WindTurbine:
         Cl = interp.bisplev(np.array(Re),AoA,self.airfoil_data['Cl_tck'][iseg])
         Cd = interp.bisplev(np.array(Re),AoA,self.airfoil_data['Cd_tck'][iseg])
 
-        if Re.size>1 and AoA.size >1: 
+        if Re.size > 1 and AoA.size > 1:
             fig = plt.figure(1)
             ax = fig.add_subplot(211)
             ax.pcolormesh(AoA, Re, Cl)
@@ -927,38 +927,38 @@ class WindTurbine:
             ax.set_ylabel('Re')
             ax.set_title('Cd')
             plt.tight_layout()
-            plt.plot(AoA,Cl)
-            plt.plot(self.airfoil_data['AoA'],self.airfoil_data['Cl'][iR,:,iseg],'+')
+            plt.plot(AoA, Cl)
+            plt.plot(self.airfoil_data['AoA'], self.airfoil_data['Cl'][iR, :, iseg], '+')
             plt.xlabel('AoA')
             plt.ylabel('Cl')
 
             plt.subplot(212)
-            plt.plot(AoA,Cd)
-            plt.plot(self.airfoil_data['AoA'],self.airfoil_data['Cd'][iR,:,iseg],'+')
+            plt.plot(AoA, Cd)
+            plt.plot(self.airfoil_data['AoA'], self.airfoil_data['Cd'][iR, :, iseg], '+')
             plt.xlabel('AoA')
             plt.ylabel('Cd')
             ax = fig.add_subplot(212)
-            ax.pcolormesh(self.airfoil_data['AoA'],self.airfoil_data['reynolds'],self.airfoil_data['Cd'][:,:,iseg])
+            ax.pcolormesh(self.airfoil_data['AoA'], self.airfoil_data['reynolds'], self.airfoil_data['Cd'][:, :, iseg])
             ax.set_xlabel('AoA')
             ax.set_ylabel('Re')
             ax.set_title('Cd')
             plt.tight_layout()
 
-        if Re.size==1 and AoA.size>1: 
-            
+        if Re.size == 1 and AoA.size > 1:
+
             plt.figure(1)
             plt.subplot(211)
             iR = np.argmin(np.abs(Re - self.airfoil_data['reynolds']))
             ax = plt.gca()
             color = next(ax._get_lines.prop_cycler)['color']
-            plt.plot(AoA,Cl,color=color)
-            plt.plot(self.airfoil_data['AoA'],self.airfoil_data['Cl'][iR,:,iseg],'+',color=color)
+            plt.plot(AoA, Cl, color=color)
+            plt.plot(self.airfoil_data['AoA'], self.airfoil_data['Cl'][iR, :, iseg], '+', color=color)
             plt.xlabel('AoA')
             plt.ylabel('Cl')
 
             plt.subplot(212)
-            plt.plot(AoA,Cd,color=color,label= self.airfoil_data['airfoilDataName'][self.airfoil_data['airfoildIndex'][iseg]])
-            plt.plot(self.airfoil_data['AoA'],self.airfoil_data['Cd'][iR,:,iseg],'+',color=color)
+            plt.plot(AoA, Cd, color=color, label=self.airfoil_data['airfoilDataName'][self.airfoil_data['airfoildIndex'][iseg]])
+            plt.plot(self.airfoil_data['AoA'], self.airfoil_data['Cd'][iR, :, iseg], '+', color=color)
             plt.xlabel('AoA')
             plt.ylabel('Cd')
 
@@ -966,31 +966,30 @@ class WindTurbine:
             plt.tight_layout()
 
 
-    # calculate WPS acording to the blade segment, Angle of attack and wind speed (needed for exploreDataBase)
-    def Phi_pp(self,freq,iseg,AoA,U_inf):
+    def Phi_pp(self, freq, iseg, AoA, U_inf):
+        # calculate WPS acording to the blade segment, Angle of attack and wind speed (needed for exploreDataBase)
         rho0 = 1.225
-        nu0 = 1.45e-5 
+        nu0 = 1.45e-5
 
-        Nfreq=len(freq)
+        Nfreq = len(freq)
 
         AoA_array = self.airfoil_data['AoA'].reshape(-1)
         iAoA = WindTurbine.find_index(AoA, AoA_array)
 
-        delta_star_top = self.airfoil_data['delta_star_top'][:,iAoA,iseg]
-        theta_momen_top = self.airfoil_data['theta_momen_top'][:,iAoA,iseg]
-        dpdx_top = self.airfoil_data['dpdx_top'][:,iAoA,iseg]
-        UeUinf_top = self.airfoil_data['UeUinf_top'][:,iAoA,iseg]
-        cf_top = self.airfoil_data['cf_top'][:,iAoA,iseg]
+        delta_star_top = self.airfoil_data['delta_star_top'][:, iAoA, iseg]
+        theta_momen_top = self.airfoil_data['theta_momen_top'][:, iAoA, iseg]
+        dpdx_top = self.airfoil_data['dpdx_top'][:, iAoA, iseg]
+        UeUinf_top = self.airfoil_data['UeUinf_top'][:, iAoA, iseg]
+        cf_top = self.airfoil_data['cf_top'][:, iAoA, iseg]
         seg = self.airfoil_data['seg'][iseg]
         chord = self.airfoil_data["chord"][iseg]
         Reynolds = self.airfoil_data['reynolds'].reshape(-1)
-
         self.controlRotSpeed(U_inf)
-        
+
         # Omega = 12.1 * 2 * np.pi / 60
         U_rot = seg * self.omega
         U_rel = np.sqrt(U_inf ** 2 + U_rot ** 2)
-        Reyn = U_rel* chord / nu0
+        Reyn = U_rel * chord / nu0
 
         ind_re = WindTurbine.find_index(Reyn, Reynolds)
         ind_left = ind_re - 1
@@ -1003,9 +1002,9 @@ class WindTurbine:
         cf_t = cf_top[ind_left] + ratio * (cf_top[ind_right] - cf_top[ind_left])
         UeUinf_t = UeUinf_top[ind_left] + ratio * (UeUinf_top[ind_right] - UeUinf_top[ind_left])
 
-        Ue_t = U_rel * np.abs(UeUinf_t)                    # external velocity (m)
-        tauw_t = cf_t * 0.5 * rho0 * Ue_t ** 2                         # wall shear stress (Pa)
-        betac_t = theta_momen_t / tauw_t * dpdx_t                      # Clauser parameter
+        Ue_t = U_rel * np.abs(UeUinf_t)              # external velocity (m)
+        tauw_t = cf_t * 0.5 * rho0 * Ue_t ** 2       # wall shear stress (Pa)
+        betac_t = theta_momen_t / tauw_t * dpdx_t    # Clauser parameter
         print('test')
         print(betac_t)
         print(dpdx_t)
@@ -1015,16 +1014,16 @@ class WindTurbine:
         print(cf_t)
         print(UeUinf_t)
         print(U_rel)
-        if cf_t<0 :
+        if cf_t < 0:
             Phi_pp_adim = 0
-            Delta = 0 
-            beta_c = betac_t 
-        elif betac_t > 60:       
+            Delta = 0
+            beta_c = betac_t
+        elif betac_t > 60:
             dpdx_t = 60 / theta_momen_t * tauw_t
-            Phi_pp_suct1,phisucc2, Delta,beta_c = WindTurbine._WP_LEE(freq.reshape(1, Nfreq), delta_star_t, theta_momen_t, dpdx_t, cf_t, UeUinf_t, U_rel)
+            Phi_pp_suct1, phisucc2, Delta, beta_c = WindTurbine._WP_LEE(freq.reshape(1, Nfreq), delta_star_t, theta_momen_t, dpdx_t, cf_t, UeUinf_t, U_rel)
             Phi_pp_adim = np.squeeze(10*np.log10(np.squeeze(Phi_pp_suct1)*Ue_t/(tauw_t **2*delta_star_t)))
         else:
-            Phi_pp_suct1,phisucc2, Delta,beta_c = WindTurbine._WP_LEE(freq.reshape(1, Nfreq), delta_star_t, theta_momen_t, dpdx_t, cf_t, UeUinf_t, U_rel)
+            Phi_pp_suct1, phisucc2, Delta, beta_c = WindTurbine._WP_LEE(freq.reshape(1, Nfreq), delta_star_t, theta_momen_t, dpdx_t, cf_t, UeUinf_t, U_rel)
             Phi_pp_adim = np.squeeze(10*np.log10(np.squeeze(Phi_pp_suct1)*Ue_t/(tauw_t **2*delta_star_t)))
 
         freq_adim = freq*delta_star_t/Ue_t 
@@ -1035,37 +1034,37 @@ class WindTurbine:
 
     # allow to compute and the wall pressure spectrum for all the blade segment and possible velocity and AoA 
     def exploreDataBase(self):
-        # init frequency for the spectrum 
+        # init frequency for the spectrum
         fc = [5, 6.3, 8, 10, 12.5, 16, 20, 25,  31.5, 40, 50, 63, 80,100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000]
         Nfc = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,2,2,3,4,4,4,5,5,5,6,6,6,7,7,10]
-        freq = computeThirdOctaveFrequencies(fc,Nfc)
+        freq = computeThirdOctaveFrequencies(fc, Nfc)
         AoA_array = self.airfoil_data['AoA'].reshape(-1)
         seg_array = self.airfoil_data['seg']
-        # init the figure 
-        fig, (ax1,ax2) = plt.subplots(1,2)
-        line, = ax1.semilogx(self.Phi_pp(freq, 1,0,8)[0], self.Phi_pp(freq, 1,0,8)[1], lw=2)
-        line.set_label(self.Phi_pp(freq, 1,0,8)[2] + '; chord=' + str(round(self.Phi_pp(freq, 1,0,8)[3],0)) + 'm')
-        ax1.set_xlabel('$\omega \delta^* /U_e$')
-        ax1.set_ylabel('$\Phi_{pp} U_e / \\tau \delta^*$')
-        ax1.set_ylim(-50,40)
-        ax1.set_xlim(0.001,10)
+        # init the figure
+        fig, (ax1, ax2) = plt.subplots(1, 2)
+        line, = ax1.semilogx(self.Phi_pp(freq, 1, 0, 8)[0], self.Phi_pp(freq, 1, 0, 8)[1], lw=2)
+        line.set_label(self.Phi_pp(freq, 1, 0, 8)[2] + '; chord=' + str(round(self.Phi_pp(freq, 1, 0, 8)[3], 0)) + 'm')
+        ax1.set_xlabel('$\\omega \\delta^* /U_e$')
+        ax1.set_ylabel('$\\Phi_{pp} U_e / \\tau \\delta^*$')
+        ax1.set_ylim(-50, 40)
+        ax1.set_xlim(0.001, 10)
 
-        line2, = ax2.plot(self.Phi_pp(freq, 1,0,8)[4], self.Phi_pp(freq, 1,0,8)[5],'*' )
-        ax2.set_ylim(0,70)
-        ax2.set_xlim(0,10)
-        ax2.set_xlabel('$\Delta$')
+        line2, = ax2.plot(self.Phi_pp(freq, 1, 0, 8)[4], self.Phi_pp(freq, 1, 0, 8)[5], '*')
+        ax2.set_ylim(0, 70)
+        ax2.set_xlim(0, 10)
+        ax2.set_xlabel('$\\Delta$')
         ax2.set_ylabel('$\\beta_c$')
 
-        # create de sliders to modify the plot 
-        fig.subplots_adjust( bottom=0.3)
+        # create de sliders to modify the plot
+        fig.subplots_adjust(bottom=0.3)
 
         axAoA = fig.add_axes([0.25, 0.15, 0.65, 0.03])
         AoA_slider = Slider(
             ax=axAoA,
             label='AoA',
-            valmin = AoA_array[0],
-            valmax = AoA_array[-1],
-            valstep = AoA_array,
+            valmin=AoA_array[0],
+            valmax=AoA_array[-1],
+            valstep=AoA_array,
             valinit=0,
         )
 
@@ -1074,7 +1073,7 @@ class WindTurbine:
             ax=axSeg,
             label="Seg index",
             valmin=0,
-            valmax=len(seg_array )-1,
+            valmax=len(seg_array)-1,
             valinit=0,
             valstep=1,
         )
@@ -1091,12 +1090,12 @@ class WindTurbine:
 
         # The function to be called anytime a slider's value changes
         def update(val):
-            Phi = self.Phi_pp(freq,seg_slider.val, AoA_slider.val,U_slider.val)
+            Phi = self.Phi_pp(freq, seg_slider.val, AoA_slider.val, U_slider.val)
             line.set_xdata(Phi[0])
             line.set_ydata(Phi[1])
             line2.set_xdata(Phi[4])
             line2.set_ydata(Phi[5])
-            line.set_label(Phi[2] + '; chord=' + str(round(Phi[3],1)) + 'm')
+            line.set_label(Phi[2] + '; chord=' + str(round(Phi[3], 1)) + 'm')
             ax1.legend()
             # ax.set_xlim(min(Phi[0]),max(Phi[0]))
             # ax.set_ylim(min(Phi[1]),max(Phi[1]))
@@ -1112,14 +1111,14 @@ class WindTurbine:
         ax2.grid(True)
         plt.show()
 
-    def save(self,fname: str):
+    def save(self, fname: str):
         """save class as self.name.dat"""
-        with open(fname,'wb') as file:
-            pickle.dump(self.__dict__,file)
+        with open(fname, 'wb') as file:
+            pickle.dump(self.__dict__, file)
 
-    def load(self,fname: str):
+    def load(self, fname: str):
         """try load self.name.dat"""
-        with open(fname,'rb') as file:
+        with open(fname, 'rb') as file:
             self.__dict__ = pickle.load(file)
 
 if __name__ == "__main__":
