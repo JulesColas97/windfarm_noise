@@ -494,17 +494,18 @@ def SPL_SWL_function(index,input_var,return_dict,BEM=False):
     # return OASPL, OASPL_beta, AM_rec, SPL_freq, SWL_freq, SPL_tot, beta
 
 def SPL_SWL_parallel(wt:WindTurbine,atmos:Les,mesh:Mesh,freq:list,Ncore:int,BEM:bool=False, fc:np.ndarray = None, Nfc:np.ndarray = None):
-    """_summary_
+    """Compute SPL in free field and SWL for a given wind turbine, atmospheric condition, mesh and set of frequency.
+        The calculations are done in parrallel for different part of the mesh.
 
     Args:
-        wt (WindTurbine): _description_
-        atmos (Les): _description_
-        mesh (Mesh): _description_
-        freq (list): _description_
-        Ncore (int): _description_
-        BEM (bool, optional): _description_. Defaults to False.
-        fc (np.ndarray, optional): _description_. Defaults to None.
-        Nfc (np.ndarray, optional): _description_. Defaults to None.
+        wt (WindTurbine): defines the wind turbine geometric property
+        atmos (Les): Set the amospheric condition around the turbine
+        mesh (Mesh): Defines the mesh on which to compute the resuls
+        freq (list): list of frequency for which the calculation are done
+        Ncore (int): Number of threads used for the parallel (minimum 2)
+        BEM (bool, optional): If True uses BEM theory and drag and lift coefficient of each segment to compute the effective AoA. Defaults to False.
+        fc (np.ndarray, optional): Array of third octave band. Must corresponds to freq list and is used to compute SPL and SWL in third octave band. Defaults to None.
+        Nfc (np.ndarray, optional): Number of frequency per band. Must correspond with fc and freq. Defaults to None.
 
     Returns:
         _type_: _description_
@@ -530,9 +531,6 @@ def SPL_SWL_parallel(wt:WindTurbine,atmos:Les,mesh:Mesh,freq:list,Ncore:int,BEM:
     final_a = np.zeros((wt.Nseg*wt.Nblade, wt.Nbeta))
     final_adash = np.zeros((wt.Nseg*wt.Nblade, wt.Nbeta))
 
-    # final_Spp_tot = np.zeros((nx1 * nx2,wt.Nseg*wt.Nblade, len(freq), wt.Nbeta))
-    # final_Spp_TIN = np.zeros((nx1 * nx2,wt.Nseg*wt.Nblade, len(freq), wt.Nbeta))
-    # final_Spp_TEN = np.zeros((nx1 * nx2,wt.Nseg*wt.Nblade, len(freq), wt.Nbeta))
     input_array = []
     start0 = time.time()
     for ibeta in range(wt.Nbeta):
@@ -591,10 +589,9 @@ def SPL_SWL_parallel(wt:WindTurbine,atmos:Les,mesh:Mesh,freq:list,Ncore:int,BEM:
         final_beta_SPL_tot = 10*np.log10(np.sum(10**(final_SPL_tot/10), (1,3))/wt.Nbeta)
 
         print('Computations completed: ' + str(ibeta) + '/' + str(wt.Nbeta))
-
-
     end0 = time.time()
     print('total time: '+ str(c_round(end0-start0))+' seconds')
+
     # computation of third octave results and overall SPL results 
     if fc:
         SPL_third_tot = np.zeros((nx1 * nx2,wt.Nseg*wt.Nblade, len(fc), wt.Nbeta))
@@ -604,15 +601,6 @@ def SPL_SWL_parallel(wt:WindTurbine,atmos:Les,mesh:Mesh,freq:list,Ncore:int,BEM:
         dBa = Aweight(np.array(fc)).reshape(1,1,-1,1)
         OASPL_A = 10*np.log10(np.sum(10**((SPL_third_tot+dBa)/10),2))
         return final_SPL_tot,final_SPL_TIN, final_SPL_TEN, final_SWL_tot,SPL_third_tot,OASPL,OASPL_A,final_AoA,final_Uinf
+
     return final_SPL_tot,final_SPL_TIN, final_SPL_TEN, final_SWL_tot, final_AoA,final_Uinf,final_epsilon,final_Urot,final_Urel,final_a,final_adash
 
-# calculate proximity array acoording to source heigth Delta calculation and wt
-# geometry
-# def proximity(wt,height_array):
-#     proximity = np.zeros((wt.Nseg * wt.Nblade, Nbeta))
-#     for ibeta in range(wt.Nbeta):
-#         wt.beta()
-#         h_temp = (np.cos(wt.beta) * wt.seg + wt.H_ref).reshape(wt.Nblade * wt.Nseg)
-#
-#         proximity[:, ibeta] = np.abs(h_temp - height_array).argmin(axis = 0)
-#     return proximity

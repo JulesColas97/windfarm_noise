@@ -71,7 +71,7 @@ def XFOIL_pre(inf:dict, foil:dict, path:str):
 
 
 def run_Xvfb(n=5):
-    """  create a X virtual buffer to run xfoil wthout the fgrame popping
+    """  create a X virtual buffer to run xfoil wthout the frame popping
 
     Args:
         n (int, optional): token of the fram buffer (could be set to anything I think). Defaults to 5.
@@ -95,7 +95,7 @@ def kill_Xvfb():
 
 
 def XFOIL_post(path:str):
-    """read and create interpoland from Bl quantities writeen in metadata1 and metadata2
+    """read and create interpoland from boundary layer quantities writen in metadata1 and metadata2
 
     Args:
         path (str): path where to read BL quantities 
@@ -183,10 +183,10 @@ def XFOIL_post2(path:str)->np.ndarray:
     """read polar from metadata3.dat
 
     Args:
-        path (str): path to metadat files
+        path (str): path to metadata files
 
     Returns:
-        np.ndarray: array containing aoa, CL and CD coeff 
+        np.ndarray: array containing AoA, CL and CD coeff 
     """
     file_name = path + 'metadata3.dat'
     infile = open(file_name, mode = "r+")

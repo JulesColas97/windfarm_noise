@@ -6,7 +6,7 @@ pyqt5
 numexpr
 pandas
 Pillow
-tikzplotlib
+# tikzplotlib
 # -e git+ssh://git@github.com/JulesColas97/tikzplotlib.git#egg=tikzplotlib
 pyshtools
 python-sofa

@@ -15,12 +15,33 @@ from ..les import  Les
 from ..utils import interp_weights, interpolate, integrateThirdOctave,Aweight
 
 class Source:
+    """
+    A class to represent an acoustic source model for wind turbines.
+
+    This class provides methods to manage wind turbine acoustics data, perform spatial
+    interpolations, compute sound power levels, and visualize results.
+
+    Attributes:
+        atmos (Les): Atmospheric conditions.
+        wt (WindTurbine): Wind turbine object.
+        mesh (Mesh): Computational mesh.
+        Spp (np.array): Spectral power distribution data.
+    """
     atmos : Les
     wt : WindTurbine
     mesh : Mesh
     Spp : np.array
 
     def __init__(self,wt: WindTurbine=None,atmos: Les=None,mesh: Mesh=None,Spp: np.array=None):
+        """
+        Initialize the Source object with wind turbine, atmosphere, mesh, and spectral data.
+
+        Args:
+            wt (WindTurbine, optional): Wind turbine object. Defaults to None.
+            atmos (Les, optional): Atmospheric conditions. Defaults to None.
+            mesh (Mesh, optional): Computational mesh. Defaults to None.
+            Spp (np.array, optional): Spectral power distribution data. Defaults to None.
+        """
         self.wt = wt
         self.atmos = atmos
         self.mesh = mesh
@@ -38,6 +59,12 @@ class Source:
 
 
     def read_pickle(self,filename: str):
+        """
+        Load the source data from a pickle file.
+
+        Args:
+            filename (str): Path to the pickle file.
+        """
         repo_out = pickle.load(open(filename,'rb'))
         self.wt = repo_out['wind_turbine']
         self.atmos = repo_out['atmos']
@@ -52,21 +79,41 @@ class Source:
         self.Nfreq = self.Spp.shape[4]
         self.Nbeta = self.Spp.shape[5]
 
-    def save(self,fname: str,atmos_data=True):
-        """save class as self.name.dat"""
+    def save(self, fname: str, atmos_data: bool = True) -> None:
+        """
+        Save the current Source object to a file.
+
+        Args:
+            fname (str): The filename to save data.
+            atmos_data (bool, optional): Whether to include atmospheric data. Defaults to True.
+        """
+
         if atmos_data == False:
             self.atmos = None
         with open(fname,'wb') as file:
             pickle.dump(self.__dict__,file)
 
-    def load(self,fname: str):
-        """try load self.name.dat"""
+    def load(self, fname: str) -> None:
+        """
+        Load the Source object from a file.
+
+        Args:
+            fname (str): The filename to load data from.
+        """
         print('loading source ...')
         with open(fname,'rb') as file:
             self.__dict__ = pickle.load(file)
         print('done.')
 
-    def computeSpp(self, freq: np.array, Ncore: int=16,BEM=False):
+    def computeSpp(self, freq: np.array, Ncore: int = 16, BEM: bool = False) -> None:
+        """
+        Compute the spectral power distribution (Spp) for given frequencies.
+
+        Args:
+            freq (np.array): Array of frequencies.
+            Ncore (int, optional): Number of CPU cores to use. Defaults to 16.
+            BEM (bool, optional): Use BEM (Blade Element Momentum) method. Defaults to False.
+        """
         self.frequencies = freq
         self.Nfreq = len(freq)
         # rotate mesh : 
@@ -100,7 +147,16 @@ class Source:
         self.Nfreq = self.Spp.shape[4]
         self.Nbeta = self.Spp.shape[5]
 
-    def interpolate_xy(self, x: np.array, y: np.array):
+    def interpolate_xy(self, x: np.array, y: np.array) -> None:
+        """
+        Perform 2D interpolation over the XY plane. 
+        Moves form self.Spp(mesh.x_array, mesh.y_array, mesh.z_array) to 
+        self.SppInterpolated(self.x_interpolated, self.y_interpolated, self.z_interpolated)
+
+        Args:
+            x (np.array): Array of x-coordinates.
+            y (np.array): Array of y-coordinates.
+        """
         logging.info('xy 2D interpolation ...')
         x_grid,y_grid = np.meshgrid(self.mesh.x_array,self.mesh.y_array,indexing='ij')
 
@@ -157,7 +213,16 @@ class Source:
         # [self.x_interpolate,self.y_interpolate,self.z_interpolate] = np.meshgrid(x,y,self.mesh.z_array,indexing='ij')
 
 
-    def interpolate_xz(self, x: np.array, z: np.array):
+    def interpolate_xz(self, x: np.array, z: np.array) -> None:
+        """
+        Perform 2D interpolation over the XZ plane.
+        Moves form self.Spp(mesh.x_array, mesh.y_array, mesh.z_array) to 
+        self.SppInterpolated(self.x_interpolated, self.y_interpolated, self.z_interpolated)
+
+        Args:
+            x (np.array): Array of x-coordinates.
+            z (np.array): Array of z-coordinates.
+        """
         logging.info('xz 2D interpolation ...')
         x_grid,z_grid = np.meshgrid(self.mesh.x_array,self.mesh.z_array,indexing='ij')
 
@@ -189,7 +254,16 @@ class Source:
         [self.x_interpolate,self.y_interpolate,self.z_interpolate] = np.meshgrid(x,self.mesh.y_array,z,indexing='ij')
 
 
-    def interpolate_yz(self, y: np.array, z: np.array):
+    def interpolate_yz(self, y: np.array, z: np.array) -> None:
+        """
+        Perform 2D interpolation over the YZ plane.
+        Moves form self.Spp(mesh.x_array, mesh.y_array, mesh.z_array) to 
+        self.SppInterpolated(self.x_interpolated, self.y_interpolated, self.z_interpolated)
+
+        Args:
+            y (np.array): Array of y-coordinates.
+            z (np.array): Array of z-coordinates.
+        """
         y_grid,z_grid = np.meshgrid(self.mesh.y_array,self.mesh.z_array,indexing='ij')
 
         yz_old = np.concatenate((y_grid.reshape((-1,1)),z_grid.reshape((-1,1))),1)
@@ -220,6 +294,10 @@ class Source:
 
 
     def convert_to_position(self):
+        """
+        Convert Spp and SWL data into position-based arrays.
+        Useful for polar plot.
+        """
 
         spp = np.transpose(self.SWL.reshape(
             self.nx, self.ny, self.nz, self.Nseg//self.Nblade,
@@ -271,6 +349,9 @@ class Source:
         return
 
     def convert_to_one_blade(self):
+        """
+        Aggregate data to represent a single blade's contribution to sound power levels.
+        """
 
         spp = np.transpose(self.SWL.reshape(
             self.ny, self.ny, self.nz, self.Nseg//self.Nblade,
@@ -288,7 +369,14 @@ class Source:
             np.log10(np.sum(10**(spp[:, :,:, :, 2, :, :]/10), (3)))
         return
 
-    def compute_oaswl(self):
+    def compute_oaswl(self) -> int:
+        """
+        Compute the overall A-weighted sound power levels.
+
+        Returns:
+            int: Returns -1 if an error occurs.
+        """
+
         if not hasattr(self, "swlPosition"):
             print('error')
             return -1
@@ -311,7 +399,15 @@ class Source:
         self.spp_dbA = 10*np.log10(np.sum(swl_3rd * 10**(Aweight(self.fc).reshape(1,1,1,1,1,-1)/10),5))
         return
 
-    def print_info(self, x,y,z):
+    def print_info(self, x: float, y: float, z: float) -> None:
+        """
+        Print information about the sound power level at a given position.
+
+        Args:
+            x (float): X-coordinate.
+            y (float): Y-coordinate.
+            z (float): Z-coordinate.
+        """
         ix = np.abs(self.mesh.x_array - x).argmin()
         iy = np.abs(self.mesh.y_array - y).argmin()
         iz = np.abs(self.mesh.z_array - z).argmin()
@@ -332,7 +428,10 @@ class Source:
         print(self.wt.omega * 60 / (2*np.pi))
 
 
-    def plot_atmos(self):
+    def plot_atmos(self) -> None:
+        """
+        Plot atmospheric data such as wind speed and turbulence.
+        """
         plt.figure(0)
         plt.plot(self.atmos.U_inf,self.atmos.z_coord)
         plt.xlabel('$u_{inf}$ (m/s)')
@@ -344,7 +443,15 @@ class Source:
         plt.ylabel('$z$ (m)')
 
 
-    def plot_OASWL(self,ix, iy, iz,**kwargs):
+    def plot_OASWL(self, ix: int, iy: int, iz: int, **kwargs) -> None:
+        """
+        Plot the overall A-weighted sound power level in a polar plot.
+
+        Args:
+            ix (int): Index along the x-axis.
+            iy (int): Index along the y-axis.
+            iz (int): Index along the z-axis.
+        """
         self.convert_to_position()
         self.compute_oaswl()
         r = self.wt.seg
@@ -359,7 +466,15 @@ class Source:
         plt.gca().set_xticklabels([])
         # plt.colorbar(cax)
 
-    def plot_tin_ten(self,ix, iy, iz,**kwargs):
+    def plot_tin_ten(self, ix: int, iy: int, iz: int, **kwargs) -> None:
+        """
+        Plot tonal and broadband noise contributions.
+
+        Args:
+            ix (int): Index along the x-axis.
+            iy (int): Index along the y-axis.
+            iz (int): Index along the z-axis.
+        """
         self.convert_to_position()
         self.compute_oaswl()
 
@@ -402,7 +517,14 @@ class Source:
         plt.colorbar(cax)
         ax.set_title('SWL tot')
 
-    def plot_AoA(self,**kwargs):
+
+    def plot_AoA(self, **kwargs) -> plt.Axes:
+        """
+        Plot the angle of attack distribution.
+
+        Returns:
+            plt.Axes: Matplotlib axis with the plot.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -424,7 +546,10 @@ class Source:
         return cax
 
 
-    def plot_all_u(self, **kwargs):
+    def plot_all_u(self, **kwargs) -> None:
+        """
+        Plot various wind velocity components.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -489,7 +614,13 @@ class Source:
         ax.set_title('AoA')
 
 
-    def plot_epsilon(self,shading='auto',**kwargs):
+    def plot_epsilon(self, shading: str = 'auto', **kwargs) -> None:
+        """
+        Plot turbulence dissipation rate.
+
+        Args:
+            shading (str, optional): Shading style for the plot. Defaults to 'auto'.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -510,7 +641,13 @@ class Source:
         ax.set_yticklabels([])
         ax.set_xticklabels([])
 
-    def plot_Uinf(self,shading='auto',**kwargs):
+    def plot_Uinf(self, shading: str = 'auto', **kwargs) -> None:
+        """
+        Plot free-stream wind velocity.
+
+        Args:
+            shading (str, optional): Shading style for the plot. Defaults to 'auto'.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -536,7 +673,13 @@ class Source:
         ax.set_yticklabels([])
         ax.set_xticklabels([])
 
-    def plot_Urel(self,shading='auto',**kwargs):
+    def plot_Urel(self, shading: str = 'auto', **kwargs) -> None:
+        """
+        Plot relative wind velocity.
+
+        Args:
+            shading (str, optional): Shading style for the plot. Defaults to 'auto'.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -557,7 +700,13 @@ class Source:
         ax.set_yticklabels([])
         ax.set_xticklabels([])
 
-    def plot_Urot(self,shading='auto'):
+    def plot_Urot(self, shading: str = 'auto') -> None:
+        """
+        Plot the rotational velocity.
+
+        Args:
+            shading (str, optional): Shading style for the plot. Defaults to 'auto'.
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -578,7 +727,10 @@ class Source:
         ax.set_yticklabels([])
         ax.set_xticklabels([])
 
-    def plot_induction(self):
+    def plot_induction(self) -> None:
+        """
+        Plot the induction factors (axial and tangential).
+        """
         r = self.wt.seg
         self.wt.computeBeta()
         beta = self.wt.beta.reshape(self.wt.Nblade*self.wt.Nbeta)
@@ -604,154 +756,6 @@ class Source:
         ax.set_yticklabels([])
         ax.set_xticklabels([])
         plt.colorbar(cax)
-
-
-    # # duplicate matrix size and devide grid step by alpha
-    # def refine(self, alpha: float,axis: int):
-
-    #     # x axis
-    #     if axis == 0 :
-    #         # Spp = np.zeros(((self.nx-1)*alpha +1,self.nz,self.ntau,self.Nseg*self.Nblade,self.Nfreq,self.Nbeta))
-    #         Spp = np.zeros(((self.nx-1)*alpha +1,) + self.Spp.shape[1:])
-    #         Spp[::alpha,...] = self.Spp
-    #         for ii in range(alpha-1):
-    #             # Spp[ii+1::alpha,...] = self.Spp[:-1,...]
-    #             Spp[ii+1::alpha,...] = (1-ii/alpha)*self.Spp[:-1,...] + (ii/alpha)*self.Spp[1:,...]
-    #         self.Spp = Spp
-    #         self.nx = self.mesh.nx = (self.nx-1)*alpha +1
-    #         self.mesh.x_array = np.linspace(self.mesh.x_array[0],self.mesh.x_array[-1],self.nx)
-
-    #     # z axis
-    #     if axis == 1:
-    #         # Spp = np.zeros((self.nx,(self.nz-1)*alpha+1,self.ntau,self.Nseg*self.Nblade,self.Nfreq,self.Nbeta))
-    #         Spp = np.zeros((self.Spp.shape[0],(self.nz-1)*alpha +1) + self.Spp.shape[2:])
-    #         Spp[:,::alpha,...] = self.Spp
-    #         for ii in range(alpha-1):
-    #             # Spp[:,ii+1::alpha,...] = self.Spp[:,:-1,...]
-    #             Spp[:,ii+1::alpha,...] = (1-ii/alpha)*self.Spp[:,:-1,...] + (ii/alpha)*self.Spp[:,1:,...]
-    #         self.nz = self.mesh.nz = (self.nz-1)*alpha +1
-    #         self.mesh.z_array = np.linspace(self.mesh.z_array[0],self.mesh.z_array[-1],self.nz)
-    #         self.Spp = Spp
-
-    #     # tau axis
-    #     if axis == 2:
-    #         # Spp = np.zeros((self.nx,self.nz,(self.ntau-1)*alpha+1,self.Nseg*self.Nblade,self.Nfreq,self.Nbeta))
-    #         Spp = np.zeros((self.Spp.shape[0],self.Spp.shape[1],(self.ntau-1)*alpha +1) + self.Spp.shape[3:])
-    #         Spp[:,:,::alpha,...] = self.Spp
-    #         for ii in range(alpha-1):
-    #             # Spp[:,:,ii+1::alpha,...] = self.Spp[:,:,:-1,...]
-    #              Spp[:,:,ii+1::alpha,...] = (1-ii/alpha)*self.Spp[:,:,:-1,...] + (ii/alpha)*self.Spp[:,:,1:,...]
-    #         self.ntau = self.mesh.ntau = (self.ntau-1)*alpha +1
-    #         self.mesh.tau_array = np.linspace(self.mesh.tau_array[0],self.mesh.tau_array[-1],self.ntau)
-    #         self.Spp = Spp
-
-    # # increase grid step by a factor alpha (integer)
-    # def reduce(self,alpha: float,axis: int) :
-
-    #     # x axis
-    #     if axis == 0 :
-    #         self.Spp = self.Spp[::alpha,...]
-    #         self.mesh.x_array = self.mesh.x_array[::alpha]
-    #         self.mesh.nx = len(self.mesh.x_array)
-    #     if axis == 1 :
-    #         self.Spp = self.Spp[:,::alpha,...]
-    #         self.mesh.z_array = self.mesh.z_array[::alpha]
-    #         self.mesh.nz = len(self.mesh.z_array)
-    #     if axis == 2 :
-    #         self.Spp = self.Spp[:,:,::alpha,...]
-    #         self.mesh.tau_array = self.mesh.tau_array[::alpha]
-    #         self.mesh.ntau = len(self.mesh.tau_array)
-
-    # # truncate the solution to the max value for a given axe
-    # def truncate(self,max,axis):
-    #     if axis == 0:
-    #         Nxmax = np.argmin(abs(self.mesh.x_array-max))
-    #         self.Spp = self.Spp[:Nxmax+1,...]
-    #         self.mesh.x_array = self.mesh.x_array[:Nxmax+1]
-    #         self.nx = self.mesh.nx = len(self.mesh.x_array)
-    #     if axis == 1:
-    #         Nzmax = np.argmin(abs(self.mesh.z_array-max))
-    #         self.Spp = self.Spp[:,:Nzmax+1,...]
-    #         self.mesh.z_array = self.mesh.z_array[:Nzmax+1]
-    #         self.nz = self.mesh.nz = len(self.mesh.z_array)
-
-    # # rehspa Spp and mesh to fit a given x_array and z_array
-    # def reshape(self,x_array,z_array=None):
-    #     print('Spp shape :' + str(self.Spp.shape))
-    #     print('reshaping Spp ...')
-
-    #     # Change delta X to fit
-    #     if (x_array[1]-x_array[0])>(self.mesh.x_array[1]-self.mesh.x_array[0]):
-    #         alpha = (x_array[1]-x_array[0])/(self.mesh.x_array[1]-self.mesh.x_array[0])
-    #         if int(alpha)!=alpha:
-    #             print('mesh incompatible')
-    #             quit()
-    #         self.reduce(int(alpha),0)
-    #     if (x_array[1]-x_array[0])<(self.mesh.x_array[1]-self.mesh.x_array[0]):
-    #         alpha = (self.mesh.x_array[1]-self.mesh.x_array[0])/(x_array[1]-x_array[0])
-    #         if int(alpha)!=alpha:
-    #             print('mesh incompatible')
-    #             quit()
-    #         self.refine(int(alpha),0)
-
-    #     if z_array is not None :
-    #         # Change delta z to fit
-    #         if (z_array[1]-z_array[0])>(self.mesh.z_array[1]-self.mesh.z_array[0]):
-    #             alpha = (z_array[1]-z_array[0])/(self.mesh.z_array[1]-self.mesh.z_array[0])
-    #             if int(alpha)!=alpha:
-    #                 print('mesh incompatible')
-    #                 quit()
-    #             self.reduce(int(alpha),1)
-    #         if (z_array[1]-z_array[0])<(self.mesh.z_array[1]-self.mesh.z_array[0]):
-    #             alpha = (self.mesh.z_array[1]-self.mesh.z_array[0])/(z_array[1]-z_array[0])
-    #             if int(alpha)!=alpha:
-    #                 print('mesh incompatible')
-    #                 quit()
-    #             self.refine(int(alpha),1)
-
-    #     # reside domain
-    #     if (x_array[-1]<=self.mesh.x_coord[-1]):
-    #         self.truncate(x_array[-1],0)
-    #     else:
-    #         print('Spp to small')
-
-    #     if z_array is not None:
-    #         if (z_array[-1]<=self.mesh.z_coord[-1]):
-    #             self.truncate(z_array[-1],1)
-    #         else:
-    #             print('Spp to small')
-
-    #     print('Spp  shape : ' + str(self.Spp.shape))
-    #     print('done.')
-
-    # # axis is the ax orthogonal to the plane
-    # def takeOnePlane(self,pos1,axis):
-    #     if axis == 0:
-    #         ipos1 = np.argmin(abs(self.mesh.x_array - pos1))
-    #         self.Spp = self.Spp[ipos1,...]
-    #     if axis == 1:
-    #         ipos1 = np.argmin(abs(self.mesh.z_array - pos1))
-    #         self.Spp = self.Spp[:,ipos1,...]
-    #     if axis == 2:
-    #         ipos1 = np.argmin(abs(self.mesh.tau_array - pos1))
-    #         self.Spp = self.Spp[:,:,ipos1,...]
-
-    # def takeOneLine(self,pos1,pos2,axis):
-    #     if axis == 0:
-    #         ipos1 = np.argmin(abs(self.mesh.z_array - pos1))
-    #         ipos2 = np.argmin(abs(self.mesh.tau_array - pos2))
-    #         self.Spp = self.Spp[:,ipos1,ipos2,...]
-    #     if axis == 1:
-    #         ipos1 = np.argmin(abs(self.mesh.x_array - pos1))
-    #         ipos2 = np.argmin(abs(self.mesh.tau_array - pos2))
-    #         self.Spp = self.Spp[ipos1,:,ipos2,...]
-    #     if axis == 2:
-    #         ipos1 = np.argmin(abs(self.mesh.x_array - pos1))
-    #         ipos2 = np.argmin(abs(self.mesh.z_array - pos2))
-    #         self.Spp = self.Spp[ipos1,ipos2,...]
-
-
-
 
 
 

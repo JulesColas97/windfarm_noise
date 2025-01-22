@@ -3,7 +3,28 @@ import numpy as np
 import scipy as sci
 import logging
 
-def WP_LEE(freq, delta_star, theta_momen, dpdx, cf, UeUinf, Uinf):
+def WP_LEE(freq: np.ndarray, delta_star: float, theta_momen: float, 
+           dpdx: float, cf: float, UeUinf: float, Uinf: float) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Compute the wall pressure spectrum (WPS) using the Lee et al. (2018) model.
+
+    This function estimates the wall pressure spectrum based on boundary layer properties, 
+    external velocity, wall shear stress, and pressure gradients using the Lee model.
+
+    Args:
+        freq (np.ndarray): Frequency array in Hz.
+        delta_star (float): Displacement thickness of the boundary layer.
+        theta_momen (float): Momentum thickness of the boundary layer.
+        dpdx (float): Pressure gradient in the streamwise direction.
+        cf (float): Skin friction coefficient.
+        UeUinf (float): Ratio of external velocity to free-stream velocity.
+        Uinf (float): Free-stream velocity (m/s).
+
+    Returns:
+        tuple[np.ndarray, np.ndarray]: 
+            - Phipp_LEE (np.ndarray): Wall pressure spectrum in physical units.
+            - Phipp_LEE_adim (np.ndarray): Non-dimensional wall pressure spectrum.
+    """
     # global rho0 nu0
     rho0 = 1.225
     nu0 = 1.45e-5

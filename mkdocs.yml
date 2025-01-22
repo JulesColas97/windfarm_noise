@@ -1,0 +1,16 @@
+site_name: Pre-post classes for wind farm noise project
+
+
+
+plugins:
+  - mkdocstrings
+
+# markdown_extensions:
+#   - markdown_fortran.wrap:
+#       base_path: docs
+#       encoding: 'utf-8'
+
+nav:
+  - Overview: index.md
+  - Source: source.md
+  - WAPE: WAPE.md

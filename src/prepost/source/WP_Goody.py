@@ -1,9 +1,29 @@
 import numpy as np
 
 
-def WP_Goody(frequ, delta_star, theta_momen, cf, UeUinf, U_rota):
-    # Phi_pp1 is the wall pressure spectra, Phi_pp2 is the normalize WPS by
-    # (U^3*delta_star*rho^2)
+# def WP_Goody(frequ, delta_star, theta_momen, cf, UeUinf, U_rota):
+def WP_Goody(frequ: np.ndarray, delta_star: float, theta_momen: float, 
+             cf: float, UeUinf: float, U_rota: float) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Compute the wall pressure spectra (WPS) using the Goody model.
+
+    This function calculates the wall pressure spectra (Phi_pp1) and the 
+    normalized WPS (Phi_pp2) (U^3*delta_star*rho^2) based on boundary layer properties, wall shear stress,
+    and turbulent boundary layer thickness.
+
+    Args:
+        frequ (np.ndarray): Frequency array in Hz.
+        delta_star (float): Displacement thickness of the boundary layer.
+        theta_momen (float): Momentum thickness of the boundary layer.
+        cf (float): Skin friction coefficient.
+        UeUinf (float): Ratio of edge velocity to free stream velocity.
+        U_rota (float): Rotational velocity of the blade.
+
+    Returns:
+        tuple[np.ndarray, np.ndarray]: 
+            - Phi_pp1 (np.ndarray): Wall pressure spectra.
+            - Phi_pp2 (np.ndarray): Normalized wall pressure spectra.
+    """
     
     nu0 = 1.45e-5
     rho0 = 1.225
