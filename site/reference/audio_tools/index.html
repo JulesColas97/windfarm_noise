@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Reference for prepost/audio_tools.py - Pre-post classes for wind farm noise project</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Pre-post classes for wind farm noise project</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../source/" class="nav-link">Source</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../WAPE.m" class="nav-link">WAPE</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#reference-for-prepostaudio_toolspy" class="nav-link">Reference for prepost/audio_tools.py</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.c" class="nav-link">c</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.k" class="nav-link">k</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.omega" class="nav-link">omega</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.cart2sph" class="nav-link">cart2sph</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.sph2cart" class="nav-link">sph2cart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.lmfa_room_dim" class="nav-link">lmfa_room_dim</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.lmfa_xyz_spkr" class="nav-link">lmfa_xyz_spkr</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.get_hrir" class="nav-link">get_hrir</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.binaural" class="nav-link">binaural</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.decoder_binaural" class="nav-link">decoder_binaural</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.lm2acn" class="nav-link">lm2acn</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.acn2lm" class="nav-link">acn2lm</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.spharm_acn" class="nav-link">spharm_acn</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.encoder" class="nav-link">encoder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.audio_tools.decoder" class="nav-link">decoder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="reference-for-prepostaudio_toolspy">Reference for <code>prepost/audio_tools.py</code></h1>
+<p><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.c"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the celerity of sound in m/s.</p>
+<h3 id="src.prepost.audio_tools.c--returns">Returns</h3>
+<p>c : float
+    The sound celerity in m/s.</p>
+<h3 id="src.prepost.audio_tools.c--parameters">Parameters</h3>
+<p>celerity : float, default=343
+    The celerity in m/s.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">celerity</span><span class="o">=</span><span class="mi">343</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the celerity of sound in m/s.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    c : float</span>
+<span class="sd">        The sound celerity in m/s.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    celerity : float, default=343</span>
+<span class="sd">        The celerity in m/s.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">celerity</span>
+    <span class="k">return</span> <span class="n">c</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.k"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the acoustic wave number in rad/m.</p>
+<h3 id="src.prepost.audio_tools.k--returns">Returns</h3>
+<p>k : float
+    The acoustic wave number in rad/m.</p>
+<h3 id="src.prepost.audio_tools.k--parameters">Parameters</h3>
+<p>f : float
+    The frequency in Hz.
+c : float
+    The sound speed in m/s (default = 343 m/s).</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">343</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the acoustic wave number in rad/m.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    k : float</span>
+<span class="sd">        The acoustic wave number in rad/m.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : float</span>
+<span class="sd">        The frequency in Hz.</span>
+<span class="sd">    c : float</span>
+<span class="sd">        The sound speed in m/s (default = 343 m/s).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">/</span> <span class="n">c</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.omega"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the acoustic pulsating frequency in rad.</p>
+<h3 id="src.prepost.audio_tools.omega--returns">Returns</h3>
+<p>omega : float
+    The acoustic pulsating frequency in rad.</p>
+<h3 id="src.prepost.audio_tools.omega--parameters">Parameters</h3>
+<p>f : float
+    The frequency in Hz.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">omega</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the acoustic pulsating frequency in rad.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    omega : float</span>
+<span class="sd">        The acoustic pulsating frequency in rad.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : float</span>
+<span class="sd">        The frequency in Hz.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.cart2sph"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the spherical coordinate <code>r, theta, phi</code> of an array <code>x, y, z</code> in 
+cartesian coordinates.</p>
+<h3 id="src.prepost.audio_tools.cart2sph--returns">Returns</h3>
+<p>r : float
+    The value in spherical coordinates
+theta : float
+    The value in spherical coordinates
+phi : float
+    The value in spherical coordinates</p>
+<h3 id="src.prepost.audio_tools.cart2sph--parameters">Parameters</h3>
+<p>x : float
+    The value in Cartesian coordinate
+y : float
+    The value in Cartesian coordinate
+z : float
+    The value in Cartesian coordinate
+degree : bool, default=True
+    If true, returns the spherical coordinates in degree.</p>
+<h3 id="src.prepost.audio_tools.cart2sph--description">Description</h3>
+<p>Spherical coordinate system used:      <br />
+    Define :math:<code>r</code> to be distance (radius) from a point to the origin,
+    :math:<code>\theta</code> to be the colatitude angle and  :math:<code>\phi</code> to be the 
+    azimuthal angle. The ISO 80000-2:2019 convention is used.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cart2sph</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the spherical coordinate ``r, theta, phi`` of an array ``x, y, z`` in </span>
+<span class="sd">    cartesian coordinates.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+<span class="sd">    y : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+<span class="sd">    z : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+<span class="sd">    degree : bool, default=True</span>
+<span class="sd">        If true, returns the spherical coordinates in degree.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Spherical coordinate system used:        </span>
+<span class="sd">        Define :math:`r` to be distance (radius) from a point to the origin,</span>
+<span class="sd">        :math:`\\theta` to be the colatitude angle and  :math:`\\phi` to be the </span>
+<span class="sd">        azimuthal angle. The ISO 80000-2:2019 convention is used.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Arg arrays must have the same shape&#39;</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Radius</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">z</span><span class="p">)</span> <span class="c1"># Azimuth</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># Colatitude </span>
+
+
+    <span class="k">if</span> <span class="n">degree</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.sph2cart"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the Cartesian coordinate <code>x, y, z</code> of an array <code>r, theta, phi</code> in 
+spherical coordinates.</p>
+<h3 id="src.prepost.audio_tools.sph2cart--returns">Returns</h3>
+<p>x : float
+    The value in Cartesian coordinate
+y : float
+    The value in Cartesian coordinate
+z : float
+    The value in Cartesian coordinate</p>
+<h3 id="src.prepost.audio_tools.sph2cart--parameters">Parameters</h3>
+<p>r : float
+    The value in spherical coordinates
+theta : float
+    The value in spherical coordinates
+phi : float
+    The value in spherical coordinates</p>
+<h3 id="src.prepost.audio_tools.sph2cart--description">Description</h3>
+<p>Spherical coordinate system used:      <br />
+    Define :math:<code>r</code> to be distance (radius) from a point to the origin,
+    :math:<code>\theta</code> to be the colatitude angle and  :math:<code>\phi</code> to be the 
+    azimuthal angle. The ISO 80000-2:2019 convention is used.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sph2cart</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the Cartesian coordinate ``x, y, z`` of an array ``r, theta, phi`` in </span>
+<span class="sd">    spherical coordinates.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+<span class="sd">    y : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+<span class="sd">    z : float</span>
+<span class="sd">        The value in Cartesian coordinate</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        The value in spherical coordinates</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Spherical coordinate system used:        </span>
+<span class="sd">        Define :math:`r` to be distance (radius) from a point to the origin,</span>
+<span class="sd">        :math:`\\theta` to be the colatitude angle and  :math:`\\phi` to be the </span>
+<span class="sd">        azimuthal angle. The ISO 80000-2:2019 convention is used.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Arg arrays must have the same shape&#39;</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">deg</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.lmfa_room_dim"></a>
+    <div class="doc doc-contents first">
+
+        <p>Returns the x, y and z dimensions of the listening room at LMFA.</p>
+<h3 id="src.prepost.audio_tools.lmfa_room_dim--returns">Returns</h3>
+<p>room_dim : array (3,)
+    The dimensionss of the listening room.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lmfa_room_dim</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the x, y and z dimensions of the listening room at LMFA.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    room_dim : array (3,)</span>
+<span class="sd">        The dimensionss of the listening room.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+
+    <span class="n">room_dim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">room_dim</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.lmfa_xyz_spkr"></a>
+    <div class="doc doc-contents first">
+
+        <p>Returns the x, y and z coordinates of the listening room loudspeakers at LMFA.</p>
+<h3 id="src.prepost.audio_tools.lmfa_xyz_spkr--returns">Returns</h3>
+<p>xyz : array (22, 3)
+    The coordiantes of the loudspeakers.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lmfa_xyz_spkr</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the x, y and z coordinates of the listening room loudspeakers at LMFA.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    xyz : array (22, 3)</span>
+<span class="sd">        The coordiantes of the loudspeakers.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.4</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mf">1.9</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="c1"># Center front</span>
+                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.9</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="c1"># Center center</span>
+                        <span class="p">[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="c1"># Center back</span>
+                        <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mf">1.9</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],</span> <span class="c1"># Up front</span>
+                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.9</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],</span> <span class="c1"># Up center</span>
+                        <span class="p">[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.25</span><span class="p">],</span> <span class="c1"># Up back</span>
+                        <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span><span class="mf">1.9</span><span class="p">,</span><span class="o">-</span><span class="mf">1.25</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.25</span><span class="p">],[</span><span class="mf">1.4</span><span class="p">,</span><span class="o">-</span><span class="mf">1.9</span><span class="p">,</span><span class="o">-</span><span class="mf">1.25</span><span class="p">]])</span> <span class="c1"># Bottom front</span>
+
+    <span class="k">return</span> <span class="n">xyz</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.get_hrir"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return the Head Related Impulse Responses corresponding from the closest angles <code>theta, phi</code> as FIR filters.</p>
+<h3 id="src.prepost.audio_tools.get_hrir--returns">Returns</h3>
+<p>rir_l : array
+    The left ear RIR 
+rir_r : float
+    The right ear RIR</p>
+<h3 id="src.prepost.audio_tools.get_hrir--parameters">Parameters</h3>
+<p>theta : float
+    The azimuthal angle in degrees
+phi : float
+    The colatitude angle in degrees</p>
+<h3 id="src.prepost.audio_tools.get_hrir--description">Description</h3>
+<p>Spherical coordinate system used:      <br />
+    Define :math:<code>r</code> to be distance (radius) from a point to the origin,
+    :math:<code>\theta</code> to be the azimuthal angle in the :math:<code>xy</code>-plane from 
+    the :math:<code>x</code>-axis with :math:<code>0\leq\theta&lt;2\pi</code>, and :math:<code>\phi</code> to 
+    be the polar angle (also known as the zenith angle and colatitude, with
+    :math:<code>\phi=90^\circ - \delta</code> where :math:<code>\delta</code> is the latitude) 
+    from the positive :math:<code>z</code>-axis with :math:<code>0\leq \phi \leq \pi</code>. 
+    This is the convention commonly used in mathematics.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_hrir</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the Head Related Impulse Responses corresponding from the closest angles ``theta, phi`` as FIR filters.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rir_l : array</span>
+<span class="sd">        The left ear RIR </span>
+<span class="sd">    rir_r : float</span>
+<span class="sd">        The right ear RIR</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        The azimuthal angle in degrees</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        The colatitude angle in degrees</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Spherical coordinate system used:        </span>
+<span class="sd">        Define :math:`r` to be distance (radius) from a point to the origin,</span>
+<span class="sd">        :math:`\\theta` to be the azimuthal angle in the :math:`xy`-plane from </span>
+<span class="sd">        the :math:`x`-axis with :math:`0\leq\\theta&lt;2\pi`, and :math:`\phi` to </span>
+<span class="sd">        be the polar angle (also known as the zenith angle and colatitude, with</span>
+<span class="sd">        :math:`\phi=90^\circ - \delta` where :math:`\delta` is the latitude) </span>
+<span class="sd">        from the positive :math:`z`-axis with :math:`0\leq \phi \leq \pi`. </span>
+<span class="sd">        This is the convention commonly used in mathematics. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">HRTF_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/HRTF_44100.sofa&#39;</span> <span class="c1"># Path to sofa HRIR file</span>
+    <span class="n">HRTF</span> <span class="o">=</span> <span class="n">sofa</span><span class="o">.</span><span class="n">Database</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">HRTF_path</span><span class="p">)</span> <span class="c1"># Open sofa data</span>
+
+    <span class="c1"># Retrieve source positions of the HRIR measurements</span>
+    <span class="n">src_positions</span> <span class="o">=</span> <span class="n">HRTF</span><span class="o">.</span><span class="n">Source</span><span class="o">.</span><span class="n">Position</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">system</span><span class="o">=</span><span class="s2">&quot;spherical&quot;</span><span class="p">)</span> 
+
+    <span class="c1"># Get cartesian coordinates of the source positions for : </span>
+    <span class="c1"># r=1, colatitude = 90 - latitude, azimuth</span>
+    <span class="n">vec_cart_src</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sph2cart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">90</span><span class="o">-</span><span class="n">src_positions</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">src_positions</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Get cartesian coordinates of the given source angles</span>
+    <span class="n">vec_cart_source</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sph2cart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Retrieve the index of the nearest grid point based on dot product</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">vec_cart_source</span><span class="nd">@vec_cart_src</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    <span class="c1">#</span>
+    <span class="c1"># n_samples = int(np.floor(((src_positions[0,2]-0.1)/c())*HRTF.Data.SamplingRate.get_values(indices={&quot;M&quot;:idx})))</span>
+    <span class="c1"># Get IR for the left ear (receiver 0)</span>
+    <span class="n">ir_l</span> <span class="o">=</span> <span class="n">HRTF</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">IR</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;M&quot;</span><span class="p">:</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+    <span class="c1"># ir_l = np.concatenate((np.roll(ir_l, -n_samples)[:-n_samples], np.zeros(n_samples)))</span>
+    <span class="c1"># Get IR for the right ear (receiver 1)</span>
+    <span class="n">ir_r</span> <span class="o">=</span> <span class="n">HRTF</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">IR</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;M&quot;</span><span class="p">:</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+    <span class="c1"># ir_r = np.concatenate((np.roll(ir_r, -n_samples)[:-n_samples], np.zeros(n_samples)))</span>
+
+    <span class="k">return</span> <span class="n">ir_l</span><span class="p">,</span> <span class="n">ir_r</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.binaural"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return normalized binaural stereo sound.</p>
+<h3 id="src.prepost.audio_tools.binaural--returns">Returns</h3>
+<p>binaural_sound : array
+    The binaural stereo sound</p>
+<h3 id="src.prepost.audio_tools.binaural--parameters">Parameters</h3>
+<p>sound : array
+    The sound file to convolve
+rir_l : array
+    The IR filter for the left ear
+rir_r : array
+    The IR filter for the right ear
+fs : float
+    The sampling frequency
+play : bool, default=True
+    If true, plays the binaural sound file using sounddevice.</p>
+<h3 id="src.prepost.audio_tools.binaural--description">Description</h3>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">binaural</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="n">ir_l</span><span class="p">,</span> <span class="n">ir_r</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return normalized binaural stereo sound.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    binaural_sound : array</span>
+<span class="sd">        The binaural stereo sound</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sound : array</span>
+<span class="sd">        The sound file to convolve</span>
+<span class="sd">    rir_l : array</span>
+<span class="sd">        The IR filter for the left ear</span>
+<span class="sd">    rir_r : array</span>
+<span class="sd">        The IR filter for the right ear</span>
+<span class="sd">    fs : float</span>
+<span class="sd">        The sampling frequency</span>
+<span class="sd">    play : bool, default=True</span>
+<span class="sd">        If true, plays the binaural sound file using sounddevice.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Lenght of the sound file</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Initialize binaural stereo sound matrix</span>
+    <span class="n">binaural_sound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># Convolve left side</span>
+    <span class="n">binaural_sound</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="n">ir_l</span><span class="p">)[:</span><span class="n">N</span><span class="p">]</span>
+    <span class="c1"># Convolve right side</span>
+    <span class="n">binaural_sound</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="n">ir_r</span><span class="p">)[:</span><span class="n">N</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">binaural_sound</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.decoder_binaural"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return decoded sound file.</p>
+<h3 id="src.prepost.audio_tools.decoder_binaural--returns">Returns</h3>
+<p>binaural_sound : 2-D array
+    sound.shape[0] by 2 matrix </p>
+<h3 id="src.prepost.audio_tools.decoder_binaural--parameters">Parameters</h3>
+<p>blm : array
+    The encoded sound file of shape lmax by N samples
+lmax : int
+    The ambisonic order (lmax &gt; 0)
+method : string, default='mode_matching'
+    Deconding method. Should be 'mode_matching'
+src : string, default='plane'
+    The type of source to consider for encoding. Should be 'plane or 'monopole'.</p>
+<h3 id="src.prepost.audio_tools.decoder_binaural--description">Description</h3>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">decoder_binaural</span><span class="p">(</span><span class="n">blm</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lmax</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;mode_matching&#39;</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s1">&#39;plane&#39;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return decoded sound file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    binaural_sound : 2-D array</span>
+<span class="sd">        sound.shape[0] by 2 matrix </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    blm : array</span>
+<span class="sd">        The encoded sound file of shape lmax by N samples</span>
+<span class="sd">    lmax : int</span>
+<span class="sd">        The ambisonic order (lmax &gt; 0)</span>
+<span class="sd">    method : string, default=&#39;mode_matching&#39;</span>
+<span class="sd">        Deconding method. Should be &#39;mode_matching&#39;</span>
+<span class="sd">    src : string, default=&#39;plane&#39;</span>
+<span class="sd">        The type of source to consider for encoding. Should be &#39;plane or &#39;monopole&#39;.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">HRTF_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/HRTF_44100.sofa&#39;</span> <span class="c1"># Path to sofa HRIR file</span>
+    <span class="n">HRTF</span> <span class="o">=</span> <span class="n">sofa</span><span class="o">.</span><span class="n">Database</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">HRTF_path</span><span class="p">)</span> <span class="c1"># Open sofa data</span>
+
+    <span class="c1"># Retrieve source positions of the HRIR measurements</span>
+    <span class="n">src_positions</span> <span class="o">=</span> <span class="n">HRTF</span><span class="o">.</span><span class="n">Source</span><span class="o">.</span><span class="n">Position</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">system</span><span class="o">=</span><span class="s2">&quot;spherical&quot;</span><span class="p">)</span> 
+
+    <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s1">&#39;mode_matching&#39;</span><span class="p">:</span>
+
+        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">((</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">src_positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;plane&#39;</span><span class="p">:</span>
+
+            <span class="c1"># Spherical harmonic coefficients of the loudspeakers</span>
+            <span class="k">for</span> <span class="n">src_count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">src_positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>       
+                <span class="n">C</span><span class="p">[:,</span> <span class="n">src_count</span><span class="p">]</span> <span class="o">=</span> <span class="n">spharm_acn</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="mi">90</span><span class="o">-</span><span class="n">src_positions</span><span class="p">[</span><span class="n">src_count</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">src_positions</span><span class="p">[</span><span class="n">src_count</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">elif</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;monopole&#39;</span> <span class="p">:</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sorry, not implemented yet&#39;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">src</span> <span class="o">!=</span> <span class="s1">&#39;plane&#39;</span> <span class="o">!=</span> <span class="s1">&#39;monopole&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;src must be plane or monopole&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Matrix pseudo inverse to obtain the decoding matrix</span>
+        <span class="n">decoder</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+        <span class="c1"># Calculate the loudspeaker signals from the target SH sound field</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">decoder</span><span class="nd">@blm</span>
+        <span class="c1"># Initialize binaural stereo sound file</span>
+        <span class="n">binaural_sound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">blm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="c1"># Sum the binaural signals from each loudspeaker</span>
+        <span class="k">for</span> <span class="n">i_src</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">src_positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="c1"># Retrieve IRs from sofa file</span>
+            <span class="n">ir_l</span><span class="p">,</span> <span class="n">ir_r</span> <span class="o">=</span> <span class="n">get_hrir</span><span class="p">(</span><span class="mi">90</span><span class="o">-</span><span class="n">src_positions</span><span class="p">[</span><span class="n">i_src</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">src_positions</span><span class="p">[</span><span class="n">i_src</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1"># Convolve noise with IRs</span>
+
+            <span class="n">binaural_sound</span> <span class="o">+=</span> <span class="n">binaural</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i_src</span><span class="p">,:],</span> <span class="n">ir_l</span><span class="p">,</span> <span class="n">ir_r</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">binaural_sound</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.lm2acn"></a>
+    <div class="doc doc-contents first">
+
+        <p>Out of Class version of lm2acn.
+Reshapes a matrix of coefficients from i-l-m to ACN 
+(Ambisonic Channel Number ordering).</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lm2acn</span><span class="p">(</span><span class="n">coeffs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Out of Class version of lm2acn.</span>
+<span class="sd">    Reshapes a matrix of coefficients from i-l-m to ACN </span>
+<span class="sd">    (Ambisonic Channel Number ordering).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lmax</span> <span class="o">=</span> <span class="n">coeffs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">newcoeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([(</span><span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">acn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">acn</span><span class="p">))</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">acn</span> <span class="o">-</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">newcoeffs</span><span class="p">[</span><span class="n">acn</span><span class="p">]</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">newcoeffs</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.acn2lm"></a>
+    <div class="doc doc-contents first">
+
+        <p>Converts the matrix of coefficients of an SHCoeffs instance 
+from ACN (Ambisonic Channel Number ordering) to i-l-m</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">acn2lm</span><span class="p">(</span><span class="n">coeffs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Converts the matrix of coefficients of an SHCoeffs instance </span>
+<span class="sd">    from ACN (Ambisonic Channel Number ordering) to i-l-m</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">coeffs</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">newcoeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">lmax</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">acn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coeffs</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">acn</span><span class="p">))</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">acn</span> <span class="o">-</span> <span class="n">l</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">newcoeffs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[</span><span class="n">acn</span><span class="p">]</span>
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="n">newcoeffs</span>
+    <span class="k">return</span> <span class="n">coeffs</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.spharm_acn"></a>
+    <div class="doc doc-contents first">
+
+        <p>Returns the :math:<code>4\pi</code>-normalized real spherical harmonic of degree <code>l</code> 
+and order <code>m</code> in the ACN ordering.</p>
+<h3 id="src.prepost.audio_tools.spharm_acn--returns">Returns</h3>
+<p>y : float
+    The spherical harmonic <code>ylm</code> evaluated at argument (<code>theta</code>, 
+    <code>phi</code>).</p>
+<h3 id="src.prepost.audio_tools.spharm_acn--parameters">Parameters</h3>
+<p>l : integer
+    The spherical harmonic order.
+theta : float
+    The colatitude angle in degree.
+phi : float
+    The azimuth angle in degree.</p>
+<h3 id="src.prepost.audio_tools.spharm_acn--description">Description</h3>
+<p>The :math:<code>4\pi</code>-normalized real spherical harmonic of degree l and order m
+is defiened as follows:</p>
+<p>.. math ::
+    egin{equation}
+    Y_{lm}( heta,arphi) = \sqrt{(2l+1)(2 - \delta(m)) 
+    rac{(l-|m|)!}{(l+|m|)!}} 
+    \left \lbrace egin{array}{ll} P_{lm}
+    (\sin(arphi)) \cos (m  heta) &amp; \mbox{if $m \ge 0$} \
+    P_{l|m|}(\sin (arphi)) \sin (|m|       heta) &amp; \mbox{if $m &lt; 0$},
+    \end{array} 
+ight.
+    \end{equation}</p>
+<p>where :math:<code>P_{lm}</code> is the associated Legendre polynomial of degree
+:math:<code>l</code> and order :math:<code>m</code>.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">spharm_acn</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the :math:`4\pi`-normalized real spherical harmonic of degree ``l`` </span>
+<span class="sd">    and order ``m`` in the ACN ordering.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    y : float</span>
+<span class="sd">        The spherical harmonic ``ylm`` evaluated at argument (``theta``, </span>
+<span class="sd">        ``phi``).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    l : integer</span>
+<span class="sd">        The spherical harmonic order.</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        The colatitude angle in degree.</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        The azimuth angle in degree.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+<span class="sd">    The :math:`4\pi`-normalized real spherical harmonic of degree l and order m</span>
+<span class="sd">    is defiened as follows:</span>
+
+<span class="sd">    .. math ::</span>
+<span class="sd">        \begin{equation}</span>
+<span class="sd">        Y_{lm}(\theta,\varphi) = \sqrt{(2l+1)(2 - \delta(m)) </span>
+<span class="sd">        \frac{(l-|m|)!}{(l+|m|)!}} </span>
+<span class="sd">        \left \lbrace \begin{array}{ll} P_{lm}</span>
+<span class="sd">        (\sin(\varphi)) \cos (m \theta) &amp; \mbox{if $m \ge 0$} \\</span>
+<span class="sd">        P_{l|m|}(\sin (\varphi)) \sin (|m| \theta) &amp; \mbox{if $m &lt; 0$},</span>
+<span class="sd">        \end{array} \right.</span>
+<span class="sd">        \end{equation}</span>
+
+<span class="sd">    where :math:`P_{lm}` is the associated Legendre polynomial of degree</span>
+<span class="sd">    :math:`l` and order :math:`m`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Ylm</span> <span class="o">=</span> <span class="n">pyshtools</span><span class="o">.</span><span class="n">expand</span><span class="o">.</span><span class="n">spharm</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">Yacn</span> <span class="o">=</span> <span class="n">lm2acn</span><span class="p">(</span><span class="n">Ylm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Yacn</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.encoder"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return encoded sound file.</p>
+<h3 id="src.prepost.audio_tools.encoder--returns">Returns</h3>
+<p>blm : 2-D array
+    (lmax+1)**2 by sound.shape[0] matrix</p>
+<h3 id="src.prepost.audio_tools.encoder--parameters">Parameters</h3>
+<p>sound : array
+    The sound file to convolve
+lmax : int
+    The ambisonic order
+theta : float
+    The colatitude angle of the source
+phi : float
+    the azimuthal angle of the source
+src : string, default='plane'
+    The type of source to consider for encoding. Should be 'plane or 'monopole'.</p>
+<h3 id="src.prepost.audio_tools.encoder--description">Description</h3>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">encoder</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s1">&#39;plane&#39;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return encoded sound file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    blm : 2-D array</span>
+<span class="sd">        (lmax+1)**2 by sound.shape[0] matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sound : array</span>
+<span class="sd">        The sound file to convolve</span>
+<span class="sd">    lmax : int</span>
+<span class="sd">        The ambisonic order</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        The colatitude angle of the source</span>
+<span class="sd">    phi : float</span>
+<span class="sd">        the azimuthal angle of the source</span>
+<span class="sd">    src : string, default=&#39;plane&#39;</span>
+<span class="sd">        The type of source to consider for encoding. Should be &#39;plane or &#39;monopole&#39;.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get the spherical harmonic coefficients at the given angles</span>
+    <span class="n">ylm</span> <span class="o">=</span> <span class="n">spharm_acn</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;plane&#39;</span><span class="p">:</span>
+        <span class="c1"># Encoding the source signal</span>
+        <span class="n">blm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="p">((</span><span class="n">lmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">ylm</span>
+
+        <span class="k">return</span> <span class="n">blm</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">elif</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;monopole&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sorry, not implemented yet ...&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">src</span> <span class="o">!=</span> <span class="s1">&#39;plane&#39;</span> <span class="o">!=</span> <span class="s1">&#39;monopole&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;src must be plane or monopole&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.audio_tools.decoder"></a>
+    <div class="doc doc-contents first">
+
+        <p>Return decoded sound file.</p>
+<h3 id="src.prepost.audio_tools.decoder--returns">Returns</h3>
+<p>w : 2-D array
+    spkr.shape[0] by sound.shape[0] matrix</p>
+<h3 id="src.prepost.audio_tools.decoder--parameters">Parameters</h3>
+<p>blm : array
+    The encoded sound file
+lmax : int
+    The ambisonic order (lmax &gt; 0)
+spkr : array, default=None
+    The N loudspeaker positions in cartesian coordinates (N,3). If None, the loudspeaker configuration from LMFA is used.
+method : string, default='mode_matching'
+    Deconding method. Should be 'mode_matching'
+src : string, default='plane'
+    The type of source to consider for encoding. Should be 'plane or 'monopole'.</p>
+<h3 id="src.prepost.audio_tools.decoder--description">Description</h3>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/audio_tools.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span>
+<span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">decoder</span><span class="p">(</span><span class="n">blm</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">spkr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mode_matching&#39;</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s1">&#39;plane&#39;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return decoded sound file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    w : 2-D array</span>
+<span class="sd">        spkr.shape[0] by sound.shape[0] matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    blm : array</span>
+<span class="sd">        The encoded sound file</span>
+<span class="sd">    lmax : int</span>
+<span class="sd">        The ambisonic order (lmax &gt; 0)</span>
+<span class="sd">    spkr : array, default=None</span>
+<span class="sd">        The N loudspeaker positions in cartesian coordinates (N,3). If None, the loudspeaker configuration from LMFA is used.</span>
+<span class="sd">    method : string, default=&#39;mode_matching&#39;</span>
+<span class="sd">        Deconding method. Should be &#39;mode_matching&#39;</span>
+<span class="sd">    src : string, default=&#39;plane&#39;</span>
+<span class="sd">        The type of source to consider for encoding. Should be &#39;plane or &#39;monopole&#39;.</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">spkr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">spkr</span> <span class="o">=</span> <span class="n">lmfa_xyz_spkr</span><span class="p">()</span>
+
+    <span class="c1"># Get spherical coordinates of loudspeakers (no need for r values)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">th_spkr</span><span class="p">,</span> <span class="n">ph_spkr</span> <span class="o">=</span> <span class="n">cart2sph</span><span class="p">(</span><span class="n">spkr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">spkr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">spkr</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s1">&#39;mode_matching&#39;</span><span class="p">:</span>
+
+        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">((</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">spkr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;plane&#39;</span><span class="p">:</span>
+
+            <span class="c1"># Spherical harmonic coefficients of the loudspeakers</span>
+            <span class="k">for</span> <span class="n">spkr_count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">spkr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>       
+                <span class="n">C</span><span class="p">[:,</span> <span class="n">spkr_count</span><span class="p">]</span> <span class="o">=</span> <span class="n">spharm_acn</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">th_spkr</span><span class="p">[</span><span class="n">spkr_count</span><span class="p">],</span> <span class="n">ph_spkr</span><span class="p">[</span><span class="n">spkr_count</span><span class="p">])</span>
+
+            <span class="c1"># Matrix pseudo inverse to obtain the decoding matrix</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+            <span class="c1"># Calculate the loudspeaker signals from the target SH sound field</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">d</span><span class="nd">@blm</span>
+
+            <span class="k">return</span> <span class="n">w</span>
+
+        <span class="k">elif</span> <span class="n">src</span><span class="o">==</span><span class="s1">&#39;monopole&#39;</span> <span class="p">:</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sorry, not implemented yet&#39;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">src</span> <span class="o">!=</span> <span class="s1">&#39;plane&#39;</span> <span class="o">!=</span> <span class="s1">&#39;monopole&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;src must be plane or monopole&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

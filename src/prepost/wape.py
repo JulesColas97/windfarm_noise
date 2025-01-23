@@ -19,7 +19,9 @@ from .pre import Simu
 
 
 class PeResults:
-    """Class to handle PE results from an H5 file.
+    """This class is used to handle PE results computed with the code found in `src/kernel/New_PE_c/`.
+    This allow to read results from the .h5 files and to plot the $\Delta L$ fields. 
+
 
     Args:
         casename (str): Name of the case.
@@ -47,6 +49,8 @@ class PeResults:
 
     def read_carto(self, fname: str):
         """Reads the cartography data from the H5 file.
+        These are 2D fields saved for the different frequency.
+        They are stored in a matrix `self.deltaL` of shape (Nz,Nx,Nf).
 
         Args:
             fname (str): File name of the H5 file.
@@ -66,6 +70,8 @@ class PeResults:
 
     def read_receiver(self, fname: str):
         """Reads the receiver data from the H5 file.
+        They are 2D field (there can be different receiver heights). 
+        They are stored in a matrix `self.receiver` of shape (Nx, Nrec, Nf).
 
         Args:
             fname (str): File name of the H5 file.
@@ -92,6 +98,9 @@ class PeResults:
 
     def read_planes(self, fname: str):
         """Reads the plane data from the H5 file.
+        Slice of the solution are saved at the different $r$ position. 
+        This is done to obtain constan $x$ or $y$ plane solution from different propagation angle around the source.
+        The slice used for $x$ constant and $y$ constant planes are saved in two different matrices of size (Nplane, Nz, Nf).
 
         Args:
             fname (str): File name of the H5 file.
@@ -141,6 +150,7 @@ class PeResults:
 
     def plotSide(self, freq: float, cmap: str = "RdBu_r"):
         """Plots the side view of the deltaL for a given frequency.
+        Must be used after `read_carto()`
 
         Args:
             freq (float): Frequency to plot.
@@ -156,7 +166,7 @@ class PeResults:
 
     def plotSide3octave(self, freq: float, cmap: str = "RdBu_r"):
         """Plots the side view of the deltaL for a given third-octave frequency.
-
+        Must be used after computing the third octave averaged solution with  `compute3Octave`.
         Args:
             freq (float): Third-octave frequency to plot.
             cmap (str, optional): Colormap to use. Defaults to "RdBu_r".
@@ -177,6 +187,7 @@ class PeResults:
 
     def plotLineTotalDeltaL(self, height: float):
         """Plots the total deltaL along a line at a given height.
+        This does not make much sense.
 
         Args:
             height (float): Height to plot.
@@ -189,6 +200,7 @@ class PeResults:
 
     def plotSideTotalDeltaL(self, cmap: str = "RdBu_r"):
         """Plots the side view of the total deltaL.
+        This does not make much sense.
 
         Args:
             cmap (str, optional): Colormap to use. Defaults to "RdBu_r".
@@ -206,6 +218,7 @@ class PeResults:
 
     def plotLine(self, freq: float, z: float, **kwargs):
         """Plots the deltaL along a line at a given frequency and height.
+        It must be used after the `read_receiver()`functions.
 
         Args:
             freq (float): Frequency to plot.
@@ -244,7 +257,9 @@ class PeResults:
         plt.plot(self.x, self.receiver3octave[:, iheight, ifreq],**kwargs)
 
     def compute3octave(self, fc: list = None, Nfc: list = None):
-        """Computes the third-octave frequencies.
+        """Computes the third-octave frequency average $\Delta L$. 
+        fc and Nfc must corresponds to the `self.frequencies`. read from the H5 files. 
+        A check is perfomed at the beginning of the function.
 
         Args:
             fc (list, optional): List of center frequencies. Defaults to None.
@@ -295,6 +310,8 @@ class PeResults:
 
     def plotFlowSide(self, fname: str, cmap: str = "RdYlBu_r", xstep: int = 1, zstep: int = 1):
         """Plots the side view of the flow field from a given H5 file.
+        WARNING: the PE code is note very well implemented. If several angles are run in the same folder the `flow.h5` file will be overwritten. 
+        Hence only the flow from the last angle computed can be plotted.
 
         Args:
             fname (str): File name of the H5 file containing the flow data.

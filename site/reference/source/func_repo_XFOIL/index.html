@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Reference for prepost/source/func_repo_XFOIL.py - Pre-post classes for wind farm noise project</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Pre-post classes for wind farm noise project</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../../.." class="nav-link">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../../source/" class="nav-link">Source</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../../WAPE.m" class="nav-link">WAPE</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#reference-for-prepostsourcefunc_repo_xfoilpy" class="nav-link">Reference for prepost/source/func_repo_XFOIL.py</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.c_round" class="nav-link">c_round</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL_pre" class="nav-link">XFOIL_pre</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.run_Xvfb" class="nav-link">run_Xvfb</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL_run" class="nav-link">XFOIL_run</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.kill_Xvfb" class="nav-link">kill_Xvfb</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL_post" class="nav-link">XFOIL_post</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL_post2" class="nav-link">XFOIL_post2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL_mp" class="nav-link">XFOIL_mp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#src.prepost.source.func_repo_XFOIL.XFOIL" class="nav-link">XFOIL</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="reference-for-prepostsourcefunc_repo_xfoilpy">Reference for <code>prepost/source/func_repo_XFOIL.py</code></h1>
+<p><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.c_round"></a>
+    <div class="doc doc-contents first">
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">c_round</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">temp</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL_pre"></a>
+    <div class="doc doc-contents first">
+
+        <p>Create thye Xoil prompt to be run in order to obtain data for a given airfoile profile, alpha</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>inf</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing the flow input</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>foil</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing thea airfoil input </p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>ath to write and read the metadata</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL_pre</span><span class="p">(</span><span class="n">inf</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">foil</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create thye Xoil prompt to be run in order to obtain data for a given airfoile profile, alpha</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inf (dict): dictionary containing the flow input</span>
+<span class="sd">        foil (dict): dictionary containing thea airfoil input </span>
+<span class="sd">        path (str): ath to write and read the metadata</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rho_inf</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">];</span> <span class="n">nu_inf</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;nu&#39;</span><span class="p">];</span> <span class="n">T_inf</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+    <span class="n">foil_name</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span> <span class="n">foil_chord</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">];</span> <span class="n">foil_re</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;re&#39;</span><span class="p">];</span> <span class="n">foil_mach</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;mach&#39;</span><span class="p">];</span> <span class="n">foil_aoa</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;AoA&#39;</span><span class="p">];</span> <span class="n">foil_trip_top</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;trip_top&#39;</span><span class="p">];</span> <span class="n">foil_trip_bottom</span> <span class="o">=</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;trip_bottom&#39;</span><span class="p">]</span>
+    <span class="n">U_inf</span> <span class="o">=</span> <span class="n">foil_mach</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.4</span> <span class="o">*</span> <span class="mi">287</span> <span class="o">*</span> <span class="n">T_inf</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata1.dat&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata1.dat&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata2.dat&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata2.dat&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata3.dat&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata3.dat&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;xfoil_driver.txt&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;xfoil_driver.txt&quot;</span><span class="p">)</span>
+
+    <span class="c1">#for the development of the xfoil_driver file</span>
+    <span class="n">outfile</span>  <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;xfoil_driver.txt&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="c1"># outfile.write(&quot;PLOP\nG F\n\n&quot;)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;LOAD &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">foil_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># outfile.write(&quot;63415\n&quot;)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;GDES</span><span class="se">\n</span><span class="s2">GSET</span><span class="se">\n</span><span class="s2">SCAL</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">foil_chord</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">EXEC</span><span class="se">\n</span><span class="s2">GSET</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># outfile.write(&quot;PPAR\nN 200\n t 0.8\n\n\n&quot;)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;PPAR</span><span class="se">\n</span><span class="s2">N 200</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># </span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;OPER</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;VPAR</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># outfile.write(&quot;N 1\n\n&quot;)</span>
+
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;XTR</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">foil_trip_top</span><span class="p">,</span><span class="n">foil_trip_bottom</span><span class="p">))</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ITER</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="mi">400</span><span class="p">))</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;VISC</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">foil_re</span><span class="p">))</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;M</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">foil_mach</span><span class="p">))</span>
+
+    <span class="c1">#outfile.write(&quot;OPER\nRE &quot; + str(foil_re) + &quot;\nM &quot; + str(foil_mach) + &quot;\nITER 400\nVISC\nVPAR\nXTR\n&quot; + str(foil_trip_top) + &quot;\n&quot; + str(foil_trip_bottom) + &quot;\n\n&quot;)</span>
+    <span class="c1">#outfile.write(&quot;OPER\nRE &quot; + str(foil_re) + &quot;\nM &quot; + str(foil_mach) + &quot;\nITER 400\nVISC\nVPAR\n\n&quot;)</span>
+
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pacc</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;metadata3.dat</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># outfile.write(&quot;ALFA 1 \n&quot;)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ALFA  1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ALFA &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">foil_aoa</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pacc</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DUMP &quot;</span> <span class="o">+</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;metadata1.dat</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CPWR &quot;</span> <span class="o">+</span> <span class="n">path</span><span class="o">+</span><span class="s2">&quot;metadata2.dat</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;QUIT</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.run_Xvfb"></a>
+    <div class="doc doc-contents first">
+
+        <p>create a X virtual buffer to run xfoil wthout the frame popping</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n</code>
+            </td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>token of the fram buffer (could be set to anything I think). Defaults to 5.</p>
+              </div>
+            </td>
+            <td>
+                  <code>5</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_Xvfb</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;  create a X virtual buffer to run xfoil wthout the frame popping</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n (int, optional): token of the fram buffer (could be set to anything I think). Defaults to 5.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;Xvfb :&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; &amp;&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL_run"></a>
+    <div class="doc doc-contents first">
+
+        <p>Ryun xfoil inside the virtual buffer </p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n</code>
+            </td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>must be set to the same as in  <code>run_Xvfb</code>. Defaults to 5.</p>
+              </div>
+            </td>
+            <td>
+                  <code>5</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL_run</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ryun xfoil inside the virtual buffer </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n (int, optional): must be set to the same as in  `run_Xvfb`. Defaults to 5.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;DISPLAY=:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot; xfoil &lt; xfoil_driver.txt&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.kill_Xvfb"></a>
+    <div class="doc doc-contents first">
+
+        <p>kill all virtual buffers.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">kill_Xvfb</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;kill all virtual buffers. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;kill $!&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL_post"></a>
+    <div class="doc doc-contents first">
+
+        <p>read and create interpoland from boundary layer quantities writen in metadata1 and metadata2</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path where to read BL quantities </p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>tuple[dict,int]: dictionary of interpoland for BL quantities, success flag</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL_post</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;read and create interpoland from boundary layer quantities writen in metadata1 and metadata2</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): path where to read BL quantities </span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[dict,int]: dictionary of interpoland for BL quantities, success flag</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># read metada1.dat</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;/metadata1.dat&#39;</span><span class="p">):</span>
+        <span class="n">run_flag</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1">#now for reading the required data from the metadata1/2.dat files</span>
+        <span class="n">final_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Ue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Dstar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata1.dat&quot;</span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">data_in</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># read data line by line</span>
+        <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_in</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">temp_array</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">[</span><span class="n">temp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">temp1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_array</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">temp1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">repo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp_array</span><span class="p">[</span><span class="n">temp1</span><span class="p">]))</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Ue&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Dstar&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+        <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># read metadata 2</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;metadata2.dat&quot;</span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">data_in</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># read data line by line </span>
+        <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_in</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="n">temp_array</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">[</span><span class="n">temp</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">temp1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_array</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">temp1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">repo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp_array</span><span class="p">[</span><span class="n">temp1</span><span class="p">]))</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1">#for the fitting of splines between the stored data</span>
+        <span class="c1">#for Dstar, theta and edge velocity</span>
+        <span class="c1"># find leading edge index </span>
+        <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">temp</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">temp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="k">break</span>
+        <span class="n">LE_index</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="n">tck_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># create BL interpoland </span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Ue_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Ue&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Dstar&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;theta_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Cf_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cf&#39;</span><span class="p">][:</span> <span class="n">LE_index</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Ue_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Ue&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;Dstar&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;theta_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Cf_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cf&#39;</span><span class="p">][</span><span class="n">LE_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1">#for the coefficient of pressure</span>
+        <span class="c1"># find leading edge index </span>
+        <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">][</span><span class="n">temp</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">][</span><span class="n">temp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="k">break</span>
+        <span class="n">LE_index_cp</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">][:</span> <span class="n">LE_index_cp</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cp&#39;</span><span class="p">][:</span> <span class="n">LE_index_cp</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;x_cp&#39;</span><span class="p">][</span><span class="n">LE_index_cp</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">final_data</span><span class="p">[</span><span class="s1">&#39;cp&#39;</span><span class="p">][</span><span class="n">LE_index_cp</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">run_flag</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No result generated!!!!&#39;</span><span class="p">)</span>
+        <span class="n">tck_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">tck_dict</span><span class="p">,</span> <span class="n">run_flag</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL_post2"></a>
+    <div class="doc doc-contents first">
+
+        <p>read polar from metadata3.dat</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path to metadata files</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>np.ndarray: array containing AoA, CL and CD coeff</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL_post2</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;read polar from metadata3.dat</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): path to metadata files</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: array containing AoA, CL and CD coeff </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;metadata3.dat&#39;</span>
+    <span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span>
+    <span class="n">data_in</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">data_in</span> <span class="o">=</span> <span class="n">data_in</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">row_offset</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">iline</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">aoa</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">Cl</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">Cd</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">while</span> <span class="n">data_in</span><span class="p">[</span><span class="n">iline</span> <span class="o">+</span> <span class="n">row_offset</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">temp_array</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">[</span><span class="n">iline</span> <span class="o">+</span> <span class="n">row_offset</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">ichar</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">aoa_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">Cl_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">Cd_flag</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">while</span> <span class="n">Cd_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">aoa_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">aoa</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]))</span>
+                <span class="n">aoa_flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">ichar</span> <span class="o">=</span> <span class="n">ichar</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">Cl_flag</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">aoa_flag</span> <span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">Cl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]))</span>
+                <span class="n">Cl_flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">ichar</span> <span class="o">=</span> <span class="n">ichar</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">Cl_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">Cd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]))</span>
+                <span class="n">Cd_flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">ichar</span> <span class="o">=</span> <span class="n">ichar</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">temp_array</span><span class="p">[</span><span class="n">ichar</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">ichar</span> <span class="o">=</span> <span class="n">ichar</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">iline</span> <span class="o">=</span> <span class="n">iline</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># tck_polar = interp.splrep(aoa, Cl, k = 2)</span>
+    <span class="c1"># return tck_polar</span>
+
+    <span class="c1"># remove metadata file (needed for newt run )</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">([</span><span class="n">aoa</span><span class="p">,</span><span class="n">Cl</span><span class="p">,</span><span class="n">Cd</span><span class="p">]))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL_mp"></a>
+    <div class="doc doc-contents first">
+
+        <p>run xfoil, check if time limit is reached. if xfoil dont converge after 10s: break</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>inf</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing the flow input</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>foil</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing thea airfoil input </p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>ath to write and read the metadata</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL_mp</span><span class="p">(</span><span class="n">inf</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">foil</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span><span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;run xfoil, check if time limit is reached. if xfoil dont converge after 10s: break</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inf (dict): dictionary containing the flow input</span>
+<span class="sd">        foil (dict): dictionary containing thea airfoil input </span>
+<span class="sd">        path (str): ath to write and read the metadata</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># create prompt to input in xfoil </span>
+    <span class="n">XFOIL_pre</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">foil</span><span class="p">,</span><span class="n">path</span><span class="p">)</span>
+    <span class="c1"># run xfoil </span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">doitReturnValue</span> <span class="o">=</span> <span class="n">func_timeout</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">XFOIL_run</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;XFOIL has converged satisfactorily!!&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">FunctionTimedOut</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;TASKKILL /F /IM xfoil.exe&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;XFOIL has timed out!!!&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br><hr><br></p>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="src.prepost.source.func_repo_XFOIL.XFOIL"></a>
+    <div class="doc doc-contents first">
+
+        <p>create prompt, launch Xcode and return values of interest acording at the given target fraction of the chord (closest to the trailing edge)</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path to write and read the metadata</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>target_frac</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>fraction of the chord to measure the BL quantities</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>inf</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing the flow input</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>foil</code>
+            </td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dictionary containing thea airfoil input </p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>tuple[dict,np.ndarray]: outdir contains boundary layer quantities, polar contains the lift and drag coeeficient</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/prepost/source/func_repo_XFOIL.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">XFOIL</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">target_frac</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">inf</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">foil</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;create prompt, launch Xcode and return values of interest acording at the given target fraction of the chord (closest to the trailing edge)</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): path to write and read the metadata</span>
+<span class="sd">        target_frac (float): fraction of the chord to measure the BL quantities</span>
+<span class="sd">        inf (dict): dictionary containing the flow input</span>
+<span class="sd">        foil (dict): dictionary containing thea airfoil input </span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[dict,np.ndarray]: outdir contains boundary layer quantities, polar contains the lift and drag coeeficient </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># compute dynamic pressur ?? dont know why </span>
+    <span class="n">dyn_press</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">inf</span><span class="p">[</span><span class="s1">&#39;mach&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.4</span> <span class="o">*</span> <span class="mi">287</span> <span class="o">*</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># create directory to save data file from xfoil </span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># run Xfoil, check if function timed out </span>
+    <span class="n">XFOIL_mp</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">foil</span><span class="p">,</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># read data and post process data from X foil </span>
+    <span class="n">tck_dict</span><span class="p">,</span> <span class="n">run_flag</span> <span class="o">=</span> <span class="n">XFOIL_post</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="c1"># sample BL quantities at the given target_fraction of the chord </span>
+    <span class="k">if</span> <span class="n">run_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">Dstar_suction</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">theta_suction</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;theta_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">Ue_suction</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Ue_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">Cf_suction</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Cf_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">dpdx_suction</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dyn_press</span><span class="p">)</span>
+        <span class="n">dpdx_suction1</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">((</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">((</span><span class="n">target_frac</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_suction&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">dyn_press</span><span class="p">)</span>
+
+        <span class="n">Dstar_pressure</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">theta_pressure</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;theta_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">Ue_pressure</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Ue_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">Cf_pressure</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;Cf_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">dpdx_pressure</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dyn_press</span><span class="p">)</span>
+        <span class="n">dpdx_pressure1</span> <span class="o">=</span> <span class="n">c_round</span><span class="p">((</span><span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">target_frac</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">interp</span><span class="o">.</span><span class="n">splev</span><span class="p">((</span><span class="n">target_frac</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">],</span> <span class="n">tck_dict</span><span class="p">[</span><span class="s1">&#39;cp_pressure&#39;</span><span class="p">],</span> <span class="n">der</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">foil</span><span class="p">[</span><span class="s1">&#39;chord&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">dyn_press</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">run_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">Dstar_suction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">theta_suction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">Ue_suction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">dpdx_suction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">Cf_suction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">);</span> 
+        <span class="n">dpdx_suction1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+        <span class="n">Dstar_pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">theta_pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">Ue_pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">dpdx_pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">);</span> 
+        <span class="n">Cf_pressure</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">);</span> 
+        <span class="n">dpdx_pressure1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Dstar_suction</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;theta_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_suction</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Ue_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ue_suction</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;dpdx_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpdx_suction</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Cf_suction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cf_suction</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;dpdx_suction1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpdx_suction1</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Dstar_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Dstar_pressure</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;theta_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_pressure</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Ue_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ue_pressure</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;dpdx_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpdx_pressure</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;Cf_pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cf_pressure</span><span class="p">;</span> 
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;dpdx_pressure1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dpdx_pressure1</span>
+
+    <span class="c1"># post process polar files to read Cl, and Cd </span>
+    <span class="n">polar</span> <span class="o">=</span> <span class="n">XFOIL_post2</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out_dict</span><span class="p">,</span><span class="n">polar</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><p><br><br></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

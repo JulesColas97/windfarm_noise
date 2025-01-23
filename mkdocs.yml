@@ -3,8 +3,37 @@ site_name: Pre-post classes for wind farm noise project
 
 
 plugins:
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            relative_crossrefs: false
+            members_order: source
+  - search
 
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+
+theme:
+  name: "material"
+  # features:
+  #   - search.share
+  palette:
+    - scheme: slate
+      toggle: 
+        icon: material/weather-sunny
+        name: Dark mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+  #user_color_mode_toggle: true
 # markdown_extensions:
 #   - markdown_fortran.wrap:
 #       base_path: docs
@@ -13,4 +42,33 @@ plugins:
 nav:
   - Overview: index.md
   - Source: source.md
-  - WAPE: WAPE.md
+  - WAPE: WAPE.m 
+
+  - PrePost for wape simulations:
+    - Audio_tools: reference/audio_tools.md
+    - Auralization: reference/auralization.md
+    - Combine: reference/combine.md
+    - Deltalfield: reference/deltaLfield.md
+    - Gtpe: reference/gtpe.md
+    - Les: reference/les.md
+    - Post: reference/post.md
+    - Pre: reference/pre.md
+    - Source:
+      - Atmos: reference/source/atmos.md
+      - Bem: reference/source/BEM.md
+      - Fresnelcs: reference/source/fresnelCS.md
+      - Func_repo_xfoil: reference/source/func_repo_XFOIL.md
+      - Function: reference/source/function.md
+      - Main: reference/source/main.md
+      - Mesh: reference/source/mesh.md
+      - Mio: reference/source/mio.md
+      - Parallel: reference/source/parallel.md
+      - Utils: reference/source/utils.md
+      - Wind_turbine: reference/source/wind_turbine.md
+      - Wp_goody: reference/source/WP_Goody.md
+      - Wp_lee: reference/source/WP_LEE.md
+    - Spl: reference/spl.md
+    - Spl_process: reference/spl_process.md
+    - Utils: reference/utils.md
+    - Wape: reference/wape.md
+

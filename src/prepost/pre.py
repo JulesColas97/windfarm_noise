@@ -13,12 +13,20 @@ from .utils import computeThirdOctaveFrequencies
 
 
 class Simu():
-    def __init__(self, casename: str):
-        """initialize Instance Simu, with a dictionnary of input for a PE simulation
+    """Create an Instance Simu, with a dictionnary of input for a PE simulation.
+    This class is used to define the complete simulation of a wind farm. 
+    It allows to set the global input parameters for the PE simulations, to define a LES as input for the simulation. 
+    This will set the number of turbine and ther position inside the flow. 
+    The acoustic domain for the simulation can also be defines allong with the number of propagation angle and source height for each turbine. 
+    
+    The global parameter for the PE simulation are saved in a dictionary self.inputs.
+    Methods are also define to create the different input file the fortran PE simulation. 
+    The source code used for the PE simulation can be found in `src/kernel/New_PE_c/`.
 
-        Args:
-            casename (str): name of the case
-        """
+    Args:
+        casename (str): name of the case
+    """
+    def __init__(self, casename: str):
         self.casename = casename
         self.xplanes = None
         self.yplanes = None
@@ -87,7 +95,9 @@ class Simu():
         }
 
     def readLes(self, path: str):
-        """Reads and adds a LES flow simulation and stores it as a Les object.
+        """Reads and adds a LES flow simulation and stores it as a `prepost.les.Les` object.
+        The Path must lead to a folder containing the `input.conf` file and `output/` directory corresponding to a LES perfomed with Twente code.
+        The `turbine_input.dat` is also used to determine the position of the turbines inside the flow.
 
         Args:
             path (str): Path to the LES data.
@@ -100,7 +110,7 @@ class Simu():
         print(self.les.turbines)
 
     def createInputFile(self, directory: str = './'):
-        """Creates an input.nml file from the inputs dictionary.
+        """Creates an input.nml file for the WAPE simulations from the `self.inputs` dictionary.
 
         Args:
             directory (str, optional): Directory to save the input file. Defaults to './'.
@@ -125,6 +135,9 @@ class Simu():
 
     def set_input(self, key: str, value: any):
         """Sets an input in the inputs dictionary.
+        This is used to add or modified parameters for the WAPE simulations. 
+        Be ware that there is no check that a given parameter is indeed needed for the simulations. 
+        There is also no check that all the paramaters needed are presente in the `self.inputs` dictionnary.
 
         Args:
             key (str): Key of the input.
@@ -137,7 +150,7 @@ class Simu():
 
     def set_frequencies(self, fc: list, Nfc: list = None):
         """Sets the frequencies for the simulation. If only fc is given only these frequencies are computed.
-        If fc and Nfc are set  the set of frequencies are computed with the function computeThirdOctaveFrequencies
+        If fc and Nfc are given  the set of frequencies are computed with the function computeThirdOctaveFrequencies.
 
         Args:
             fc (list): List of center frequencies.
@@ -158,13 +171,14 @@ class Simu():
                     src_path: str = '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE',
                     flow_path: str = '/home/lmfa/jcolas/Documents/DEV/LES/', ratio: float = None):
         """Defines the cases to be simulated with the number of source heights, angles, and flow data.
+        The wind turbine are automatically defined from the `Les` data.
 
         Args:
             heights (list): List of source heights.
             angles (list): List of propagation angles.
             src_path (str, optional): Path to the source code. Defaults to '/home/lmfa/jcolas/Documents/DEV/wf_phd/src/kernel/New_PE/PE_2D_WAPE'.
             flow_path (str, optional): Path to the flow data. Defaults to '/home/lmfa/jcolas/Documents/DEV/LES/'.
-            ratio (float, optional): Ratio for the LES data. Defaults to None.
+            ratio (float, optional): Scaling ratio for the LES flow. Defaults to None.
         """
         self.heights = heights
         self.tau = angles
@@ -257,6 +271,8 @@ class Simu():
 
     def computeSimulationTime(self) -> float:
         """Computes an estimation of the simulation time.
+        This estimation is based on a calulation for 45 frequencies from 50hz to 1080hz up to 1km. 
+        This took approximately 195s on one haswell core. 
 
         Returns:
             float: Total simulation time.
@@ -285,6 +301,7 @@ class Simu():
             mem (int, optional): Memory allocation. Defaults to 5000.
             time (str, optional): Time limit. Defaults to "2:00:00".
         """
+
         f = open(dirname+'/launch.sh', 'w')
         f.write("#!/bin/bash\n")
         f.write("#SBATCH --job-name="+jname+"\n")
@@ -344,7 +361,8 @@ class Simu():
 
     def distributeCases(self, distribute_tau: int = None, mem: int = 5000,
                         time: str = "2:00:00", turbine_index: list = None):
-        """Distributes cases for the simulation. Creates the directories, input.nml files, launch.sh files for running the complete simulation. 
+        """Distributes cases for the simulation. 
+        This function reates the directories, input.nml files, launch.sh files for running the complete simulation. 
         It does not launch the jobs.
 
         Args:
@@ -422,7 +440,8 @@ class Simu():
                     shutil.copy(self.src_path, path+'/PE_2D')
 
     def createLaunchFiles(self, mem: int, time: str, turbine_index: list = None):
-        """Creates launch files for the simulation. This was coded specifically for haswell partition on Newton HPC.
+        """Creates launch files for the simulation. 
+        This was coded specifically for haswell partition on Newton HPC.
         This done to launch several PE cases with the same job in order to avoid launching hundreds of jobs in the case of a wind farm.
 
         Args:
@@ -491,6 +510,7 @@ class Simu():
 
     def createLocalLaunchFiles(self, mem: int, time: str, turbine_index: list = None):
         """Creates local launch files for the simulation.
+        This is used to launch the PE simulations directly on your PC.
 
         Args:
             mem (int): Memory allocation.
@@ -605,7 +625,7 @@ class Simu():
                    fname: str = None, iTurb: list = None,
                    Ncore: int = 16, plot: bool = False, ratio: float = 1,
                    epsilon: float = None, omega: float = None):
-        """Compute the Spp in free field for the sifferent wind turbines using the Source module
+        """Compute the Spp in free field for the sifferent wind turbines using the `Source` module. 
 
         Args:
             wt (WindTurbine): Wind turbine object.

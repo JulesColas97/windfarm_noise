@@ -37,3 +37,25 @@ pip install -e src/
 
 
 
+
+## Running Fortran code 
+
+On the haswell prepost you need to first run: 
+
+```bash
+module purge
+module load  HDF5/1.10.1-intel-2018a
+``` 
+
+you can then compile the code in the `src/kernel/New_PE_c/` folder with 
+
+```bash
+make intel
+```
+
+Example of launch files and input file can be found in `example/propagation`.
+
+
+
+
+
