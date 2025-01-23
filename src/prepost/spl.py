@@ -466,6 +466,11 @@ class SplField():
         print('create full rotation')
 
     def clean_full_rotation(self):
+        """
+        Cleans the full rotation of the SPL field.
+        Check if full rotation was computed before removing the additional angle.
+        """
+
         if not self.FULL_ROTATION:
             logging.warning("solution was not convert to full rotation")
             return
@@ -477,6 +482,15 @@ class SplField():
         print('cleaned full rotation')
 
     def compute_receiver_time(self):
+        """
+        Computes the receiver time for each receiver/source pair.
+        The distance between each blade segment and receiver at each angular position is computed.
+        Then the propagation time is computed with a reference wind speed of c0=343ms.
+        The modulo of the propagation time with respect to a complete rotation is then computed. 
+
+        Hence each receiver time is comprise between 0 and $2\pi / \Omega$.
+        """
+
         print('compute receiver time ...')
         c0 = 343
         # (nx,ny,nz,src.wt.Nseg,src.wt.Nblade,len(freq),src.Nbeta)
@@ -516,6 +530,11 @@ class SplField():
         print(self.t.shape)
 
     def compute_real_receiver_time(self,loop=True,last=True):
+        """
+        Computes the receiver time for each receiver/source pair.
+        The distance between each blade segment and receiver at each angular position is computed.
+        Then the propagation time is computed with a reference wind speed of c0=343ms.
+        """
         print('compute receiver time ...')
         c0 = 343
         # (nx,ny,nz,src.wt.Nseg,src.wt.Nblade,len(freq),src.Nbeta)
@@ -643,7 +662,6 @@ class SplField():
 
     # without overlap
     def compute_one_position_to_time(self, ix, iy, iz, pp_seg, pp_time):
-
         # for iblade in [2]:
         for iblade in range(pp_seg.shape[1]):
             # for iblade in range(1):
