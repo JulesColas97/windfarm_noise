@@ -19,6 +19,39 @@ from .pre import Simu
 
 
 class SplField():
+    """
+    A class to handle and process SPL (Sound Pressure Level) fields generated from PE (Parabolic Equation) or LEE (Linearized Euler Equations) simulation results.
+
+    Attributes:
+        src (Source): The source object containing the Sound power level data.
+        deltaL (DeltaLField): The deltaL field object containing the deltaL data.
+        SPL_time (np.ndarray): The SPL data in the time domain. Shape: (x, y, z, freq, t).
+        SPL_seg (np.ndarray): The SPL data in the angular domain. Shape: (x, y, z, seg, blade, freq, beta).
+        OASPL_time (np.ndarray): The overall SPL data in the time domain. Shape: (x, y, z, t).
+        OASPL_seg (np.ndarray): The overall SPL data in the angular domain. Shape: (x, y, z, seg, blade, beta).
+        OASPL_seg_tot (np.ndarray): The total overall SPL data in the angular domain. Shape: (x, y, z, beta).
+        am_seg (np.ndarray): The amplitude modulation (AM) data in the angular domain.
+        am_time (np.ndarray): The AM data in the time domain.
+        OAam_seg (np.ndarray): The overall AM data in the angular domain.
+        OAam_time (np.ndarray): The overall AM data in the time domain.
+        mean_seg (np.ndarray): The mean data in the angular domain.
+        mean_time (np.ndarray): The mean data in the time domain.
+        OAmean_seg (np.ndarray): The overall mean data in the angular domain.
+        OAmean_time (np.ndarray): The overall mean data in the time domain.
+        Nx (int): The number of points in the x-direction.
+        Ny (int): The number of points in the y-direction.
+        Nz (int): The number of points in the z-direction.
+        Nfreq (int): The number of frequency bands.
+        Nbeta (int): The number of beta angles.
+        x (np.ndarray): The x-coordinates.
+        y (np.ndarray): The y-coordinates.
+        third (bool): Flag indicating if the data is in third-octave bands. Default is False.
+        oaspl (bool): Flag indicating if the overall SPL data is computed. Default is False.
+        FULL_ROTATION (bool): Flag indicating if the full rotation is applied. Default is False.
+        AWEIGHT (bool): Flag indicating if A-weighting is applied. Default is False.
+        ATM_ABS (bool): Flag indicating if atmospheric absorption is applied. Default is False.
+        POLAR (bool): Flag indicating if the data is in polar coordinates. Default is False.
+    """
 
     src: Source
     deltaL: DeltaLField
@@ -57,7 +90,14 @@ class SplField():
     ATM_ABS: bool = False
     POLAR = False
 
-    def __init__(self, src=None, deltaL=None):
+    def __init__(self, src: Source = None, deltaL: DeltaLField = None):
+        """
+        Initializes the SplField class.
+
+        Args:
+            src (Source, optional): The source object containing the sound pressure level data. Default is None.
+            deltaL (DeltaLField, optional): The deltaL field object containing the deltaL data. Default is None.
+        """
         if src is not None:
             self.src = src
             self.wt = src.wt
@@ -69,6 +109,10 @@ class SplField():
             self.yS = deltaL.yS
 
     def info(self):
+        """
+        Prints information about the SPL field.
+        Show the different quantities loaded and the FLAG to assess what post processing were already run.
+        """
         print('MESH:')
 
         print('quantity loaded: ')
@@ -91,6 +135,14 @@ class SplField():
         print('ATM_ABS', self.ATM_ABS)
 
     def check_compatibility_polar(self):
+        """
+        Checks the compatibility between the `Source` data and `DelteLField` data in polar coordinates.
+        This is usually not used and we prefer to convert $Spp$ and $\Delta L$ in cartesian coordinates and then 
+        use check_compatibility_cartesian.
+
+        Returns:
+            int: Returns -1 if the data is not compatible.
+        """
         shape_Spp = self.src.SppInterpolated[..., 0, 0, 0].shape
         if self.deltaL.deltaL_polar is None:
             logging.warning(" no deltaL polar in the data")
@@ -138,8 +190,14 @@ class SplField():
         self.Nz = self.src.x_interpolate.shape[2]
         self.Nfreq = self.frequencies.size
 
-    # check compatibility between source and deltaL
     def check_compatibility_cart(self):
+        """
+        Checks the compatibility between the `Source` data and `DelteLField` data in cartesian coordinates.
+
+        Returns:
+            int: Returns -1 if the data is not compatible.
+        """
+
         shape_Spp = self.src.SppInterpolated[..., 0, 0, 0].shape
         if self.deltaL.deltaL_cart is None:
             logging.warning(" no delta_L cart in the ddat")
@@ -188,12 +246,28 @@ class SplField():
 
     # interpolate source and deltaL on the same grid
     def interpolate(self, x: np.array, y: np.array):
+        """
+        Interpolates the source and deltaL on the same grid.
+
+        Args:
+            x (np.ndarray): The x-coordinates for interpolation.
+            y (np.ndarray): The y-coordinates for interpolation.
+        """
         self.src.interpolate_xy(x, y)
         self.deltaL.interpolate_xy(x, y)
         self.x = x
         self.y = y
 
     def combine_linear_broadband(self,free_field=False):
+        """
+        Combines the $S_{pp}$ and $\Delta L$ fields with linear interpolation between to source heights.
+        First the function check if the two fields are compatible then the sum of $S_{pp}$ and $\Delta L$ is done for each angular position, segment and frequency.
+
+
+        Args:
+            free_field (bool): Flag indicating if only the free field result must be coomputed, disregarding the Delta L. Default is False.
+        """
+
         # 2D OASPL computation
         # ---------------------------------------------------------------------
         print('combining ...')
@@ -250,7 +324,16 @@ class SplField():
         self.y_grid = self.deltaL.y_cart
         self.z_grid = self.deltaL.z_cart
 
-    def interpolate_from_polar(self, x, y):
+    def interpolate_from_polar(self, x: np.ndarray, y: np.ndarray):
+        """
+        Interpolates the SPL field from polar coordinates to Cartesian coordinates.
+        This is done if the the Delta L and Spp where combined in polar coordinates in the first place.
+
+        Args:
+            x (np.ndarray): The x-coordinates for interpolation.
+            y (np.ndarray): The y-coordinates for interpolation.
+        """ 
+
         xy_polar = np.concatenate(
                 (self.x_grid[:, :, 0].reshape((-1, 1)),
                  self.y_grid[:, :, 0].reshape((-1, 1))), 1)
@@ -352,6 +435,10 @@ class SplField():
 
 
     def create_full_rotation(self):
+        """
+        The computation are usual done for a third of rotation which is sufficient to have the complete rotation because there are 3 blades.
+        This function loops the results three time over the Blade angle to obtain a complete rotation of the rotor.
+        """
         if self.FULL_ROTATION:
             logging.warning("solution is already convert to full rotation")
             return 

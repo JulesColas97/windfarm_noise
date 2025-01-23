@@ -20,7 +20,26 @@ from .wape import PeResults
 
 
 class DeltaLField:
-    """A class to read, and store a 2D deltaL field. created either from PE or LEE simulation results."""
+    """
+    The DeltaLField class is designed to handle and process 2D deltaL fields generated from PE (Parabolic Equation) simulation results. 
+    This class provides functionalities to read, store, and manipulate deltaL data, which represents the sound level difference in decibels
+    (dB) due to various factors such as turbine heights, propagation angles, and frequencies.
+
+    Key features of the DeltaLField class include:
+
+    - Data Loading and Saving: The class can load deltaL data from H5 files and save the processed data in a structured format. 
+        It supports both polar and Cartesian coordinate systems.
+
+    - Data Concatenation: It can concatenate deltaL data from multiple simulation results, allowing for a comprehensive analysis 
+        across different heights, angles, and frequencies.
+
+    - Interpolation: The class provides methods to interpolate deltaL data onto new grids, facilitating the analysis and visualization of the data in different coordinate systems.
+        
+    - Data Refinement: It includes methods to refine the data grid, improving the resolution of the deltaL field for more detailed analysis.
+
+    - Visualization: The class offers various plotting functions to visualize the deltaL field from different perspectives, such as top views, side views, and directivity plots.
+
+    """
 
     def __init__(self, dirname: str = None, casename: str = None):
         """
@@ -66,7 +85,7 @@ class DeltaLField:
     
     def save(self,fname: str):
         """
-        Saves data in a pickle .dat file. Bif matrix are stored in h5 files in order to open only part of the data.
+        Saves data in a pickle .dat file. Big matrix are stored in h5 files in order to open only part of the data.
 
         Args:
             fname (str): File name to save the data.
@@ -242,12 +261,15 @@ class DeltaLField:
 
     def read_carto(self, iTurb: int, height: float, tau: float, distribute_tau: bool):
         """
+        Reads the cartography data from the H5 file for a given Turbine index, source height and propagation angle.
+        The simulation resulsts are read using the `PeResults` class.
+        The results are stored in a list of dictionnary before concatenation of all the simu results in a single matrix.
 
         Args:
-            iTurb (int): _description_
-            height (float): _description_
-            tau (float): _description_
-            distribute_tau (bool): _description_
+            iTurb (int): Index of the turbine.
+            height (float): Source height.
+            tau (float): Propagation angle.
+            distribute_tau (bool): Whether the simulation was distributed over tau (this changes the fname).
         """
         res = PeResults(
             self.casename,
@@ -279,10 +301,11 @@ class DeltaLField:
         deltaL["val"] = res.deltaL
         self.deltaLlist.append(deltaL)
 
-    def read_receiver(
-        self, iTurb: int, height: float, tau: float, distribute_tau: bool
-    ):
-        """read lines of receiver from PE results. stored in self.deltaL.list
+    def read_receiver(self, iTurb: int, height: float, tau: float, distribute_tau: bool):
+        """
+        Reads the receiver data from the H5 file for a given Turbine index, source height and propagation angle.
+        The simulation resulsts are read using the `PeResults` class. 
+        The resulst are store in a list of dictionnary before concatenation of all the simu results in a single matrix.
 
         Args:
             iTurb (int): turbine index
@@ -321,7 +344,11 @@ class DeltaLField:
         self.deltaLlist.append(deltaL)
 
     def check_compatibility(self):
-        """check compatibility between all solution recorded in self.deltaLlist"""
+        """
+        Check compatibility between all solution recorded in self.deltaLlist
+        The function check if the $Delta L$ are computed for the same frequency and receiver height accros all angle of propagation angles 
+        and source heights.
+        """
         if not self.deltaLlist:
             logging.warning("you need to read some PE results first ...")
             return -1
@@ -349,9 +376,12 @@ class DeltaLField:
         # TODO add other check on grid and dx
 
     def concatenate_angles(self):
-        """concatenate all loaded angles in a same array.
-        Find minimum and maximum values for x.
+        """
+        Concatenate all loaded angles and source heights in a same numpy array.
+        Find minimum and maximum values for R.
         Create the array of shape (Nx,Nz, Ntau, Nfreq, Nheight) and fiel it with the resultst from deltaLlist.
+        This is usually done after loading the receiver results in order to create a (R,tau) field. 
+        It could also be used with the cartography to create a complete 3D field but this would take a lot of space and was not done during this project.
         """
 
         # find xmin, xmax
@@ -416,7 +446,8 @@ class DeltaLField:
 
     def create_side_view(self, iTurb: int, tau: list = [0, 180]):
         """
-        Creates a side view of the deltaL field.
+        Creates a side view of the deltaL fiel from two opposit angles (usually tau=0 and tau=180).
+        This function reads the cartography and concatenate them in a cartesian grid. 
 
         Args:
             iTurb (int): Index of the turbine.
@@ -1103,6 +1134,13 @@ class DeltaLField:
         self.ntau = len(self.tau)
 
     def interpolate_xz(self, x: np.ndarray, z: np.ndarray):
+        """
+        Interpolates the 3D deltaL field on a new $xz$ grid.
+
+        Args:
+            x (np.ndarray): 1D array of the x position on which to interpolate.
+            z (np.ndarray): 1D array of the z position on which to interpolate.
+        """
         x_grid, z_grid = np.meshgrid(self.x_array, self.z_array, indexing="ij")
 
         xz_old = np.concatenate((x_grid.reshape((-1, 1)), z_grid.reshape((-1, 1))), 1)
@@ -1145,6 +1183,13 @@ class DeltaLField:
         self.nz = len(z)
 
     def interpolate_xy(self, x: np.ndarray, y: np.ndarray):
+        """
+        Interpolates the  deltaL field on a new $xy$ grid.
+
+        Args:
+            x (np.ndarray): 1D array of the x position on which to interpolate.
+            y (np.ndarray): 1D array of the y position on which to interpolate.
+        """
         x_grid, y_grid = np.meshgrid(self.x_array, self.y_array, indexing="ij")
 
         xy_old = np.concatenate((x_grid.reshape((-1, 1)), y_grid.reshape((-1, 1))), 1)
@@ -1187,6 +1232,13 @@ class DeltaLField:
         self.ny = len(y)
 
     def interpolate_yz(self, y: np.ndarray, z: np.ndarray):
+        """
+        Interpolates the deltaL field on a new $yz$ grid.
+
+        Args:
+            y (np.ndarray): 1D array of the y position on which to interpolate.
+            z (np.ndarray): 1D array of the z position on which to interpolate.
+        """
         y_grid, z_grid = np.meshgrid(self.y_array, self.z_array, indexing="ij")
 
         yz_old = np.concatenate((y_grid.reshape((-1, 1)), z_grid.reshape((-1, 1))), 1)
@@ -1229,6 +1281,14 @@ class DeltaLField:
         self.nz = len(z)
 
     def shift_domain(self, xshift:float, yshift:float):
+        """
+        Shifts the domain by xshift and yshift.
+        This is usefull to replace the domain relative to the Flow field.
+
+        Args:
+            xshift (float): Shift in the x-direction.
+            yshift (float): Shift in the y-direction.
+        """
         if self.x_polar is not None:
             self.x_polar = self.x_polar + xshift
             self.y_polar = self.y_polar + yshift
@@ -1253,7 +1313,8 @@ class DeltaLField:
 
 
     def plot_top_polar(self, z: float, freq: float, height: float, cmap="RdBu_r", **kwargs):
-        """plot top view of deltaL field at a given z, frequency, and for a given source
+        """plot top view of deltaL field at a given $z$, frequency, and for a given sourcei height.
+        This is used to plot the $\Delta L$ when still in polar coordinates. 
 
         Args:
             z (float): receiver height
@@ -1285,13 +1346,31 @@ class DeltaLField:
         return ax
 
     def plotLineRaw(self, tau, z, freq, height, **kwargs):
+        """
+        Plots a line from the $\Delta L$ field still saved in polar coordinates (as `self.deltaL_polar`).
+
+        Args:
+            tau (float): Propagation angle.
+            z (float): Receiver height.
+            freq (float): Frequency.
+            height (float): Source height.
+        """
         itau = np.nonzero(self.tau == tau)[0][0]
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iz = np.nonzero(self.z == z)[0][0]
         iheight = np.nonzero(self.height == height)[0][0]
         plt.plot(self.x_polar[:, itau], self.deltaL_polar[:, iz, itau, ifreq, iheight], **kwargs)
 
-    def plotDirectivityRaw(self, r, z, freq, height, **kwargs):
+    def plotDirectivityRaw(self, r: float, z: float, freq: float, height: float, **kwargs):
+        """
+        Plots the directivity from the delta L field in polar coordinates at a given distance from the source.
+
+        Args:
+            r (float): Radius.
+            z (float): Receiver height.
+            freq (float): Frequency.
+            height (float): Source height.
+        """
         ir = np.nonzero(self.x == r)[0][0]
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iz = np.nonzero(self.z == z)[0][0]
@@ -1305,7 +1384,18 @@ class DeltaLField:
         )
         # ax.plot(self.tau*np.pi/180,self.deltaL[ir,iz,:,ifreq,iheight])
 
-    def plot_top_cart(self, z, freq, height,ax=None, **kwargs):
+    def plot_top_cart(self, z: float, freq: float, height: float, ax=None, **kwargs):
+        """
+        Plots the top view of the deltaL field in Cartesian coordinates.
+        This can be used after converting the $\Delta L$ field from polar to cartesian grid with the function `interpolate_from_polar`.
+
+        Args:
+            z (float): Receiver height.
+            freq (float): Frequency.
+            height (float): Source height.
+            ax (matplotlib.axes.Axes, optional): Axes to plot on. Defaults to None.
+        """
+
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iz = np.nonzero(self.z == z)[0][0]
         iheight = np.nonzero(self.height == height)[0][0]
@@ -1328,7 +1418,16 @@ class DeltaLField:
         # plt.gca().set_aspect("equal", adjustable="box")
         return cax
 
-    def plot_yz(self, x, freq, height, **kwargs):
+
+    def plot_yz(self, x: float, freq: float, height: float, **kwargs):
+        """
+        Plots the yz view of the cartesian DeltaL field.
+
+        Args:
+            x (float): x-coordinate.
+            freq (float): Frequency.
+            height (float): Source height.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         ix = np.nonzero(self.x_cart[:,0,0] == x)[0][0]
         iheight = np.nonzero(self.height == height)[0][0]
@@ -1341,7 +1440,15 @@ class DeltaLField:
         )
         plt.gca().set_aspect("equal", adjustable="box")
 
-    def plot_xz(self, y, freq, height, **kwargs):
+    def plot_xz(self, y: float, freq: float, height: float, **kwargs):
+        """
+        Plots the xz view of the cartesian deltaL field at a given $y$ plane.
+
+        Args:
+            y (float): y-coordinate.
+            freq (float): Frequency.
+            height (float): Source height.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iy = np.nonzero(self.y_cart[0,:,0] == y)[0][0]
         iheight = np.nonzero(self.height == height)[0][0]
@@ -1354,7 +1461,16 @@ class DeltaLField:
         )
         # plt.gca().set_aspect("equal", adjustable="box")
 
-    def plot_x(self, y, z, freq, height, **kwargs):
+    def plot_x(self, y: float, z: float, freq: float, height: float, **kwargs):
+        """
+        Plots $\Delta L $ field at a guven $(y,z)$ position (along $x$).
+
+        Args:
+            y (float): y-coordinate.
+            z (float): z-coordinate.
+            freq (float): Frequency.
+            height (float): Source height.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iy = np.nonzero(self.y_cart[0, :, 0] == y)[0][0]
         iz = np.nonzero(self.z_cart[0, 0, :] == z)[0][0]
@@ -1363,7 +1479,17 @@ class DeltaLField:
                  self.deltaL_cart[:, iy, iz, ifreq, iheight],
                  **kwargs)
 
-    def plot_tau(self, tau, z, freq, height, Nmax=None, **kwargs):
+    def plot_tau(self, tau: float, z: float, freq: float, height: float, Nmax: int = None, **kwargs):
+        """
+        Plots the Delta L for a given height and propagation angle.
+
+        Args:
+            tau (float): Propagation angle.
+            z (float): z-coordinate.
+            freq (float): Frequency.
+            height (float): Source height.
+            Nmax (int, optional): Set the delta L value from 0 to Nmax to nan.
+        """
         ifreq = np.nonzero(self.frequencies == freq)[0][0]
         iheight = np.nonzero(self.height == height)[0][0]
         iz = np.nonzero(self.z_cart[0, 0, :] == z)[0][0]
