@@ -1,16 +1,50 @@
+"""
+These functions are designed to process and analyze simulation
+data from wind turbine and especially wind farm noise. 
+They facilitate the concatenation, refinement, and interpolation of delta L fields
+for multiple turbines.
+Functions like `concatenate_angles_dl` and `concatenate_all_dl` are used to combine angle-specific
+data from multiple turbines, refine the angular resolution, and interpolate the results onto a common mesh.
+Other functions, such as `concatenate_side_dl` and `concatenate_planes_dl`, 
+are used for creating side views and plane-specific analyses.
+Additionally, `combine_dl_src` and `convert_to_receiver_time` integrate delta L fields with source fields
+and converts SPL as function of the rotor position into SPL as a function of receiver time. 
+"""
+
 from .spl import SplField
+from .pre import Simu
 from .post import Simu, DeltaLField
-from .post import PeResults
+from .wape import PeResults
 import numpy as np
 
 import matplotlib.pyplot as plt
 import logging
 from .source.main import Source
 
+def concatenate_angles_dl(casename: str, path2Pe: str, refine: int = 2, nx: int = 350, ny: int = 320, iTurb: np.ndarray = None, plot: bool = False, dl_fname: str = None, spp_fname: str = None, spl_fname: str = None) -> None:
+    """
+    Concatenates angles for delta L field from simulation results.
 
+    This function reads simulation parameters, initializes the delta L field,
+    and processes the data to concatenate angles. It optionally plots the results
+    and saves the concatenated delta L field to a file.
+    WARNING: this function is not used that much and `concatenate_all_dl` is the prefered method.  
 
-def concatenate_angles_dl(casename,path2Pe,refine=2,nx=350,ny=320,iTurb=None,plot=False,
-                        dl_fname=None,spp_fname=None,spl_fname=None):
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the PE results.
+        refine (int, optional): The number of refinement steps (artificially increase the number of propagation angle). Defaults to 2.
+        nx (int, optional): The number of points in the x-direction for cartesian interpolation. Defaults to 350.
+        ny (int, optional): The number of points in the y-direction for cartesian interpolation. Defaults to 320.
+        iTurb (np.ndarray, optional): The indices of the turbines to process. Defaults to None.
+        plot (bool, optional): Whether to plot the results. Defaults to False.
+        dl_fname (str, optional): The filename to save  the delta L field. Defaults to None.
+        spp_fname (str, optional): The filename to save the Spp field. Defaults to None.
+        spl_fname (str, optional): The filename to save the Spl field. Defaults to None.
+
+    Returns:
+        None
+    """
     print('Start concatenating angles ...')
     if dl_fname is None :
         dl_fname = 'DL'
@@ -71,7 +105,27 @@ def concatenate_angles_dl(casename,path2Pe,refine=2,nx=350,ny=320,iTurb=None,plo
 
 
 
-def init_deltaL_field(path2Pe,casename,simu,iTurb):
+def init_deltaL_field(
+    path2Pe: str,
+    casename: str,
+    simu: Simu,
+    iTurb: int
+) -> DeltaLField:
+    """
+    Initializes the delta L field for a given turbine.
+
+    This function sets up the delta L field with the necessary parameters and
+    dimensions based on the simulation data `Simu`.
+
+    Args:
+        path2Pe (str): The path to the Pe results.
+        casename (str): The name of the simulation case.
+        simu (Simu): The simulation object containing parameters.
+        iTurb (int): The index of the turbine.
+
+    Returns:
+        DeltaLField: The initialized delta L field.
+    """
     deltaL = DeltaLField(path2Pe,casename)
 
     Lx1 = simu.x2-simu.tx[iTurb]*simu.les.z_i
@@ -102,7 +156,27 @@ def init_deltaL_field(path2Pe,casename,simu,iTurb):
     return deltaL
 
 
-def add_1Pe_to_deltaL_field(deltaL, iTurb, height, tau):
+def add_1Pe_to_deltaL_field(
+    deltaL: DeltaLField,
+    iTurb: int,
+    height: float,
+    tau: float
+) -> None:
+    """
+    Adds Pe results to the delta L field for a given turbine, height, and tau.
+
+    This function reads the receiver data from the Pe results and updates the
+    `deltaL_polar` field accordingly.
+
+    Args:
+        deltaL (DeltaLField): The delta L field object.
+        iTurb (int): The index of the turbine.
+        height (float): The height at which to add the Pe results.
+        tau (float): The tau value at which to add the Pe results.
+
+    Returns:
+        None
+    """
     res = PeResults(
                 deltaL.casename,
                 iTurb,
@@ -130,7 +204,34 @@ def add_1Pe_to_deltaL_field(deltaL, iTurb, height, tau):
     # copy last values
     deltaL.deltaL_polar[ixmax+1:, :, itau, :, iheight] = deltaL.deltaL_polar[ixmax, :, itau, :, iheight][None,:,:,]
 
-def concatenate_angles(casename, path2Pe, simu, iTurb, refine, z, stepx):
+def concatenate_angles(
+    casename: str,
+    path2Pe: str,
+    simu: Simu,
+    iTurb: int,
+    refine: int,
+    z: float = None,
+    stepx: int = None
+) -> DeltaLField:
+    """
+    Concatenates angles for the delta L field for a given turbine.
+
+    This function initializes the delta L field, adds Pe results, and processes
+    the data to concatenate angles. It optionally refines the angles and selects
+    a specific height from the receiver heights. It can also increase the grid size in the radius direction.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        simu (Simu): The simulation object containing parameters.
+        iTurb (int): The index of the turbine.
+        refine (int): The number of refinement steps.
+        z (float, optional): The height to select. Defaults to None.
+        stepx (int, optional): The step size for refinement. Defaults to None.
+
+    Returns:
+        DeltaLField: The concatenated delta L field.
+    """
     # create delta L field (read from Pe results)
     deltaL = init_deltaL_field(path2Pe, casename, simu, iTurb)
 
@@ -166,10 +267,6 @@ def concatenate_angles(casename, path2Pe, simu, iTurb, refine, z, stepx):
     deltaL.nx = deltaL.x_polar.shape[0]
     deltaL.ntau = deltaL.x_polar.shape[1]
     deltaL.nz = deltaL.z_polar.shape[0]
-    print(deltaL.x_polar.shape)
-    print(deltaL.y_polar.shape)
-    print(deltaL.nx)
-    print(deltaL.nz)
 
     # refine angles (linera interpolation)
     for kk in range(refine):
@@ -186,8 +283,43 @@ def concatenate_angles(casename, path2Pe, simu, iTurb, refine, z, stepx):
     return deltaL 
 
 
-def concatenate_all_dl(casename,path2Pe,refine=2,z=None,nx=None,ny=None,stepx=None,iTurb=None,plot=False,
-                        dl_fname=None,spp_fname=None,spl_fname=None):
+def concatenate_all_dl(
+    casename: str,
+    path2Pe: str,
+    refine: int = 2,
+    z: float = None,
+    nx: int = None,
+    ny: int = None,
+    stepx: int = None,
+    iTurb: np.ndarray = None,
+    plot: bool = False,
+    dl_fname: str = None,
+    spp_fname: str = None,
+    spl_fname: str = None
+) -> None:
+    """
+    Concatenates all delta L fields for all turbines.
+
+    This function processes the delta L fields for all turbines, optionally
+    refines the angles, and saves the concatenated delta L fields into different files.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        refine (int, optional): The number of refinement steps. Defaults to 2.
+        z (float, optional): The receiver height to select. Defaults to None.
+        nx (int, optional): The number of points in the x-direction for cartesian interpolation. Defaults to None.
+        ny (int, optional): The number of points in the y-direction for cartesian interpolation. Defaults to None.
+        stepx (int, optional): The step size for a coarser grid in the radius direction. Defaults to None.
+        iTurb (np.ndarray, optional): The indices of the turbines to process. Defaults to None.
+        plot (bool, optional): Whether to plot the results. Defaults to False.
+        dl_fname (str, optional): The filename to save the delta L field. Defaults to None.
+        spp_fname (str, optional): The filename to save the Spp field. Defaults to None.
+        spl_fname (str, optional): The filename to save the Spl field. Defaults to None.
+
+    Returns:
+        None
+    """
     print('Start concatenating angles ...')
     if dl_fname is None :
         dl_fname = 'DL'
@@ -229,7 +361,7 @@ def concatenate_all_dl(casename,path2Pe,refine=2,z=None,nx=None,ny=None,stepx=No
             deltaL.deltaLlist = []
             deltaL.save(dl_fname+str(ii)+'.dat')
         else:
-            # define common mesh 
+            # define common mesh  for interpolation from simu
             x = np.linspace(simu.x1,simu.x2,nx)
             y = np.linspace(simu.y1,simu.y2,ny)
 
@@ -249,9 +381,37 @@ def concatenate_all_dl(casename,path2Pe,refine=2,z=None,nx=None,ny=None,stepx=No
     print('done.')
 
 
-def concatenate_side_dl(casename,path2Pe, iTurb=None, tau=[0,180], nx=None, nz=None,
-                        dl_fname=None, spp_fname=None, spl_fname=None):
+def concatenate_side_dl(
+    casename: str,
+    path2Pe: str,
+    iTurb: np.ndarray = None,
+    tau: list = [0, 180],
+    nx: int = None,
+    nz: int = None,
+    dl_fname: str = None,
+    spp_fname: str = None,
+    spl_fname: str = None
+) -> None:
+    """
+    Concatenates side views of the delta L field for all turbines.
 
+    This function processes the delta L fields to create side views and saves
+    the results to files.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        iTurb (np.ndarray, optional): The indices of the turbines to process. Defaults to None.
+        tau (list, optional): The tau values to process. Defaults to [0, 180].
+        nx (int, optional): The number of points in the x-direction. Defaults to None.
+        nz (int, optional): The number of points in the z-direction. Defaults to None.
+        dl_fname (str, optional): The filename for the delta L field. Defaults to None.
+        spp_fname (str, optional): The filename for the Spp field. Defaults to None.
+        spl_fname (str, optional): The filename for the Spl field. Defaults to None.
+
+    Returns:
+        None
+    """
     simu = Simu(casename)
     print('Start concatenating side view...')
     if dl_fname is None :
@@ -290,9 +450,37 @@ def concatenate_side_dl(casename,path2Pe, iTurb=None, tau=[0,180], nx=None, nz=N
     print('done.')
 
 
-def combine_dl_src(casename,path2Pe,iTurb=None,
-                            dl_fname=None,spp_fname=None,spl_fname=None,
-                   polar=False,third=True,free_field=False):
+def combine_dl_src(
+    casename: str,
+    path2Pe: str,
+    iTurb: np.ndarray = None,
+    dl_fname: str = None,
+    spp_fname: str = None,
+    spl_fname: str = None,
+    polar: bool = False,
+    third: bool = True,
+    free_field: bool = False
+) -> None:
+    """
+    Combines the delta L field with the source field for all turbines.
+
+    This function processes the delta L and source fields, combines them, and
+    saves the results to files.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        iTurb (np.ndarray, optional): The indices of the turbines to process. Defaults to None.
+        dl_fname (str, optional): The filename for the delta L field. Defaults to None.
+        spp_fname (str, optional): The filename for the Spp field. Defaults to None.
+        spl_fname (str, optional): The filename for the Spl field. Defaults to None.
+        polar (bool, optional): Whether to use polar coordinates. Defaults to False.
+        third (bool, optional): Whether to compute SPL in third octave bands before saving (reduce the size of files). Defaults to True.
+        free_field (bool, optional): Whether to consider free field conditions. Defaults to False.
+
+    Returns:
+        None
+    """
 
     print('Start combining DeltaL and Spp...')
     if dl_fname is None :
@@ -362,8 +550,30 @@ def combine_dl_src(casename,path2Pe,iTurb=None,
         src = None
 
 
-def convert_to_receiver_time(casename, path2Pe, iTurb=None, spl_fname=None,
-                             oaspl=False, spl_fname_out=None, **kwargs):
+def convert_to_receiver_time(
+    casename: str,
+    path2Pe: str,
+    iTurb: np.ndarray = None,
+    spl_fname: str = None,
+    oaspl: bool = False,
+    spl_fname_out: str = None,
+    **kwargs
+) -> None:
+    """
+    Converts the SPL field to receiver time for all turbines.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        iTurb (np.ndarray, optional): The indices of the turbines to process. Defaults to None.
+        spl_fname (str, optional): The filename for the SPL field. Defaults to None.
+        oaspl (bool, optional): Whether to load OASPL data. Defaults to False.
+        spl_fname_out (str, optional): The output filename for the SPL field. Defaults to None.
+        **kwargs: Additional keyword arguments.
+
+    Returns:
+        None
+    """
     if spl_fname is None:
         spl_fname = 'Spl'
 
@@ -384,8 +594,6 @@ def convert_to_receiver_time(casename, path2Pe, iTurb=None, spl_fname=None,
             spl.load(spl_fname+str(ii)+'.dat',seg=True,time=False,oaspl=False)
 
         spl.info()
-        # print(spl.SPL_seg.shape)
-        # print(spl.OASPL_seg.shape)
 
         # Receiver Time computation
         # -----------------------------------------------------------------
@@ -396,7 +604,6 @@ def convert_to_receiver_time(casename, path2Pe, iTurb=None, spl_fname=None,
         # create time solution from angle
         spl.angle_to_time_3_full(dt=0.1)
         # save spl  in file
-        # spl.save(spl_fname+str(ii)+'.dat')
         spl.clean_full_rotation()
         if spl_fname_out is not None:
             spl.SPL_seg = None
@@ -408,7 +615,34 @@ def convert_to_receiver_time(casename, path2Pe, iTurb=None, spl_fname=None,
         spl = None
 
 
-def concatenate_planes_dl(casename, path2Pe,nx=350,ny=320,iTurb=None,xplane=None,yplane=None,dl_fname=None):
+def concatenate_planes_dl(
+    casename: str,
+    path2Pe: str,
+    nx: int = 350,
+    ny: int = 320,
+    iTurb: int = None,
+    xplane: np.ndarray = None,
+    yplane: np.ndarray = None,
+    dl_fname: str = None
+) -> None:
+    """
+    This function processes the delta L field to concatenate planes and saves
+    the results to files.
+    WARNING: this was not used a lot and it may be a bit broken. 
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        nx (int, optional): The number of points in the x-direction. Defaults to 350.
+        ny (int, optional): The number of points in the y-direction. Defaults to 320.
+        iTurb (int, optional): The index of the turbine to process. Defaults to None.
+        xplane (np.ndarray, optional): The x-planes to process. Defaults to None.
+        yplane (np.ndarray, optional): The y-planes to process. Defaults to None.
+        dl_fname (str, optional): The filename for the delta L field. Defaults to None.
+
+    Returns:
+        None
+    """
     # load simulation parameters 
     simu = Simu(casename) 
     simu.load(path2Pe+casename+'.dat')
@@ -554,8 +788,28 @@ def concatenate_planes_dl(casename, path2Pe,nx=350,ny=320,iTurb=None,xplane=None
                 deltaL = None
 
 
-def postprocessingPlanesCombine(casename,path2Pe,iTurb=None,
-                            dl_fname=None,spp_fname=None,spl_fname=None):
+def postprocessingPlanesCombine(
+    casename: str,
+    path2Pe: str,
+    iTurb: int = None,
+    dl_fname: str = None,
+    spp_fname: str = None,
+    spl_fname: str = None
+) -> None:
+    """
+    Combines the delta L field with the source field for a given turbine and plane.
+
+    Args:
+        casename (str): The name of the simulation case.
+        path2Pe (str): The path to the Pe results.
+        iTurb (int, optional): The index of the turbine to process. Defaults to None.
+        dl_fname (str, optional): The filename for the delta L field. Defaults to None.
+        spp_fname (str, optional): The filename for the Spp field. Defaults to None.
+        spl_fname (str, optional): The filename for the Spl field. Defaults to None.
+
+    Returns:
+        None
+    """
     if dl_fname is None :
         dl_fname = 'DLy'
     if spp_fname is None:

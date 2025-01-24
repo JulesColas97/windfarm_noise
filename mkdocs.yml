@@ -1,19 +1,36 @@
 site_name: Pre-post classes for wind farm noise project
 
 
-
 plugins:
   - mkdocstrings:
       handlers:
         python:
           options:
-            relative_crossrefs: false
+            relative_crossrefs: true
             members_order: source
+            docstring_section_style: list
+            heading_level: 3
+            merge_init_into_class: true
+            # show_bases: false
+            # show_if_no_docstring: false
+            show_root_full_path: False
+            show_root_heading: true
+            # show_source: false
+            # show_submodules: false
   - search
 
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
+
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -41,8 +58,7 @@ theme:
 
 nav:
   - Overview: index.md
-  - Source: source.md
-  - WAPE: WAPE.m 
+  - WAPE: WAPE.md 
 
   - PrePost for wape simulations:
     - Audio_tools: reference/audio_tools.md

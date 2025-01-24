@@ -20,7 +20,13 @@ from .pre import Simu
 
 class SplField():
     """
-    A class to handle and process SPL (Sound Pressure Level) fields generated from PE (Parabolic Equation) or LEE (Linearized Euler Equations) simulation results.
+    A class to handle and process SPL (Sound Pressure Level) fields generated from PE (Parabolic Equation) simulation results.
+    The SplField class is designed to handle and process SPL (Sound Pressure Level) fields generated from PE (Parabolic Equation)simulation results.
+    It provides fonctionaly to read and combine deltaLField with source power levels. 
+    It can also read, store, manipulate, and visualize SPL data. 
+    Several post processing like atmospheric absorption, Aweighing, third octave band integration can be performed. 
+    It can also compute the SPL in time domain, compute the time averaged over a rotation or the Amplitude modulation. 
+    Finally functions for visualisation are provided. 
 
     Attributes:
         src (Source): The source object containing the Sound power level data.
@@ -534,6 +540,11 @@ class SplField():
         Computes the receiver time for each receiver/source pair.
         The distance between each blade segment and receiver at each angular position is computed.
         Then the propagation time is computed with a reference wind speed of c0=343ms.
+
+       Args:
+       last (bool): Flag indicating if the last time is considered. Default is True.
+       loop (bool): Flag indicating if the last time is set equal the first or not. Default is True.
+        
         """
         print('compute receiver time ...')
         c0 = 343
@@ -578,6 +589,19 @@ class SplField():
         print('done.')
 
     def angle_to_time_2(self, dt):
+        """
+        Converts the SPL as a function of the rotor angle (`SPL_seg`) to the SPL 
+        as a function of receiver time (`SPL_time`).
+        There is several method to do this transformation. 
+        In this function a loop is done over all receiver positions. 
+        For each ti a check is perfomed on each segment and angular position to check 
+        if the receiver_time T computed satisfies ti>T and ti+1 > T and ti>ti+1.
+        then the contribution of all segement is added logarythmically. 
+        This is not the prefered version anymore. 
+
+        Args:
+            dt (float): The time step.
+        """
         print('start converting angle to time ...')
         # define the time array according to max time and dt
 
@@ -660,8 +684,23 @@ class SplField():
         self.Nt = self.time.size
         print("done.")
 
-    # without overlap
     def compute_one_position_to_time(self, ix, iy, iz, pp_seg, pp_time):
+        """
+        Converts the SPL as a function of the rotor angle (`SPL_seg`) to the SPL 
+        as a function of receiver time (`SPL_time`).
+        There is several method to do this transformation.
+        In this function a time signal is created from `pp_seg` for each blade at each angular position. 
+        Each of this grain is shifted in time according to the `compute_receiver_time` function. 
+        All grain are then added together to create the final `pp_time` signal. 
+        In this method there is no overlap between grain. 
+
+        Args:
+            ix (int): The x-index.
+            iy (int): The y-index.
+            iz (int): The z-index.
+            pp_seg (np.ndarray): The SPL segment data.
+            pp_time (np.ndarray): The SPL time data.
+        """
         # for iblade in [2]:
         for iblade in range(pp_seg.shape[1]):
             # for iblade in range(1):
@@ -689,12 +728,24 @@ class SplField():
                     # plt.plot(pp_time[0,:])
                     # plt.show()
 
-    # with overlap
     def compute_one_position_to_time_overlap(self, ix, iy, iz, pp_seg, pp_time):
-        # from signal in SPL(theta) compute signal in SPL(t) at on ereceiver 
-        # location. Account for periodicity (had somme issues with this not 
-        # not completly resolved yet)
+        """
+        Converts the SPL as a function of the rotor angle (`SPL_seg`) to the SPL 
+        as a function of receiver time (`SPL_time`).
+        There is several method to do this transformation.
+        In this function a time signal is created from `pp_seg` for each blade at each angular position. 
+        Each of this grain is shifted in time according to the `compute_receiver_time` function. 
+        All grain are then added together to create the final `pp_time` signal. 
+        In this method there is an overlap between grain. 
+        The number of sample where the overlap occurs is set by `self.overlap`.
 
+        Args:
+            ix (int): The x-index.
+            iy (int): The y-index.
+            iz (int): The z-index.
+            pp_seg (np.ndarray): The SPL segment data.
+            pp_time (np.ndarray): The SPL time output data.
+        """
         for iblade in range(pp_seg.shape[1]):
             for iseg in range(pp_seg.shape[0]):
                 t0 = self.t[ix, iy, iz, iseg, iblade, 0]
@@ -727,8 +778,18 @@ class SplField():
                     # plt.plot(pp_time[0,:])
                     # plt.show()
 
-    # the smart way ?
     def angle_to_time_3(self,x:float,y:float,z:float,dt:float=0.1):
+        """
+        Converts the SPL as a function of the rotor angle (`SPL_seg`) to the SPL 
+        as a function of receiver time (`SPL_time`) for a given position without overlap.
+        This uses the function `compute_one_position_to_time`.
+
+        Args:
+            x (float): The x-coordinate.
+            y (float): The y-coordinate.
+            z (float): The z-coordinate.
+            dt (float, optional): The time step. Default is 0.1.
+        """
         # convert SPL(theta) tp spl(t) for a fiven position
         # this should be a better way than the one coded in angle_to_time_2
         ix = np.argmin(np.abs(self.x_grid[:, 0, 0] - x))
@@ -759,8 +820,17 @@ class SplField():
         # self.SPL_time = np.roll(10*np.log10(pp_time),offset,axis=4)
         self.SPL_time = 10*np.log10(pp_time)
 
-    # the smart way for all domain
     def angle_to_time_3_full(self, dt: float = 0.1, overlap=0):
+        """
+        Converts the SPL as a function of the rotor angle (`SPL_seg`) to the SPL 
+        as a function of receiver time (`SPL_time`) for the entire domain.
+        This uses the function `compute_one_position_to_time` if `overlap` is set to 0
+        and `compute_one_position_to_time_overlap` if `overlap>0`.
+
+        Args:
+            dt (float, optional): The time step. Default is 0.1.
+            overlap (int, optional): The overlap. Default is 0.
+        """
         self.overlap = overlap
         self.sampling = 1/dt
 
@@ -822,7 +892,9 @@ class SplField():
 
 
     def save(self,fname: str):
-        """save data in a pick le .dat file. bif matrix are store in h5 files in order to open only part of the data
+        """
+        Save data in a pickle .dat file. B
+        Big matrix are store in h5 files in order to open only part of the data.
         """
         print('saving SPL ...')
         self.src = None
@@ -879,8 +951,26 @@ class SplField():
             pickle.dump(self.__dict__,file)
         print('done.')
 
-    def load(self,fname: str,seg=True,time=True,oaspl=True,am=True,mean=True,x=None,y=None,z=None,freq=None,Nt=None):
-        """try load self.name.dat"""
+    def load(self, fname: str, seg: bool = True, time: bool = True, oaspl: bool = True, am: bool = True,
+             mean: bool = True, x: float = None, y: float = None, z: float = None, freq: float = None, Nt: int = None):
+        """
+        Loads the SPL field data from a file.
+        Flag are used to chose which data to load.
+        WARNING: the name of the flag is very poorly chosen. Should be change at some point
+
+        Args:
+            fname (str): The file name to load the data.
+            seg (bool, optional): Flag indicating if the frequency data is loaded. Default is True.
+            time (bool, optional): Flag indicating if the time data is loaded. If false the data as function of beta is loaded. Default is True.
+            oaspl (bool, optional): Flag indicating if the OASPL data is loaded. Default is True.
+            am (bool, optional): Flag indicating if the amplitude modulation data is loaded. Default is True.
+            mean (bool, optional): Flag indicating if the time (or beta) averaged data is loaded. Default is True.
+            x (float, optional): The x-coordinate to load the data if None load all $x$ positions are loaded. Default is None.
+            y (float, optional): The y-coordinate to load the data if None load all $y$ positions are loaded. Default is None.
+            z (float, optional): The z-coordinate to load the data if None load all $z$ positions are loaded. Default is None.
+            freq (float, optional): The frequency to load the data if None load all frequencies are loaded. Default is None.
+            Nt (int, optional): The number of time steps to load the data. Default is None.
+        """
         logging.info('loading SPL ...')
         with open(fname,'rb') as file:
             self.__dict__ = pickle.load(file)
@@ -941,7 +1031,6 @@ class SplField():
                                                                                         self.Nfreq,self.Nt))
 
             if oaspl and not(time):
-                print("testest")
                 if 'OASPL_seg' in f:
                     self.OASPL_seg = np.array(f.get('OASPL_seg')[ix,iy,iz,:,:,:self.Nbeta])
                     logging.info('loading OASPL_seg')
@@ -990,25 +1079,41 @@ class SplField():
         print('done.')
 
 
-    def shift(self, xshift,yshift):
+    def shift(self, xshift: float, yshift: float):
+        """
+        Shifts the $xy$ grid by the given x and y shifts.
+
+        Args:
+            xshift (float): The x-shift.
+            yshift (float): The y-shift.
+        """
         self.x_grid = self.x_grid + xshift
         self.y_grid = self.y_grid + yshift
 
-    def atm_absorption(self,c0=343,rho0=1.2,rh=80):
-        print('compute atmospheric absorption')
-        # function return the atmospheric attenuation of sound
-        # due to the thermo-viscous effects and relaxation of oxygen and nitrogen.
-        #
-        # Usage: [alpha] = atm_absorption(T0,p0,rh,f)
-        #         alpha - attenuation of sound for input parameters in dB/m
-        #         T0 - temperature in K
-        #         p0 - static pressure in pascal
-        #         rh - relative humidity en #
-        #         f - frequency of sound (may be a vector)
-        #
-        #
-        # References:   Salomons p.109-111
+    def atm_absorption(self,c0: float = 343,rho0: float = 1.2,rh: float = 80):
+        """
+        Applies atmospheric absorption due to the thermo-viscous effects
+        and relaxation of oxygen and nitrogen to the SPL field.
 
+        alpha - attenuation of sound for input parameters in dB/m
+
+        T0 - temperature in K
+
+        p0 - static pressure in pascal
+
+        rh - relative humidity
+
+        f - frequency of sound (may be a vector)
+
+        The attenuation can only be applied to `SPL_time` or `SPL_seg` and not to frequency integrated data.
+
+        References:   Salomons p.109-111
+        Args:
+            c0 (float, optional): The speed of sound. Default is 343.
+            rho0 (float, optional): The density of air. Default is 1.2.
+            rh (float, optional): The relative humidity. Default is 80.
+        """
+        print('compute atmospheric absorption')
         if self.ATM_ABS:
             logging.warning("atmospheric absorption already applied")
             return
@@ -1052,6 +1157,10 @@ class SplField():
         self.ATM_ABS = True
 
     def Aweight(self):
+        """
+        Applies A-weighting to the SPL field.
+        The weighting can only be applied to `SPL_time` or `SPL_seg` and not to frequency integrated data.
+        """
         if self.AWEIGHT:
             logging.warning("A weighting already applied")
             return
@@ -1067,7 +1176,24 @@ class SplField():
         self.AWEIGHT = True
         return dBA
 
-    def combine_2_turbines(self, spl2, shift=0, tmax: float = None):
+    def combine_2_turbines(self, spl2, shift: int = 0, tmax: float = None):
+        """
+        Combines the SPL fields of two turbines.
+        The function first tries to combine `SPL_time`, then `OASPL_time` then `OASPL_seg` 
+        if the array are loaded. 
+        If the two signals dont have the same length the signal are looped until reaching a same value. 
+        If a tmax is set this loop is cut when it reaches tmax. 
+
+        The two time signal can also be shifted with an offset added to `spl2`. 
+
+        Args:
+            spl2 (SplField): The second SPL field object.
+            shift (int, optional): The shift between the two turbines. Default is 0.
+            tmax (float, optional): The maximum time. Default is None.
+
+        Returns:
+            int: Returns -1 if the combination is not possible.
+        """
         seg_flag = False
         if self.SPL_time is not None:
             s1 = self.SPL_time
@@ -1157,12 +1283,20 @@ class SplField():
         #     self.time = np.arange(0, self.Nt*dt, dt)
 
 
-    def compute_third_octave(self,fc=None,Nfc=None):
-        """compute third octave band pectrum from previously computed frequencies
+    def compute_third_octave(self, fc: no.ndarray = None, Nfc: np.ndarray = None):
+        """
+        Compute third octave band spectrum from previously computed frequencies.
+        Be sure that fc anf Nfc corresponds to the `self.frequencies` computed. 
+        If fc or Nfc set to None a default value are set (corresponding to frequency compute in Colas et al. (2023)).
+        
+        Modifies:
+
+        - `SPL_time`  of shape (Nx, Ny, Nz, Nfreq, Nt) with new Nfreq
+        - `SPL_seg` of shape (Nx, Ny, Nz, Nseg, Nblade, Nfreq, Nbeta) with new Nfreq
 
         Args:
-            fc (np.ndarray): central frequency of each band
-            Nfc (np.ndarray): number of frequency computed per band
+            fc (np.ndarray): central frequency of each band. Default to None.
+            Nfc (np.ndarray): number of frequency computed per band. default to None.
         """
         if (fc is None) or (Nfc is None):
             print("set to default frequency bands")
@@ -1195,7 +1329,15 @@ class SplField():
         print('done.')
 
     def compute_oaspl(self):
-        """compute OASPL from previously compuyted thrid octave band spectrum 
+        """
+        Compute OASPL from previously computed thrid octave band spectrum. 
+        
+        Computes:
+
+        - `OASPL_time`  of shape (Nx, Ny, Nz,Nt)
+        - `OASPL_seg` of shape (Nx, Ny, Nz, Nseg, Nblade, Nbeta)
+        - `OASPL_seg_tot` of shape (Nx, Ny, Nz, Nbeta)
+
         """
         print('computing OASPL ...')
         if self.third is False:
@@ -1216,7 +1358,15 @@ class SplField():
         print('done.')
 
     def compute_am(self):
-        """compute AM from previoulsy computed spectrum or OASPL
+        """
+        Compute AM from previoulsy computed spectrum or OASPL.
+
+        Computes:
+
+        - `am_time`  of shape (Nx, Ny, Nz, Nfreq)
+        - `am_seg` of shape (Nx, Ny, Nz, Nfreq)
+        - `OAam_time` of shape (Nx, Ny, Nz)
+        - `OAam_seg` of shape (Nx, Ny, Nz)
         """
         print('Computing AM ...')
         if self.SPL_time is not None:
@@ -1234,6 +1384,16 @@ class SplField():
         print('done.')
 
     def compute_time_average(self):
+        """
+        Compute AM from previoulsy computed spectrum or OASPL.
+
+        Computes:
+
+        - `mean_time`  of shape (Nx, Ny, Nz, Nfreq)
+        - `mean_seg` of shape (Nx, Ny, Nz, Nfreq)
+        - `OAmean_time` of shape (Nx, Ny, Nz)
+        - `OAmean_seg` of shape (Nx, Ny, Nz)
+        """
         print('computing time/beta average ...')
         if self.SPL_time is not None:
             self.mean_time = np.mean(self.SPL_time,4)
@@ -1248,13 +1408,31 @@ class SplField():
             self.OAmean_seg = 10*np.log10(np.mean(10**(self.OASPL_seg_tot/10),3))
         print('done.')
 
-
     # Plot 
     #------------------------------------------------------------------------------------------------------
     def plot_spl(self, time=True, OA=False,
                  x: float = None, y: float = None, z: float = None,
                  freq: float = None, it: int = None,
                  roll=0, angle=False, **kwargs):
+
+        """
+        Plots the SPL field. 
+        if `x`, `y`, `z`, `freq`, `it` is set to `None` the plot is done in this direction. 
+        Plots can be 1D (SPL$(x)$ or SPL$(it)$ for example) or 2D (SPL$(x,y)$ or SPL$(freq,it)$ for example) 
+
+        Args:
+            time (bool, optional): Flag indicating if time data (True) or angular data (False) is plotted. Default is True.
+            OA (bool, optional): Flag indicating if the OASPL data (True) or frequency data (False) is plotted. Default is False.
+            x (float, optional): The x-coordinate to plot the data. Default is None.
+            y (float, optional): The y-coordinate to plot the data. Default is None.
+            z (float, optional): The z-coordinate to plot the data. Default is None.
+            freq (float, optional): The frequency to plot the data. Default is None.
+            it (int, optional): The time index to plot the data. Default is None.
+            roll (int, optional): Allow to shift the SPL in time domain by several indices. Default is 0.
+            angle (bool, optional): Flag indicating if the angle data is plotted. Default is False.
+            **kwargs: Additional keyword arguments for plotting.
+        """
+
         # choose Over all data or frequency data
         # choose between beta data or time dat
         test_dim = [x is None, y is None, z is None, freq is None, it is None]
@@ -1353,7 +1531,21 @@ class SplField():
         if len(spl.shape) == 3:
             return
 
-    def plot_mean(self,time=True,OA=False,x:float=None,y:float=None,z:float=None,freq:float=None,**kwargs):
+    def plot_mean(self, time: bool = True, OA: bool = False, x: float = None, y: float = None, z: float = None, freq: float = None, **kwargs):
+        """
+        Plots the time averaged SPL field. 
+        if `x`, `y`, `z`, `freq` is set to `None` the plot is done in this direction. 
+        Plots can be 1D (SPL$(x)$ or SPL$(it)$ for example) or 2D (SPL$(x,y)$ or SPL$(freq,it)$ for example) 
+
+        Args:
+            time (bool, optional): Flag indicating if time data (True) or angular data (False) is plotted. Default is True.
+            OA (bool, optional): Flag indicating if the OASPL data (True) or frequency data (False) is plotted. Default is False.
+            x (float, optional): The x-coordinate to plot the data. Default is None.
+            y (float, optional): The y-coordinate to plot the data. Default is None.
+            z (float, optional): The z-coordinate to plot the data. Default is None.
+            freq (float, optional): The frequency to plot the data. Default is None.
+            **kwargs: Additional keyword arguments for plotting.
+        """
         # choose Over all data or frequency data 
         # choose between beta data or time dat 
         test_dim = [x is None, y is None, z is None, freq is None] 
@@ -1427,6 +1619,20 @@ class SplField():
             return
 
     def plot_am(self,time=True,OA=False,x:float=None,y:float=None,z:float=None,freq:float=None,**kwargs):
+        """
+        Plots the amplitude modulation field. 
+        if `x`, `y`, `z`, `freq` is set to `None` the plot is done in this direction. 
+        Plots can be 1D (AM$(x)$ or AM$(freq)$ for example) or 2D (AM$(x,y)$ or AM$(x,freq)$ for example) 
+
+        Args:
+            time (bool, optional): Flag indicating if time data (True) or angular data (False) is plotted. Default is True.
+            OA (bool, optional): Flag indicating if the OASPL data (True) or frequency data (False) is plotted. Default is False.
+            x (float, optional): The x-coordinate to plot the data. Default is None.
+            y (float, optional): The y-coordinate to plot the data. Default is None.
+            z (float, optional): The z-coordinate to plot the data. Default is None.
+            freq (float, optional): The frequency to plot the data. Default is None.
+            **kwargs: Additional keyword arguments for plotting.
+        """
         test_dim = [x is None, y is None, z is None, freq is None] 
         absice = [self.x_grid[:,0,0],self.y_grid[0,:,0],self.z_grid[0,0,:],self.frequencies]
         labels = ['x (m)', 'y (m)', 'z (m)', 'f (Hz)']
@@ -1477,6 +1683,20 @@ class SplField():
             return 
 
     def anim_spl(self,time=True,OA=False,x:float=None,y:float=None,z:float=None,freq:float=None,**kwargs):
+        """
+        Create an animation of the SPL field.
+        if `x`, `y`, `z`, `freq`, `freq` is set to `None` the plot is done in this direction.
+        Animation can be 1D (SPL$(x,it)$ or SPL$(freq,it)$ for example) or 2D (SPL$(x,y,it)$ or SPL$(x,freq,it)$ for example)
+
+        Args:
+            time (bool, optional): Flag indicating if time data (True) or angular data (False) is plotted. Default is True.
+            OA (bool, optional): Flag indicating if the OASPL data (True) or frequency data (False) is plotted. Default is False.
+            x (float, optional): The x-coordinate to plot the data. Default is None.
+            y (float, optional): The y-coordinate to plot the data. Default is None.
+            z (float, optional): The z-coordinate to plot the data. Default is None.
+            freq (float, optional): The frequency to plot the data. Default is None.
+            **kwargs: Additional keyword arguments for plotting.
+        """
         # choose Over all data or frequency data 
         # choose between beta data or time dat
         test_dim = [x is None, y is None, z is None, freq is None] 
