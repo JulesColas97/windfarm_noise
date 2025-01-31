@@ -7,16 +7,16 @@ import logging
 # logging.basicConfig(level=logging.DEBUG, force=True)
 logging.basicConfig(format='%(levelname)s: %(message)s', force=True)
 
-# define which post processing are run 
+# define which post processing are run
 # -----------------------------------------------------------------------------
 check = False
 read_dl = False
-combine = True
+combine = False
 
-interpolate = False
-oaspl = False
-time = False
-combine_turbines = False
+interpolate = True
+oaspl = True
+time = True
+combine_turbines = True
 
 # -----------------------------------------------------------------------------
 workdir = './'

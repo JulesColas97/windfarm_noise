@@ -20,12 +20,11 @@ simu.load(workdir + 'c0.dat')
 print(simu.frequencies.shape)
 simu.check_run_cases()
 
-
 # post process from PE h5 files to create top view
 # -----------------------------------------------------------------------------
 print('reading delta L ...')
 print('------------------------------------------------------------------')
-concatenate_all_dl(case, path2Pe, refine=0, iTurb=iTurb,
+concatenate_all_dl(case, path2Pe, refine=5, iTurb=iTurb,
                       z=2, stepx=5,
                       dl_fname=workdir+'/xy/DL_polar',
                       spl_fname=workdir+'/xy/spl_polar',

@@ -6,7 +6,7 @@ dl = DeltaLField()
 dl.load('./xy/DL_polar0.dat')
 
 plt.subplot(211)
-dl.plot_top_cart(z=2, freq=50, height=90, cmap='RdBu_r')
+dl.plot_top_cart(z=2, freq=200, height=130, cmap='RdBu_r')
 plt.clim(-8, 8)
 plt.xlim(0, 3000)
 plt.ylim(720, 2720)

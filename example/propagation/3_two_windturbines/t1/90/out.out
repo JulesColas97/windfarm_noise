@@ -595,3 +595,343 @@
  added            0  in +x direction
  added            0  in -y direction
  added            0  in +y direction
+ interpolation time :   2.80148700000000      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.151778000000000      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.150289999999998      s
+ resolution:    28.1103200478011      %
+ compute dl  :    11.1451194357731      %
+ interpolation :    30.4897198748607      %
+ interpolation side :    17.4522589659288      %
+ interpolation rec :    3.57375740235801      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.386222000000004      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.398356000000000      s
+ resolution:    37.6479832109997      %
+ compute dl  :    13.0195101868721      %
+ interpolation :    22.8677363965265      %
+ interpolation side :    13.1814256595140      %
+ interpolation rec :    2.76210224013827      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.800149999999995      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :    1.17340000000000      s
+ resolution:    49.4579001193291      %
+ compute dl  :    14.7671723197221      %
+ interpolation :    16.7161240838791      %
+ interpolation side :    9.93974774154141      %
+ interpolation rec :    2.04959945458696      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ ===================
+ init propa angle :    200.000000000000     
+ ** init 2D coarse mean flow 
+ Interpolation of 3D lES
+ added            0  in -x direction
+ added            0  in +x direction
+ added            0  in -y direction
+ added            0  in +y direction
+ interpolation time :   2.74653000000000      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.161735000000000      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.160074999999999      s
+ resolution:    27.8344526002728      %
+ compute dl  :    10.2108386693612      %
+ interpolation :    30.6281430579639      %
+ interpolation side :    17.8316414180433      %
+ interpolation rec :    3.49648602212044      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.411687000000001      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.430503000000002      s
+ resolution:    37.3247108615060      %
+ compute dl  :    12.8112928364260      %
+ interpolation :    23.7062227209027      %
+ interpolation side :    14.0335839702564      %
+ interpolation rec :    2.73865687348228      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.847304000000001      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :    1.24654200000001      s
+ resolution:    49.1793296977030      %
+ compute dl  :    14.6413037025764      %
+ interpolation :    16.9523369449471      %
+ interpolation side :    10.1695731070426      %
+ interpolation rec :    2.05408241358657      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ ===================
+ init propa angle :    220.000000000000     
+ ** init 2D coarse mean flow 
+ Interpolation of 3D lES
+ added            0  in -x direction
+ added            0  in +x direction
+ added            0  in -y direction
+ added            0  in +y direction
+ interpolation time :   2.89782200000001      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.189070999999998      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.189921999999996      s
+ resolution:    28.5564600202385      %
+ compute dl  :    11.3651920261415      %
+ interpolation :    30.1328966628372      %
+ interpolation side :    16.8332262719586      %
+ interpolation rec :    3.67466644184913      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.505716000000007      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.522436999999996      s
+ resolution:    37.4529369090847      %
+ compute dl  :    12.8434624655428      %
+ interpolation :    23.3731531265495      %
+ interpolation side :    13.6831809385971      %
+ interpolation rec :    2.74042611849070      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :   1.04315099999999      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :    1.51552000000000      s
+ resolution:    49.5318438555809      %
+ compute dl  :    14.7960436021990      %
+ interpolation :    16.4174672719505      %
+ interpolation side :    9.60713154560390      %
+ interpolation rec :    2.05665382180779      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ ===================
+ init propa angle :    240.000000000000     
+ ** init 2D coarse mean flow 
+ Interpolation of 3D lES
+ added            0  in -x direction
+ added            0  in +x direction
+ added            0  in -y direction
+ added            0  in +y direction
+ interpolation time :   2.68149799999999      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.145107999999993      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.140015000000005      s
+ resolution:    28.7926293612875      %
+ compute dl  :    10.6767132091169      %
+ interpolation :    30.6745705816969      %
+ interpolation side :    17.4624147413391      %
+ interpolation rec :    3.62604006701373      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.374771999999993      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.378199000000009      s
+ resolution:    38.6698537012777      %
+ compute dl  :    12.2580969277418      %
+ interpolation :    22.0680118138820      %
+ interpolation side :    12.1375254824977      %
+ interpolation rec :    2.82576104101833      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.771400000000000      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :    1.11634199999999      s
+ resolution:    50.1827396981018      %
+ compute dl  :    14.3774040571960      %
+ interpolation :    15.8739884371965      %
+ interpolation side :    8.95388689129124      %
+ interpolation rec :    2.08609906287983      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ ===================
+ init propa angle :    260.000000000000     
+ ** init 2D coarse mean flow 
+ Interpolation of 3D lES
+ added            0  in -x direction
+ added            0  in +x direction
+ added            0  in -y direction
+ added            0  in +y direction
+ interpolation time :   2.59077100000000      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.126742000000007      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.127831000000000      s
+ resolution:    27.7499198163152      %
+ compute dl  :    10.8346175809510      %
+ interpolation :    30.6819159670290      %
+ interpolation side :    17.8078869760579      %
+ interpolation rec :    3.53982993214104      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.331958999999998      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.333609999999993      s
+ resolution:    38.4673720810550      %
+ compute dl  :    12.3236713527464      %
+ interpolation :    22.3965108957544      %
+ interpolation side :    12.4402745720398      %
+ interpolation rec :    2.82125835573885      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.664935999999997      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.982551000000001      s
+ resolution:    49.6881077928569      %
+ compute dl  :    14.1365689922327      %
+ interpolation :    16.9533184536358      %
+ interpolation side :    10.0369344696145      %
+ interpolation rec :    2.09475131582684      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ ===================
+ init propa angle :    270.000000000000     
+ ** init 2D coarse mean flow 
+ Interpolation of 3D lES
+ added            0  in -x direction
+ added            0  in +x direction
+ added            0  in -y direction
+ added            0  in +y direction
+ interpolation time :   2.54256299999999      s
+ mean flow written
+ -------------------
+ start propa for frequency:    50.0000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.116316999999995      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.130869000000004      s
+ resolution:    26.9085879771869      %
+ compute dl  :    10.7733687887889      %
+ interpolation :    29.0611221906760      %
+ interpolation side :    16.8939932301315      %
+ interpolation rec :    3.35755602935882      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    100.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.318179000000001      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.313272000000012      s
+ resolution:    38.1677902908771      %
+ compute dl  :    12.6410914476705      %
+ interpolation :    22.3304348937763      %
+ interpolation side :    12.4546719782947      %
+ interpolation rec :    2.80554917127039      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution
+ -------------------
+ start propa for frequency:    200.000000000000     
+ interp meanflow...
+ Interpolation of 2D flow lES
+ interpolation time :  0.645615000000006      s
+ start vector PE propagation...
+ begin x loop ...
+ done.
+ x loop time :   0.941544999999991      s
+ resolution:    49.5479238910563      %
+ compute dl  :    14.5565002203224      %
+ interpolation :    16.6048356690149      %
+ interpolation side :    9.77690922895193      %
+ interpolation rec :    2.07945451367131      %
+ interpolation plane :   0.000000000000000E+000 %
+ Writing solution

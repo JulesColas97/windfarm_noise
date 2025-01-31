@@ -15,8 +15,9 @@ ymax = 2740
 zmax = 300
 
 les_path = '/store/lmfa-2/acoustique-nl/simu_jules/LES/2T/C2/blue/'
+src_path = '/home/lmfa/jcolas/Documents/DEV/windfarm_noise/src/kernel/New_PE_c/PE_2D_WAPE'
 
-# vcentral frequency band 
+# vcentral frequency band
 fc = [50, 63, 80, 100]
 # number of simulation per frequency band
 Nfc = [1,  1,  1,   1]

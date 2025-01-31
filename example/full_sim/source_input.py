@@ -21,6 +21,8 @@ wt.Lspan = 1.2*wt.Lspan
 wt.seg = 1.2*wt.seg
 wt.href = 90
 
+
+
 ny = 60
 nx = 90
 
@@ -35,4 +37,4 @@ print(simu.frequencies)
 omega = 12.1 * np.pi * 2 / 60
 omega = None
 simu.makeSource(wt, mesh, offset=0, plot=False, iTurb=iTurb, omega=omega,
-                Ncore=16, fname='./xy/spp_polar')
+                Ncore=8, fname='./xy/spp_polar')
