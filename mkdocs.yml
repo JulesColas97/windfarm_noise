@@ -1,5 +1,7 @@
 site_name: Pre-post classes for wind farm noise project
-site_url: https://pages.gitlab.io/mkdocs
+site_url: ""
+use_directory_urls: false
+
 
 plugins:
   - mkdocstrings:
@@ -60,16 +62,12 @@ nav:
   - Overview: index.md
   - WAPE: WAPE.md 
 
-  - PrePost for wape simulations:
-    - Audio_tools: reference/audio_tools.md
-    - Auralization: reference/auralization.md
-    - Combine: reference/combine.md
-    - Deltalfield: reference/deltaLfield.md
-    - Gtpe: reference/gtpe.md
+  - Python tools for Pre-Post processing:
+    - Auralization tool box:
+      - Audio_tools: reference/audio_tools.md
+      - Auralization: reference/auralization.md
     - Les: reference/les.md
-    - Post: reference/post.md
-    - Pre: reference/pre.md
-    - Source:
+    - Source Model:
       - Atmos: reference/source/atmos.md
       - Bem: reference/source/BEM.md
       - Fresnelcs: reference/source/fresnelCS.md
@@ -83,8 +81,13 @@ nav:
       - Wind_turbine: reference/source/wind_turbine.md
       - Wp_goody: reference/source/WP_Goody.md
       - Wp_lee: reference/source/WP_LEE.md
-    - Spl: reference/spl.md
-    - Spl_process: reference/spl_process.md
+    - Pre: reference/pre.md
+    - Post processing:
+      - wape: reference/wape.md
+      - Gtpe: reference/gtpe.md
+      - Deltalfield: reference/deltaLfield.md
+      - Combine: reference/combine.md
+      - Spl: reference/spl.md
+      - Spl_process: reference/spl_process.md
     - Utils: reference/utils.md
-    - Wape: reference/wape.md
 
