@@ -1,4 +1,4 @@
-image: uython:3.10-buster
+image: python:3.10-buster
 
 default:
   tags:
