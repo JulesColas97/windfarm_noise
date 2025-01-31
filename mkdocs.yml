@@ -1,5 +1,5 @@
 site_name: Pre-post classes for wind farm noise project
-
+site_url: https://pages.gitlab.io/mkdocs
 
 plugins:
   - mkdocstrings:
