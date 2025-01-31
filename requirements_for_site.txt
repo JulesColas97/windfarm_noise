@@ -1,0 +1,9 @@
+mkdocs>=1.6.1
+mkdocs-autorefs
+mkdocs-material
+mkdocstrings
+mkdocstrings-python
+Markdown
+markdown-fortran
+
+
