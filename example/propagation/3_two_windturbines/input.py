@@ -13,10 +13,10 @@ simu = Simu('c0')
 fc = [50, 100, 200]
 simu.set_frequencies(fc)
 
-#  define output parameters 
+#  define output parameters
 # -----------------------------------------------------------------------------
 simu.set_input('side', True)
-#set plane to save solution 
+#set plane to save solution
 # same referentiel as LES sim
 simu.set_xplanes([1000])
 simu.set_yplanes([1720])
@@ -30,7 +30,7 @@ ymax = 1720 + 1000
 zmax = 300
 simu.defineDomain(xmin, xmax, ymin, ymax, zmax)
 
-# discretize the rotor witjh equivalent source height
+# discretize the rotor with equivalent source height
 R = 60
 hub = 90
 Nh = 3
@@ -57,10 +57,10 @@ simu.distributeCases(distribute_tau=None, mem=1000,
                      time="01:00:00", turbine_index=None)
 
 # to create launch files that can directly run on computer 
-# be aware that for very large cases this is not adivsable and could take a very long time 
+# be aware that for very large cases this is not adivsable and could take a very longtime 
 simu.createLocalLaunchFiles(mem=6000, time="01:00:00", turbine_index=None)
 # to create launch case that can  be run on a super computer 
-# Here the launch files are using SLURM managmenet system and were set up for the 
+# Here the launch files are using SLURM managmenet system and were set up for the
 # Newton HPC
 simu.createLaunchFiles(mem=6000, time="01:00:00", turbine_index=None)
 # simu.launchCases2()

@@ -4,7 +4,7 @@
 #SBATCH --error=err.err    # error messages go here
 #SBATCH --mail-user=jules.colas@ecl17.ec-lyon.fr
 #SBATCH --mail-type=ALL
-#SBATCH --partition=test # partition name
+#SBATCH --partition=haswell # partition name
 #SBATCH --nodes=1
 #SBATCH --ntasks=6
 #SBATCH --cpus-per-task=1

@@ -1283,7 +1283,7 @@ class SplField():
         #     self.time = np.arange(0, self.Nt*dt, dt)
 
 
-    def compute_third_octave(self, fc: no.ndarray = None, Nfc: np.ndarray = None):
+    def compute_third_octave(self, fc: np.ndarray = None, Nfc: np.ndarray = None):
         """
         Compute third octave band spectrum from previously computed frequencies.
         Be sure that fc anf Nfc corresponds to the `self.frequencies` computed. 
