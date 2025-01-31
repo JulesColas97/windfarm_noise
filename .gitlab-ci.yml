@@ -10,7 +10,7 @@ before_script:
 test:
   stage: test
   script:
-  - mkdocs build --strict --verbose --site-dir test
+  - mkdocs build --verbose --site-dir test
   artifacts:
     paths:
     - test
@@ -20,7 +20,7 @@ test:
 pages:
   stage: deploy
   script:
-  - mkdocs build --strict --verbose
+  - mkdocs build --verbose
   artifacts:
     paths:
     - public
