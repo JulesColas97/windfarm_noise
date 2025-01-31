@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip instal -r requirements_for_site.txt
+          pip install -r requirements_for_site.txt
 
       # - name: Generate API Reference Documentation
       #   run: |
