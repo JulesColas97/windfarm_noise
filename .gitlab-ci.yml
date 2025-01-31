@@ -1,4 +1,8 @@
-image: python:3.10-buster
+image: uython:3.10-buster
+
+default:
+  tags:
+    - deploy, web
 
 before_script:
   - pip install -r requirements_for_site.txt
