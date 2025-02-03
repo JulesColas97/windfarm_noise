@@ -6,4 +6,5 @@ example/**/*.dat
 example/**/*.h5
 *.mod
 *.o
+.python-version
 

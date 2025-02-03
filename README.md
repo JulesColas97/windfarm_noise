@@ -1,5 +1,10 @@
-## Installation
+## General 
 
+The complete documentation of the code code can be found [here](https://julescolas97.github.io/windfarm_noise/) 
+
+
+
+## Installation
 
 On newton you need Python 3.10 to run the different scripts. 
 You can load the module with 
