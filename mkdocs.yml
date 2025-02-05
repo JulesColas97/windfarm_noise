@@ -29,6 +29,9 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
@@ -43,6 +46,11 @@ theme:
   name: "material"
   # features:
   #   - search.share
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.footer
+
   palette:
     - scheme: slate
       toggle: 
@@ -60,12 +68,12 @@ theme:
 
 nav:
   - Overview: index.md
+
+  - Installation: installation.md
+
   - WAPE: WAPE.md 
 
   - Python tools for Pre-Post processing:
-    - Auralization tool box:
-      - Audio_tools: reference/audio_tools.md
-      - Auralization: reference/auralization.md
     - Les: reference/les.md
     - Source Model:
       - Atmos: reference/source/atmos.md
@@ -90,4 +98,19 @@ nav:
       - Spl: reference/spl.md
       - Spl_process: reference/spl_process.md
     - Utils: reference/utils.md
+    - Auralization tool box:
+      - Audio_tools: reference/audio_tools.md
+      - Auralization: reference/auralization.md
+
+  - Examples:
+    - Source model: 
+        - General: examples/source.md
+        - Simple input: examples/simple_input.md
+        - LES input: examples/les_input.md
+        - Multiple turbines: examples/multiple_turbines.md
+    - WAPE simulation: 
+        - General: examples/propagation.md
+        - One wind turbine: examples/propa_1_turbine.md
+        - Multiple turbines: examples/propa_2_turbines.md
+    - Complete windfarm simulation: examples/complete_simulation.md
 

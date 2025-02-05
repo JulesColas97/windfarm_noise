@@ -3,14 +3,15 @@ prepost/__init__.py
 prepost/audio_tools.py
 prepost/auralization.py
 prepost/combine.py
+prepost/deltaLfield.py
 prepost/gtpe.py
 prepost/les.py
 prepost/post.py
 prepost/pre.py
-prepost/setup_pe.py
 prepost/spl.py
 prepost/spl_process.py
 prepost/utils.py
+prepost/wape.py
 prepost.egg-info/PKG-INFO
 prepost.egg-info/SOURCES.txt
 prepost.egg-info/dependency_links.txt

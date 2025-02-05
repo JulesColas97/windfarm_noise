@@ -1,0 +1,1 @@
+The propagation simulation can be performed either directly with the Fortran code (see the first example) or by using a Python class that allows to set up several PE simulation to assess the noise from a wind farm (see second example). 

@@ -1,11 +1,14 @@
-import prepost as pp
+from prepost.source import Windturbine
+from prepost.source import Mesh
+from prepost.source import Source
+from prepost import Les
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 # Create the object wind turbine
 # -----------------------------------------------------------------------------
-wt = pp.source.WindTurbine()
+wt = WindTurbine()
 # set the parameter to the default turbine 
 # the default corresponds to the turbine define in Cotte et al . 
 wt.default()
@@ -31,7 +34,7 @@ y = np.linspace(-100, 100, ny)
 z = np.array([2])
 
 # create the Mesh object
-mesh = pp.source.Mesh(polar=False)
+mesh = Mesh(polar=False)
 # set the mesh arrays 
 mesh.set_cartesian_mesh(x, y, z)
 mesh.cartesian_2_polar()
@@ -42,7 +45,7 @@ mesh.cartesian_2_polar()
 # so to enter a simple profile or even a constant value you still need to input 
 # an entire flow field
 # -----------------------------------------------------------------------------
-atmos = pp.Les('./')
+atmos = Les('./')
 atmos.z = np.linspace(0,200,100)
 atmos.y = np.array([-1000,1000])
 atmos.x = np.array([-1000,1000])
@@ -58,20 +61,23 @@ print(atmos.u.shape)
 # plt.plot(atmos.u[:,0,0],atmos.z)
 atmos.epsilon = np.zeros_like(atmos.u) +  epsilon
 
+# Compute sound power 
+# -----------------------------------------------------------------------------
 # define frequencies
 frequencies = np.array([50,100,200,500,800,1000])
 
-Ncore = 4
-# Compute sound power 
-# -----------------------------------------------------------------------------
+# set the rotational speed 
 omega = 12.1 * 2 * np.pi / 60
 wt.controlRotSpeed(U_hub, omega=omega)
+#define the blade twist 
 wt.setOptimalTwist(U_hub, 4)
 
 print('U_hub', U_hub)
 print('Omega', wt.omega*60/(2*np.pi))
 
-src = pp.Source(wt, atmos, mesh)
+src = Source(wt, atmos, mesh)
+
+Ncore = 4
 src.computeSpp(frequencies, Ncore)
 src.mesh.polar_2_cartesian()
 

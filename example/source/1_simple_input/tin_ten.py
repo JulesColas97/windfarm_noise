@@ -15,9 +15,6 @@ x = src.mesh.x_array[ix]
 y = src.mesh.y_array[iy]
 R = np.sqrt((x-src.wt.absolute_pos[0])**2 + (y-src.wt.absolute_pos[1])**2)
 
-# print(iy)
-# print(src.SWL.shape)
-# print(src.Spp_tin.shape)
 SWL_true = 10*np.log10(np.sum(10**(src.SWL[ix, 0, iy, ...]/10),
                   (0, 2))/src.Nbeta) + Aweight(src.frequencies)
 

@@ -6,11 +6,31 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 class Les:
+    """
+    A class to handle Large Eddy Simulation (LES) data processing and visualization.
+
+    Attributes:
+        path (str): The path to the directory containing the LES data files.
+    """
 
     def __init__(self,path):
+        """
+        Initializes the Les class with the given path.
+
+        Args:
+            path (str): The path to the directory containing the LES data files.
+        """
         self.path = path
 
-    def read(self,dirname="output", ratio=None, adim=False):
+    def read(self, dirname: str = "output", ratio: float = None, adim: bool = False):
+        """
+        Reads LES data from files and initializes the grid and flow variables.
+
+        Args:
+            dirname (str): The directory name where the data files are located.
+            ratio (float, optional): A scaling ratio for the velocity dimension.
+            adim (bool, optional): Flag to use adimensional values.
+        """
         fname = self.path + '/%s/gridz.h5'%(dirname)
         vel = h5py.File(fname,"r")
         z = np.array(vel['var'])
@@ -166,128 +186,99 @@ class Les:
     # def add_first_point():
 
 
-    def plotQuantityXZ(self,fname,y,**kwargs):
-        iy = np.argmin(np.abs(self.y-y))
+    def plotQuantityXZ(self, fname: str, y: float, **kwargs) -> plt.Axes:
+        """
+        Plots a quantity in the XZ plane at a specified y-coordinate.
 
-        if fname == 'u' :
-            vel =  self.u
-        elif fname == 'v' :
-            vel = self.v
-        elif fname == 'w':
-            vel = self.w
-        elif fname == 'c':
-            vel = self.c
-        elif fname == 'theta':
-            vel = self.theta
-        elif fname == 'T':
-            vel = self.T
-        elif fname == 'epsilon':
-            if self.epsilon is None:
-                self.dissipation()
-            vel = self.epsilon
-        else:
-            vel = h5py.File(self.path + fname,"r")
-            vel = np.array(vel['var'])
+        Args:
+            fname (str): The name of the quantity to plot (e.g., 'u', 'v', 'w', 'c', 'theta', 'T', 'epsilon').
+            y (float): The y-coordinate at which to plot the quantity.
+            **kwargs: Additional keyword arguments for plot customization.
 
-        cax = plt.pcolormesh(self.x,self.z,vel[:,iy,:],**kwargs)
-        # plt.gca().set_aspect('equal', adjustable='box')
-        # plt.xlabel('x (m)')
-        # plt.ylabel('z (m)')
-        # ax=plt.gca()
-        # # plt.rcParams["contour.negative_linestyle"] = "solid"
-        # divider = make_axes_locatable(ax)
-        # cb = divider.append_axes("right", size="5%", pad=0.05)
-        # cb.set_title(fname)
-        # plt.colorbar(cax, cax=cb)
-        # plt.tight_layout()
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
+        iy = np.argmin(np.abs(self.y - y))
+        vel = self._get_quantity(fname)
+        cax = plt.pcolormesh(self.x, self.z, vel[:, iy, :], **kwargs)
         return cax
 
-    def plotQuantityXY(self,fname,z,**kwargs):
-        iz = np.argmin(np.abs(self.z-z))
+    def plotQuantityXY(self, fname: str, z: float, **kwargs) -> plt.Axes:
+        """
+        Plots a quantity in the XY plane at a specified z-coordinate.
 
-        if fname == 'u' :
-            vel =  self.u
-        elif fname == 'v' :
-            vel = self.v
-        elif fname == 'w':
-            vel = self.w
-        elif fname == 'c':
-            vel = self.c
-        elif fname == 'theta':
-            vel = self.theta
-        elif fname == 'T':
-            vel = self.T
-        elif fname == 'epsilon':
-            if self.epsilon is None:
-                self.dissipation()
-            vel = self.epsilon
-        elif fname == 'ti':
-            if self.ti is None:
-                self.turbulent_intensity()
-            vel = self.ti
-        else:
-            vel = h5py.File(self.path + fname,"r")
-            vel = np.array(vel['var'])
+        Args:
+            fname (str): The name of the quantity to plot (e.g., 'u', 'v', 'w', 'c', 'theta', 'T', 'epsilon', 'ti').
+            z (float): The z-coordinate at which to plot the quantity.
+            **kwargs: Additional keyword arguments for plot customization.
 
-        cax = plt.pcolormesh(self.x,self.y,vel[iz,:,:],**kwargs)
-        # plt.gca().set_aspect('equal', adjustable='box')
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
+        iz = np.argmin(np.abs(self.z - z))
+        vel = self._get_quantity(fname)
+        cax = plt.pcolormesh(self.x, self.y, vel[iz, :, :], **kwargs)
         plt.xlabel('x (m)')
         plt.ylabel('y (m)')
-        # ax=plt.gca()
-        # # plt.rcParams["contour.negative_linestyle"] = "solid"
-        # divider = make_axes_locatable(ax)
-        # cb = divider.append_axes("right", size="5%", pad=0.05)
-        # cb.set_title(fname)
-        # plt.colorbar(cax, cax=cb)
-        # plt.tight_layout()
-        # plt.rcParams["contour.negative_linestyle"] = "solid"
-        #divider = make_axes_locatable(ax)
-        #cb = divider.append_axes("right", size="5%", pad=0.05)
-        #cb.set_title(fname)
-        #plt.colorbar(cax, cax=cb)
         plt.tight_layout()
         return cax
 
+    def plotQuantityYZ(self, fname: str, x: float, **kwargs) -> plt.Axes:
+        """
+        Plots a quantity in the YZ plane at a specified x-coordinate.
 
-    def plotQuantityYZ(self,fname,x,**kwargs):
-        ix = np.argmin(np.abs(self.x-x))
+        Args:
+            fname (str): The name of the quantity to plot (e.g., 'u', 'v', 'w', 'c', 'theta', 'T', 'epsilon', 'ti').
+            x (float): The x-coordinate at which to plot the quantity.
+            **kwargs: Additional keyword arguments for plot customization.
 
-        if fname == 'u' :
-            vel =  self.u
-        elif fname == 'v' :
-            vel = self.v
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
+        ix = np.argmin(np.abs(self.x - x))
+        vel = self._get_quantity(fname)
+        cax = plt.pcolormesh(self.y, self.z, vel[:, :, ix], **kwargs)
+        plt.xlabel('y (m)')
+        plt.ylabel('z (m)')
+        plt.tight_layout()
+        return cax
+
+    def _get_quantity(self, fname: str) -> np.ndarray:
+        """
+        Retrieves the quantity array based on the given filename.
+
+        Args:
+            fname (str): The name of the quantity to retrieve (e.g., 'u', 'v', 'w', 'c', 'theta', 'T', 'epsilon', 'ti').
+
+        Returns:
+            np.ndarray: The array containing the quantity data.
+        """
+        if fname == 'u':
+            return self.u
+        elif fname == 'v':
+            return self.v
         elif fname == 'w':
-            vel = self.w
+            return self.w
         elif fname == 'c':
-            vel = self.c
+            return self.c
         elif fname == 'theta':
-            vel = self.theta
+            return self.theta
         elif fname == 'T':
-            vel = self.T
+            return self.T
         elif fname == 'epsilon':
             if self.epsilon is None:
                 self.dissipation()
-            vel = self.epsilon
+            return self.epsilon
         elif fname == 'ti':
             if self.ti is None:
                 self.turbulent_intensity()
-            vel = self.ti
+            return self.ti
         else:
-            vel = h5py.File(self.path + fname,"r")
-            vel = np.array(vel['var'])
+            with h5py.File(f"{self.path}/{fname}", "r") as vel:
+                return np.array(vel['var'])
 
-        cax = plt.pcolormesh(self.y,self.z,vel[:,:,ix],**kwargs)
-        # plt.gca().set_aspect('equal', adjustable='box')
-        plt.xlabel('y (m)')
-        plt.ylabel('z (m)')
-        ax=plt.gca()
-        # # plt.rcParams["contour.negative_linestyle"] = "solid"
-        # divider = make_axes_locatable(ax)
-        # cb = divider.append_axes("right", size="5%", pad=0.05)
-        # cb.set_title(fname)
-        # plt.colorbar(cax, cax=cb)
-        plt.tight_layout()
-        return ax
+
+
 
     def plotProfile(self, fname, x=None, y=None, scaling=1, **kwargs):
         if fname == 'u':
@@ -460,70 +451,6 @@ class Les:
     def constant_epsilon(self,epsilon):
         self.epsilon_Kol = epsilon*np.ones((len(self.z_coord)))
 
-    # def dissipation(self):
-    #     #Read all the velocities and temperature
-    #     filnam = self.path + '/output/tavg_txxs11.h5'
-    #     if not os.path.isfile(filnam):
-    #         print('no epsilon computed')
-    #         return
-
-    #     vel = h5py.File(filnam,"r")
-    #     txxs11 = np.array(vel['var'])
-    #     txxs11 = txxs11[0:self.nz,:,:]
-    #     txxs11 = np.asarray(txxs11)
-    #     txxs11[1:self.nz-1,:,:] = 0.5 * (txxs11[0:self.nz-2,:,:] + txxs11[1:self.nz-1,:,:])
-    #     txxs11[0,:,:] = 0.
-    #     #Read all the velocities and temperature 
-    #     filnam = self.path + '/output/tavg_txys12.h5'
-    #     vel = h5py.File(filnam,"r")
-    #     txys12 = np.array(vel['var'])
-    #     txys12 = txys12[0:self.nz,:,:]
-    #     txys12 = np.asarray(txys12)
-    #     txys12[1:self.nz-1,:,:] = 0.5 * (txys12[0:self.nz-2,:,:] + txys12[1:self.nz-1,:,:])
-    #     txys12[0,:,:] = 0.
-    #     # txys12 = txys12
-    #     #Read all the velocities and temperature 
-    #     filnam = self.path + '/output/tavg_txzs13.h5'
-    #     vel = h5py.File(filnam,"r")
-    #     txzs13 = np.array(vel['var'])
-    #     txzs13 = txzs13[0:self.nz,:,:]
-    #     txzs13 = np.asarray(txzs13)
-    #     # txzs13 = txzs13
-    #     #Read all the velocities and temperature 
-    #     filnam = self.path + '/output/tavg_tyys22.h5'
-    #     vel = h5py.File(filnam,"r")
-    #     tyys22  = np.array(vel['var'])
-    #     tyys22  = tyys22[0:self.nz,:,:]
-    #     tyys22  = np.asarray(tyys22)
-    #     tyys22[1:self.nz-1,:,:] = 0.5 * (tyys22[0:self.nz-2,:,:] + tyys22[1:self.nz-1,:,:])
-    #     tyys22[0,:,:] = 0.
-    #     # tyys22 = tyys22
-    #     #Read all the velocities and temperature 
-    #     filnam = self.path + '/output/tavg_tyzs23.h5'
-    #     vel = h5py.File(filnam,"r")
-    #     dummy = np.array(vel['var'])
-    #     dummy = dummy[0:self.nz,:,:]
-    #     tyzs23 = np.asarray(dummy)
-    #     # tyzs23 = tyzs23
-    #     #Read all the velocities and temperature 
-    #     filnam = self.path + '/output/tavg_tzzs33.h5'
-    #     vel = h5py.File(filnam,"r")
-    #     tzzs33 = np.array(vel['var'])
-    #     tzzs33 = tzzs33[0:self.nz,:,:]
-    #     tzzs33 = np.asarray(tzzs33)
-    #     # tzzs33 = tzzs33
-
-    #     # mu = 15e-6
-    #     # rho = 1.293 
-    #     # self.epsilon = -(mu/rho)*(txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)*1000
-    #     #self.epsilon = - self.u_dim**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-    #     self.epsilon = - self.u_dim**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-    #     # if self.adim :
-    #     #     self.epsilon = - 1 / self.u_star**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-    #     # else: 
-    #     #     self.epsilon = - 1/ self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-    #     #self.epsilon = - 1 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-    # 
 
     def dissipation(self):
         # Read all the velocities and temperature
