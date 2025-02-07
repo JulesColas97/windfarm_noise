@@ -7,6 +7,16 @@ class Atmosphere():
     """Class to read and used ABL data from LES. 
         The class provides methods to read velocity and temperature profile from LES. to define generic velocity profile. 
         The class also providess function to compute the turbulence dissipation rate $\epsilon$ from the LES data
+        !!! warning 
+            this is legacy code. 
+            It is not used anymore in the `Source` class and is replaced by the `Les` class
+            instead. 
+            This was used when only a vertical profile was used as input for the source model. 
+            Now an interpolation from the 3D les data is perfomed for each segment and blade position. 
+            Maybe a different approach could be implememented where the flow data are given already interpolated 
+            to the `Source` class in order to make the two class less intricated.  
+            
+
     """
     U_inf : np.ndarray
     epsilon_Kol : np.ndarray

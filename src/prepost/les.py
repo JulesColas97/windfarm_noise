@@ -7,10 +7,34 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 class Les:
     """
-    A class to handle Large Eddy Simulation (LES) data processing and visualization.
+    The Les class is designed to handle the processing and visualization of Large Eddy Simulation (LES) data 
+    computed with Atmospheric LES code developped at the University of Twente by the PoF group. 
+    LES is a computational fluid dynamics (CFD) technique used to simulate turbulent flows 
+    by resolving large-scale eddies and modeling the effects of smaller-scale eddies. 
+    This class provides a comprehensive set of tools to read, analyze, and plot various quantities derived from LES simulations.
 
-    Attributes:
-        path (str): The path to the directory containing the LES data files.
+    Key functionalities of the Les class include:
+
+    - Data Reading: The class reads simulation data from HDF5 files, including velocity components,
+    temperature, pressure, and turbulence statistics. 
+    It also reads configuration parameters from an input file to initialize the simulation domain and grid.
+
+    - Grid Initialization: The class sets up the computational grid based on the simulation parameters, 
+    defining the spatial coordinates and dimensions of the domain. 
+    !!! note
+        a specifity of the simulation results is that the spanwise and streamwise 
+        component are not recorded at the same height than the vertical component (a half grid step higher) 
+
+    - Quantity Plotting: The class provides methods to plot various quantities in different planes (XZ, XY, YZ)
+    and to plot profiles along specific coordinates. 
+    This helps in visualizing the spatial distribution and variation of flow properties.
+
+    - Turbulence Analysis: The class calculates and plots turbulence-related quantities such as dissipation rate and turbulent intensity,
+    which are usefull input parameters for the source model developed afterwards.
+
+    - Convergence Analysis: The class reads and plots convergence data, such as kinetic energy and friction velocity, 
+    to monitor the stability and accuracy of the simulation over time.
+
     """
 
     def __init__(self,path):
@@ -278,9 +302,21 @@ class Les:
                 return np.array(vel['var'])
 
 
+    def plotProfile(self, fname: str, x: float = None, y: float = None, scaling: float = 1, **kwargs) -> np.ndarray:
+        """
+        Plots a profile of a quantity along the the z-axis.
+        If x or y are given the profile is plotted at this location, other wise it is averaged along this axis.
 
+        Args:
+            fname (str): The name of the quantity to plot (e.g., 'u', 'v', 'w', 'c', 'theta', 'T', 'epsilon', 'ti').
+            x (float, optional): The x-coordinate at which to plot the profile.
+            y (float, optional): The y-coordinate at which to plot the profile.
+            scaling (float, optional): A scaling factor for the quantity.
+            **kwargs: Additional keyword arguments for plot customization.
 
-    def plotProfile(self, fname, x=None, y=None, scaling=1, **kwargs):
+        Returns:
+            np.ndarray: The profile of the quantity.
+        """
         if fname == 'u':
             vel = self.u
             unit = "ms"
@@ -342,19 +378,15 @@ class Les:
         vel_profile = vel_profile[0:self.z.size]
 
         if fname == "epsilon" or fname == "ti":
-            plt.plot(scaling*vel_profile[1:], self.zw[1:], **kwargs)
+            plt.plot(scaling * vel_profile[1:], self.zw[1:], **kwargs)
         else:
-            plt.plot(scaling*vel_profile, self.z, **kwargs)
-
-        # plt.plot(les.theta[:,10,10],les.z_coord)
-        # plt.ylabel('$z$ (m)')
-        # if self.adim:
-        #     plt.xlabel(fname + ' (-)')
-        # else:
-        #     plt.xlabel(fname + ' ('+unit+')')
+            plt.plot(scaling * vel_profile, self.z, **kwargs)
         return vel_profile
 
     def readConvergence(self):
+        """
+        Reads convergence data from a file and initializes the time, kinetic energy, friction, and temperature arrays.
+        """
         self.t = []
         self.ke = []
         self.friction = []
@@ -379,6 +411,9 @@ class Les:
         self.temp = np.array(self.temp)
 
     def plotConvergence(self):
+        """
+        Plots the convergence of kinetic energy, friction, and temperature over time.
+        """
         t = []
         ke = []
         friction = []
@@ -430,7 +465,18 @@ class Les:
             plt.figure()
             plt.plot(angles_array[-1,:])
 
-    def takeProfile(self,x,y,ratio=1,epsilon=0.01):
+    def takeProfile(self, x: float, y: float, ratio: float = 1, epsilon: float = 0.01):
+        """
+        Takes velocity and dissipation profiles at specified x and y coordinates.
+        This was previously used to give a 2D profile as input for the source model. 
+        Now the interpolation at the segment position is directly performed during the source computation.
+
+        Args:
+            x (float): The x-coordinate at which to take the profile.
+            y (float): The y-coordinate at which to take the profile.
+            ratio (float, optional): A scaling ratio for the velocity profile.
+            epsilon (float, optional): The dissipation value to set.
+        """
         ix = np.argmin(np.abs(self.x-x))
         iy = np.argmin(np.abs(self.y-y))
 
@@ -449,10 +495,19 @@ class Les:
 
 
     def constant_epsilon(self,epsilon):
+        """
+        Sets a constant dissipation value.
+
+        Args:
+            epsilon (float): The dissipation value to set.
+        """
         self.epsilon_Kol = epsilon*np.ones((len(self.z_coord)))
 
 
     def dissipation(self):
+        """
+        Calculates the turbulence dissipation rate from the velocity gradient and shear tensor components.
+        """
         # Read all the velocities and temperature
         filnam = self.path + '/output/tavg_txxs11.h5'
         if not os.path.isfile(filnam):
@@ -496,65 +551,45 @@ class Les:
         tzzs33[0:self.nz-1,:,:] = 0.5 * (tzzs33[0:self.nz-1,:,:] + tzzs33[1:self.nz,:,:])
         tzzs33 = np.asarray(tzzs33)
 
-        # mu = 15e-6
-        # rho = 1.293 
-        # self.epsilon = -(mu/rho)*(txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)*1000
-        #self.epsilon = - self.u_dim**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
         self.epsilon = - self.u_dim**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-        # if self.adim :
-        #     self.epsilon = - 1 / self.u_star**3 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-        # else: 
-        #     self.epsilon = - 1/ self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-        #self.epsilon = - 1 / self.z_i * (txxs11 + tyys22 +  tzzs33 + 2.0 * txzs13 + 2.0 * tyzs23 + 2.0 * txys12)
-        # self.epsilon = np.insert(self.epsilon, 0, 0, axis=0)
     
     def turbulent_intensity(self):
+        """
+        Calculates the turbulent intensity from the velocity fluctuations.
+        """
         filnam = self.path + '/output/tavg_u2.h5'
         vel = h5py.File(filnam, "r")
         u2 = np.array(vel['var'])
-        #u2[1:self.nz, :, :] = 0.5 * (u2[0:self.nz-1, :, :] + u2[1:self.nz, :, :])
-        # u2[0, :, :] = 0.
 
         filnam = self.path + '/output/tavg_v2.h5'
         vel = h5py.File(filnam, "r")
         v2 = np.array(vel['var'])
-        # v2[1:self.nz, :, :] = 0.5 * (v2[0:self.nz-1, :, :] + v2[1:self.nz, :, :])
-        # v2[0, :, :] = 0.
 
         filnam = self.path + '/output/tavg_w2.h5'
         vel = h5py.File(filnam, "r")
         w2 = np.array(vel['var'])
         w2[0:self.nz-1,:,:] = 0.5 * (w2[0:self.nz-1,:,:] + w2[1:self.nz,:,:])
-        #w2[0,:,:] = 0.
 
-        # u2 = u2*self.u_dim**2
-        # v2 = v2*self.u_dim**2
-        # w2 = w2*self.u_dim**2
         filnam = self.path + '/output/tavg_u.h5'
         vel = h5py.File(filnam, "r")
         u = np.array(vel['var'])
+        
         filnam = self.path + '/output/tavg_v.h5'
         vel = h5py.File(filnam, "r")
         v = np.array(vel['var'])
+
         filnam = self.path + '/output/tavg_w.h5'
         vel = h5py.File(filnam, "r")
         w = np.array(vel['var'])
-
-
-        # u = np.zeros((self.nz, self.ny, self.nx))
-        # v = np.zeros((self.nz, self.ny, self.nx))
-        # w = self.w
-
-        #u[1:self.nz,:,:] = 0.5 * (u[0:self.nz-1,:,:] + u[1:self.nz,:,:])
-        #v[1:self.nz,:,:] = 0.5 * (v[0:self.nz-1,:,:] + v[1:self.nz,:,:])
         w[0:self.nz-1,:,:] = 0.5 * (self.w[0:self.nz-1,:,:] + self.w[1:self.nz,:,:])
 
         TKE = 0.5*(u2 + v2 + w2 - (u**2 + v**2 + w**2))
         self.ti =  np.sqrt(2.*TKE/3) / np.sqrt(u**2 + v**2 + w**2)
-        # print(self.ti.shape)
-        # print(np.mean(self.ti,(1,2)))
 
     def plotTurbineAngle(self):
+        """
+        Plots the turbine angles from a data file.
+        """
         i = 0
         lines = []
         data = []
@@ -566,7 +601,21 @@ class Les:
             i+=1
         self.data = np.array(data).astype(np.float)
         
-    def plotXZ(self,y,u=True,eps=False,**kwargs):
+    def plotXZ(self, y: float, u: bool = True, eps: bool = False, **kwargs) -> plt.Axes:
+        """
+        !!! warning 
+            The plotQuantityXZ() method should be preferred to this one (legacy).
+        Plots a quantity in the XZ plane at a specified y-coordinate.
+
+        Args:
+            y (float): The y-coordinate at which to plot the quantity.
+            u (bool, optional): Flag to plot the u-component of velocity.
+            eps (bool, optional): Flag to plot the dissipation rate.
+            **kwargs: Additional keyword arguments for plot customization.
+
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
         iy = np.argmin(np.abs(self.y-y))
         if u:
             cax = plt.pcolormesh(self.x,self.z,self.u[:,iy,:],shading='gouraud',**kwargs)
@@ -597,7 +646,21 @@ class Les:
             plt.tight_layout()
         return cax,ax
 
-    def plotXY(self,z,u=True,eps=False,**kwargs):
+    def plotXY(self, z: float, u: bool = True, eps: bool = False, **kwargs) -> plt.Axes:
+        """
+        !!! warning 
+            The plotQuantityXY() method should be preferred to this one (legacy).
+        Plots a quantity in the XY plane at a specified z-coordinate.
+
+        Args:
+            z (float): The z-coordinate at which to plot the quantity.
+            u (bool, optional): Flag to plot the u-component of velocity.
+            eps (bool, optional): Flag to plot the dissipation rate.
+            **kwargs: Additional keyword arguments for plot customization.
+
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
         iz = np.argmin(np.abs(self.z-z))
         
         if u:
@@ -628,7 +691,19 @@ class Les:
             plt.tight_layout()
         return cax,ax
            
-    def plotYZ(self,x,**kwargs):
+    def plotYZ(self, x: float, **kwargs) -> plt.Axes:
+        """
+        !!! warning 
+            The plotQuantityYZ() method should be preferred to this one (legacy).
+        Plots a quantity in the YZ plane at a specified x-coordinate.
+
+        Args:
+            x (float): The x-coordinate at which to plot the quantity.
+            **kwargs: Additional keyword arguments for plot customization.
+
+        Returns:
+            plt.Axes: The matplotlib Axes object containing the plot.
+        """
         ix = np.argmin(np.abs(self.x-x))
         plt.pcolormesh(self.y,self.z,self.u[:,:,ix],cmap='RdBu_r',shading='gouraud',**kwargs)
         plt.colorbar()
