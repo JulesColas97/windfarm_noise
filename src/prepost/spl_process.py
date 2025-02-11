@@ -466,6 +466,17 @@ def combine_dl_src(
 
     This function processes the delta L and source fields, combines them, and
     saves the results to files.
+    If the two fields are in cartesian coordinates, the function checks if the grid 
+    has a different shape. In the case it does it performs a linear interpolation to fit the source
+    grid with the DeltaL grids. 
+    If both fields are in polar coordinates. the interpolation must be perfomed prior to the function 
+    so that both grids are identical. 
+    
+    !!! warning 
+        this function has not be used for a polar grid system in a long time and some things may be broken. 
+        Maybe it is better yo use the `SplField` class  directly and the function `combine_linear_broadband`
+        if you want to perform polar computation.
+
 
     Args:
         casename (str): The name of the simulation case.

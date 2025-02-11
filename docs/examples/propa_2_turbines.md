@@ -139,7 +139,8 @@ finally the `Simu` can be save to be use in the post processing routines.
 simu.save()
 ```
 
-### Post processing 
+<hr>
+### Post processing for top view
 
 To post process the simulations we can either use the `PeResults` to read individual propagation planes or we can use the `DeltaLfield` class which allows to concatenate all propagation angle and source height into one matrix.
 
@@ -176,7 +177,7 @@ This function reads the `Simu` object, then according to the case defined it rea
 Details of the function can be found [here](../reference/spl_process.md#src.prepost.spl_process.concatenate_all_dl).
 
 
-### Plots
+<hr>
 
 To visualize the data first load the [deltaLField](../reference/deltaLfield.md) object:
 Then we can use the `plot_top_cartesian` function to plot a top view of the results. 
@@ -205,4 +206,53 @@ plt.ylim(720, 2720)
 plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 ```
+
+
+<br><hr>
+### Post processing for side view 
+
+Create a side view of the delta L field a wrapper is also implemented. 
+The `concatenate_side_dl` function  allows to concatente PE results to obtain a 2D field in 
+a plane of propagation. 
+The fields are interpolated on a grid `(nx,nz)`.
+Note that in this example two oppososite propagation planes are concatenated.
+An other set of angle could be `[20 ,200]` or just one angle. 
+Note that order is important the second propagation angle will be reverse so that the increasing x direction is in the first angles given direction. 
+
+
+```python 
+from prepost import concatenate_side_dl
+# create side view fields
+# -----------------------------------------------------------------------------
+pp.concatenate_side_dl(case, path2Pe, iTurb=iTurb,
+            tau=[0,180], nx=900, nz=151, dl_fname=workdir+'/xz/DL')
+
+```
+After this post processing, the Delta is store in the same variable as for the top view.
+The field is a ND matrix of size `(nx, ny, nz, Nfreq, Nheight)` with `ny=1`. 
+The same set of plotting function or interpolating function of the `DeltaLField`class can then be used to visualize the data. 
+
+```python 
+from prepost import DeltaLField
+import matplotlib.pyplot as plt
+
+dl = DeltaLField()
+dl.load('./xz/DL0.dat')
+
+plt.subplot(211)
+dl.plot_xz(y=1480,freq=100,height=130,cmap="RdBu_r")
+plt.clim(-10,10)
+
+
+dl = DeltaLField()
+dl.load('./xz/DL1.dat')
+print(dl.y_array)
+
+plt.subplot(212)
+dl.plot_xz(y=1960,freq=100,height=130,cmap="RdBu_r")
+plt.clim(-10,10)
+
+plt.show()
+```
+
 

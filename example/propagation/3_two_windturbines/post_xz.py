@@ -22,6 +22,6 @@ simu.check_run_cases()
 
 # create side view fields
 # -----------------------------------------------------------------------------
-pp.concatenate_side_dl(case, path2Pe, iTurb=iTurb,
+concatenate_side_dl(case, path2Pe, iTurb=iTurb,
             tau=[0,180], nx=900, nz=151, dl_fname=workdir+'/xz/DL')
 
