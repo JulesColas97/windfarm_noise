@@ -239,7 +239,63 @@ combine_dl_src(case, path2Pe, iTurb=iTurb,
                   polar=False,third=False)
 ```
 Details on the function can be found [here](../reference/spl_process.md#src.prepost.spl_process.combine_dl_src).
+Here the source results are given in cartesian coordinate system while the DeltaL results are in polar system. 
+Hence the two grid dont match and the source results are interpolated on the deltaL results grid.
+The function then saves the new source field interpolated as `spp_polar` and the spl 
+as `spl_s_polar`.
 
+
+From this point different post processing can be performed in different order depending on the need of the study. 
+Interpolation on cartesian grid can be done for the spl. 
+Computation of different quantity such as OASPL, AM, time averaged. 
+Conversion from the results as function of the rotor angle to results as a function of receiver time. 
+
+Depending on the previous post processing and/or the quantity loaded the function will apply to these quantity. 
+Here after an example of a chain of post processing is given. 
+
+
+In order to sum the contribution of the different turbine the results must be computed on the same grid which is not the case yet. 
+To do so the spl in polar system are interpolated on a common cartesian grid. 
+
+
+```python
+iTurb = [0,1]
+for ii in iTurb:
+    spl = pp.SplField()
+    spl.load(workdir + '/xy/spl_s_polar_' + str(ii) + '.dat', seg=True,
+             time=False, oaspl=False, am=False, mean=False, z=2)
+    
+    # define the common cartesian grid
+    x = np.linspace(simu.x1, simu.x2, 350)
+    y = np.linspace(simu.y1, simu.y2, 220)
+    spl.interpolate_from_polar(x, y)
+    spl.save(workdir + '/xy/spl_s_cart_'+str(ii) + '.dat')
+```
+Note that here we load the spl as function of the frequency but we could have computed the OASPL, the AM and the averaged OASPL first, then only do the interpolation for this quantity. 
+
+
+To compute the OASPL first the results are converted to third octave band then the atmospheric absorption is applied along with the A weighting finally the oaspl are computed
+
+```python
+fc = [50, 63, 80, 100]
+Nfc = [1,  1,  1,   1]
+for ii in iTurb:
+    spl = pp.SplField()
+    spl.load(workdir+'/xy/spl_s_cart_%s.dat' % ii, seg=True, time=False,
+             am=False, oaspl=False, mean=False)
+    spl.compute_third_octave(fc, Nfc)
+    spl.atm_absorption()
+    spl.Aweight()
+    spl.compute_oaspl()
+    spl.SPL_seg = None
+    spl.save(workdir+'/xy/oaspl_dbA_s_cart_%s.dat' % ii)
+    spl = None
+```
+Here we loaded the spl previously interpolated in cartesian coordinate system so the OASPL is only computed for this quantity 
+not also that we set `spl.SPL_seg` to `None` so that only the OASPL is saved in the file `oaspl_dbA_s_cart`.
+
+!!! warning
+    for this example very few frequency are considered hence the OASPL quantity is not valid in this context.
 
 
 
