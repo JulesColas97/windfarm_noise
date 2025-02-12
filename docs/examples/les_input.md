@@ -1,7 +1,7 @@
 
 ### Wind turbine and mesh set up
 
-Simimlarly to the previous example library are loaded, the wind turbine gemoetry 
+Similarly to the previous example library are loaded, the wind turbine geometry 
 and the mesh are set up. 
 
 
@@ -50,7 +50,7 @@ mesh.cartesian_2_polar()
 ### Read LES data 
 
 !!! warning 
-    In this example the flow data are read from the output of a Large Eddy simulatioon code developped at the University of Twente. Without this code and its output this section will not work.
+    In this example the flow data are read from the output of a Large Eddy simulation code developed at the University of Twente. Without this code and its output this section will not work.
 
 
 The `LES` class is used to read the LES data. 
@@ -60,7 +60,7 @@ les = pp.Les('/store/lmfa-2/acoustique-nl/simu_jules/LES/2T/C1/blue/')
 les.read(ratio=1)
 les.dissipation()
 ```
-The position of the wind turbine inside the flow is retrieved from the the LES object.
+The position of the wind turbine inside the flow is retrieved from the LES object.
 And then the wind speed at hub height is interpolated from the flow data. 
 ```python
 offset = 0
@@ -69,7 +69,7 @@ yS = np.array([[les.turbines[0,2]*les.z_i]])
 zS = np.array([[wt.href]])
 U_hub,epsilon_hub = interp_3D_atmos_data(les,xS,yS,zS)
 ```
-This is done in order to control the rotational speed and twist of the blade with respect of this referencee wind speed. 
+This is done in order to control the rotational speed and twist of the blade with respect of this reference wind speed. 
 ```python
 wt.controlRotSpeed(U_hub)
 wt.setOptimalTwist(U_hub, 4)
@@ -79,11 +79,11 @@ print('U_hub', U_hub)
 print('epsilon_hub', epsilon_hub)
 print('Omega', wt.omega*60/(2*np.pi))
 ```
-The `absolute_pos` parameter is used to define the position of the wind turbine inside the flow and is used after to interpolate the flow data at each segement and angular positions of the blades. 
+The `absolute_pos` parameter is used to define the position of the wind turbine inside the flow and is used after to interpolate the flow data at each segment and angular positions of the blades. 
 
 
 ### Source computation
-Finally the source computation is perfomed using the class `Source` similarly to the previous example. 
+Finally the source computation is performed using the class `Source` similarly to the previous example. 
 
 ```python
 # define frequencies 
@@ -101,7 +101,7 @@ src.save("./swl.dat", atmos_data=False)
 ```
 
 
-### Data visualisation 
+### Data visualization 
 
 The computed acoustic quantity can be plotted similarly to the previous example. 
 Note that polar plot of the inflow quantity can also be plotted with the `Source` class. 
@@ -112,7 +112,7 @@ src.load("./swl.dat")
 src.plot_all_u()
 plt.show()
 ```
-This function plots different quantity such as the incomming wind speed, the rotational, speed, the angle of attack, the turbulence dissipation rate for each segement and each angular position of the rotor.
+This function plots different quantity such as the incoming wind speed, the rotational, speed, the angle of attack, the turbulence dissipation rate for each segment and each angular position of the rotor.
 
 
 Single quantity can also be plotted. 

@@ -1,9 +1,9 @@
 The full script for the examples presented here after can be found in `example/source/`.
-They demonstrate how to use the python code to compute the Sound Pressure level in freefield ($S_{ff}$)
-using thee model developped by Cotté et al. 
+They demonstrate how to use the python code to compute the Sound Pressure level in free field ($S_{ff}$)
+using the model developed by Cotté et al. 
 The model definition can be found either in [Colas Phd Thesis](https://acoustique.ec-lyon.fr/publi/colas_thesis.pdf#page=51)
 
-Or in these different work:
+Or in these different works:
 
 Y. Tian. Modeling of wind turbine noise sources and propagation in the atmosphere. PhD
 thesis, Université Paris Saclay (COmUE), Feb. 2016. 

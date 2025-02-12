@@ -1,11 +1,11 @@
 
 
-### Launchind the PE fortran code
+### Launching the PE fortran code
 
 
 The simulation are run using the Fortran code `src/kernel/New_PE_c/`. 
 See the installation section for compilation instruction. 
-The code is also briefly explaine in the [WAPE](../WAPE.md) section.
+The code is also briefly explained in the [WAPE](../WAPE.md) section.
 
 An example of an input file is given here
 
@@ -110,11 +110,11 @@ $end input
 ```
 
 
-### Data visualisation
+### Data visualization
 
 Once the code has finished running
 
-The PE resultst can loaded using the Python class `PeResults`
+The PE results can be loaded using the Python class `PeResults`
 
 ```python
 from prepost import PeResults
@@ -127,10 +127,10 @@ pe = PeResults(casename='c0', iTurb=0, height=90, tau=0)
 
 !!! warning
     The class needs a name case, a Turbine index a source height and a propagation angle 
-    due to a previous implementation where the file name was defined from these quantity. 
-    In the newest version the file name is directky passed to the read function.
+    due to a previous implementation where the file name was defined from these quantities. 
+    In the newest version the file name is directly passed to the read function.
 
-The fortran code saves the $\Delta L$ (sound pressuree levelm relative to the free field) either in the entire domain (2D propagation plane) or for a set of receivers at given heights.
+The fortran code saves the $\Delta L$ (sound pressure level relative to the free field) either in the entire domain (2D propagation plane) or for a set of receivers at given heights.
 In the first case we can plot the 2D cartography for the propagation angle $\tau=0$ with :
 ```python 
 pe.read_carto(fname='./c0_0000.h5')
@@ -140,7 +140,7 @@ plt.show()
 ```
 
 
-In the second case we can plot the $\Delta L$ as a function of $x$ for a given receiver height $z=2$m with:
+In the second case we can plot the $\Delta L$ as a function of $x$ for a given receiver height $z=2$ m with:
 ```python
 pe.read_receiver('./c0_0000.h5')
 pe.plotLine(freq=500, z=2)
